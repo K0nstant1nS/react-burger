@@ -1,0 +1,20 @@
+.constructor{
+    max-height: 464px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.constructor::-webkit-scrollbar {
+    box-sizing: border-box;
+    width: 8px;
+    background: #2F2F37;
+    height: 464px
+}
+
+.constructor::-webkit-scrollbar-thumb {
+    height: 292px;
+    width: 8px;
+    background: #8585AD;
+}

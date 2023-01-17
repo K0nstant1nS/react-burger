@@ -1,0 +1,32 @@
+.header{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 88px;
+    background: #1C1C21;
+}
+
+.content{
+    position:relative;
+    min-width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    position: absolute;
+    left: 495px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    grid-column: 1;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+}

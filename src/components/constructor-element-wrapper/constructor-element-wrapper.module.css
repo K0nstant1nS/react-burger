@@ -1,0 +1,10 @@
+.wrapperElement{
+    display: grid;
+    grid-template-rows: 1;
+    grid-template-columns: 24px 1fr;
+    align-items: center;
+}
+
+.constructorElement{
+    grid-column: 2;
+}

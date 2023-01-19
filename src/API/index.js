@@ -9,13 +9,13 @@ export default class Api {
     });
   }
 
-  static async postData(additionalAddres, idsArr) {
+  static async postData(additionalAddres, data) {
     return await fetch(`${dataBaseAddres}${additionalAddres}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ingredients: idsArr }),
+      body: JSON.stringify(data),
     }).then((res) => {
       return res.ok
         ? res.json()
@@ -28,6 +28,6 @@ export default class Api {
   }
 
   static async makeOrder(idsArr) {
-    return await this.postData("/orders", idsArr);
+    return await this.postData("/orders", { ingredients: idsArr });
   }
 }

@@ -16,7 +16,7 @@ function App() {
     common: [],
   });
   const [data, setData] = useState([]);
-  const statesData = {
+  const constructorState = {
     burgerCreation,
     setBurgerCreation,
   };
@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <AppHeader />
       <div className={`mb-10 ${styles.main}`}>
-        <ConstructorContext.Provider value={statesData}>
+        <ConstructorContext.Provider value={constructorState}>
           <BurgerIngredients data={data} />
           <BurgerConstructor />
         </ConstructorContext.Provider>

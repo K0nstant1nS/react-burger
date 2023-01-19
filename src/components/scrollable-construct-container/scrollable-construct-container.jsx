@@ -1,11 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import styles from "./scrollable-construct-container.module.css";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import { v4 as uuid } from "uuid";
 import { statesDataProps } from "../../utils/propTypes";
+import { ConstructorContext } from "../../context/constructor-context";
 
-function ScrollableConstructContainer({ statesData }) {
-  const { burgerCreation, setBurgerCreation } = { ...statesData };
+function ScrollableConstructContainer() {
+  const { burgerCreation, setBurgerCreation } = useContext(ConstructorContext);
 
   function deleteHandler(itemIndex) {
     setBurgerCreation({

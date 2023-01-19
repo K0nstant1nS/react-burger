@@ -2,15 +2,14 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import styles from "./ingredient-element.module.css";
 import { ingredientProps, statesDataProps } from "../../utils/propTypes";
 import PropTypes from "prop-types";
+import { ConstructorContext } from "../../context/constructor-context";
 
-function IngredientElement({ ingredient, statesData, setIngredientModal }) {
-  const { burgerCreation, setBurgerCreation } = {
-    ...statesData,
-  };
+function IngredientElement({ ingredient, setIngredientModal }) {
+  const { burgerCreation, setBurgerCreation } = useContext(ConstructorContext);
 
   let counter = useMemo(() => {
     if (ingredient._id === burgerCreation.bun._id) {

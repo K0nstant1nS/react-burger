@@ -4,6 +4,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from "./app.module.css";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Api from "../../API";
+import { ConstructorContext } from "../../context/constructor-context";
 
 function App() {
   const [burgerCreation, setBurgerCreation] = useState({
@@ -28,17 +29,17 @@ function App() {
         const common = data.data.filter((item) => item.type !== "bun");
         setBurgerCreation({ bun: bun, common: common });
       })
-      .catch((err) =>
-        console.log(`А у вас ошибочка в getIngredients: ${err.message}`)
-      );
+      .catch((err) => console.log(err.message));
   }, []);
 
   return (
     <div className="App">
       <AppHeader />
       <div className={`mb-10 ${styles.main}`}>
-        <BurgerIngredients data={data} statesData={statesData} />
-        <BurgerConstructor statesData={statesData} />
+        <ConstructorContext.Provider value={statesData}>
+          <BurgerIngredients data={data} />
+          <BurgerConstructor />
+        </ConstructorContext.Provider>
       </div>
     </div>
   );

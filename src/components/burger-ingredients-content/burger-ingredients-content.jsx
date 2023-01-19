@@ -31,21 +31,18 @@ function BurgerIngredientsContent({ data, statesData, setIngredientModal }) {
   return (
     <div className={styles.content}>
       <SortedByType
-        statesData={statesData}
         indents="mt-10 mb-10"
         data={bunsData}
         header="Булки"
         setIngredientModal={setIngredientModal}
       />
       <SortedByType
-        statesData={statesData}
         indents="mb-10"
         data={saucesData}
         header="Соусы"
         setIngredientModal={setIngredientModal}
       />
       <SortedByType
-        statesData={statesData}
         data={mainsData}
         header="Начинки"
         setIngredientModal={setIngredientModal}

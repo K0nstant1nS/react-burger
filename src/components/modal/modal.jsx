@@ -16,11 +16,9 @@ function Modal({ children, closeModal }) {
 
   useEffect(() => {
     setTimeout(() => {
-      document.addEventListener("click", closeModal);
       document.addEventListener("keydown", escCloseHandler);
     }, 0);
     return () => {
-      document.removeEventListener("click", closeModal);
       document.removeEventListener("keydown", escCloseHandler);
     };
   });
@@ -29,7 +27,7 @@ function Modal({ children, closeModal }) {
     <>
       {createPortal(
         <div className={styles.modal}>
-          <ModalOverlay />
+          <ModalOverlay closeModal={closeModal} />
           <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
             {children}
             <div className={styles.close} onClick={closeModal}>

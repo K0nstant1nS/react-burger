@@ -7,14 +7,14 @@ import Api from "../../API";
 import { ConstructorContext } from "../../context/constructor-context";
 
 function App() {
-  const [burgerCreation, setBurgerCreation] = useState({
+  /*const [burgerCreation, setBurgerCreation] = useState({
     bun: {
       price: 0,
       name: "default",
       image: "default",
     },
     common: [],
-  });
+  });*/
   const [data, setData] = useState([]);
   const constructorState = {
     burgerCreation,
@@ -27,7 +27,6 @@ function App() {
         setData(data.data);
         const bun = data.data.filter((item) => item.type === "bun")[0];
         const common = data.data.filter((item) => item.type !== "bun");
-        setBurgerCreation({ bun: bun, common: common });
       })
       .catch((err) => console.log(err.message));
   }, []);
@@ -37,7 +36,7 @@ function App() {
       <AppHeader />
       <div className={`mb-10 ${styles.main}`}>
         <ConstructorContext.Provider value={constructorState}>
-          <BurgerIngredients data={data} />
+          <BurgerIngredients />
           <BurgerConstructor />
         </ConstructorContext.Provider>
       </div>

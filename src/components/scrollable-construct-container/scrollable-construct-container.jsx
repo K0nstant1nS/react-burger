@@ -38,7 +38,7 @@ function ScrollableConstructContainer() {
         indents="pb-4 pl-4"
         type="top"
         isLocked={true}
-        text={burgerCreation.bun.name}
+        text={`${burgerCreation.bun.name}(верх)`}
         price={burgerCreation.bun.price}
         thumbnail={burgerCreation.bun.image}
       />
@@ -49,7 +49,7 @@ function ScrollableConstructContainer() {
         indents="pt-4 pl-4"
         type="bottom"
         isLocked={true}
-        text={burgerCreation.bun.name}
+        text={`${burgerCreation.bun.name}(низ)`}
         price={burgerCreation.bun.price}
         thumbnail={burgerCreation.bun.image}
       />

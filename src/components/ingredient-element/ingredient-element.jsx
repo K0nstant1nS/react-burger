@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import { ConstructorContext } from "../../context/constructor-context";
 
 function IngredientElement({ ingredient, setIngredientModal }) {
-  const { burgerCreation, setBurgerCreation } = useContext(ConstructorContext);
+  const { burgerCreation } = useContext(ConstructorContext);
 
   let counter = useMemo(() => {
     if (ingredient._id === burgerCreation.bun._id) {

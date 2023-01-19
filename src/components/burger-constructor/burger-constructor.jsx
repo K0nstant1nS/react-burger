@@ -38,15 +38,6 @@ function BurgerConstructor() {
   const { burgerCreation } = useContext(ConstructorContext);
   const [state, dispatch] = useReducer(sumReducer, initialState);
 
-  /*const sum = useMemo(() => {
-    return burgerCreation.common.length > 0
-      ? burgerCreation.common.reduce((sum, element) => {
-          return (sum += element.price);
-        }, 0) +
-          burgerCreation.bun.price * 2
-      : burgerCreation.bun.price * 2;
-  }, [burgerCreation]);*/
-
   useEffect(() => {
     dispatch({
       type: "SET_SUM",

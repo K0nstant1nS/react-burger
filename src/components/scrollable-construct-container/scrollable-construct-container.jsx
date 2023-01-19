@@ -5,17 +5,20 @@ import { v4 as uuid } from "uuid";
 import { statesDataProps } from "../../utils/propTypes";
 
 function ScrollableConstructContainer({ statesData }) {
-  const { burgerCreation, setBurgerCreation, burgerBun } = { ...statesData };
+  const { burgerCreation, setBurgerCreation } = { ...statesData };
 
   function deleteHandler(itemIndex) {
-    setBurgerCreation([
-      ...burgerCreation.slice(0, itemIndex),
-      ...burgerCreation.slice(itemIndex + 1),
-    ]);
+    setBurgerCreation({
+      ...burgerCreation,
+      common: [
+        ...burgerCreation.common.slice(0, itemIndex),
+        ...burgerCreation.common.slice(itemIndex + 1),
+      ],
+    });
   }
 
   const burgerElementsArr = useMemo(() => {
-    return burgerCreation.map((burgerElement, index) => {
+    return burgerCreation.common.map((burgerElement, index) => {
       return (
         <ConstructorElementWrapper
           key={uuid()}
@@ -35,9 +38,9 @@ function ScrollableConstructContainer({ statesData }) {
         indents="pb-4 pl-4"
         type="top"
         isLocked={true}
-        text={burgerBun.name}
-        price={burgerBun.price}
-        thumbnail={burgerBun.image}
+        text={burgerCreation.bun.name}
+        price={burgerCreation.bun.price}
+        thumbnail={burgerCreation.bun.image}
       />
       <div className={`pl-4 pr-2 ${styles.constructor}`}>
         {burgerElementsArr}
@@ -46,9 +49,9 @@ function ScrollableConstructContainer({ statesData }) {
         indents="pt-4 pl-4"
         type="bottom"
         isLocked={true}
-        text={burgerBun.name}
-        price={burgerBun.price}
-        thumbnail={burgerBun.image}
+        text={burgerCreation.bun.name}
+        price={burgerCreation.bun.price}
+        thumbnail={burgerCreation.bun.image}
       />
     </>
   );

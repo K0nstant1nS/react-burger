@@ -8,29 +8,21 @@ import { ingredientProps, statesDataProps } from "../../utils/propTypes";
 import PropTypes from "prop-types";
 
 function IngredientElement({ ingredient, statesData, setIngredientModal }) {
-  const { burgerCreation, setBurgerCreation, burgerBun, setBurgerBun } = {
+  const { burgerCreation, setBurgerCreation } = {
     ...statesData,
   };
 
   let counter = useMemo(() => {
-    if (ingredient._id === burgerBun._id) {
+    if (ingredient._id === burgerCreation.bun._id) {
       return 1;
     }
-    return burgerCreation.reduce((sum, item) => {
+    return burgerCreation.common.reduce((sum, item) => {
       if (item._id === ingredient._id) {
         return (sum += 1);
       }
       return sum;
     }, 0);
-  }, [burgerCreation, burgerBun]);
-
-  function addBurgerElement(elementData) {
-    if (elementData.type === "bun") {
-      setBurgerBun(elementData);
-    } else {
-      setBurgerCreation([...burgerCreation, elementData]);
-    }
-  }
+  }, [burgerCreation]);
 
   function openModal() {
     setIngredientModal(ingredient);

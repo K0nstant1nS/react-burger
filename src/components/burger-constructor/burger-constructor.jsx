@@ -13,13 +13,13 @@ function BurgerConstructor({ statesData }) {
   const [orderModal, setOrderModal] = useState(null);
 
   const sum = useMemo(() => {
-    return statesData.burgerCreation.length > 0
-      ? statesData.burgerCreation.reduce((sum, element) => {
+    return statesData.burgerCreation.common.length > 0
+      ? statesData.burgerCreation.common.reduce((sum, element) => {
           return (sum += element.price);
         }, 0) +
-          statesData.burgerBun.price * 2
-      : statesData.burgerBun.price * 2;
-  }, [statesData.burgerCreation, statesData.burgerBun]);
+          statesData.burgerCreation.bun.price * 2
+      : statesData.burgerCreation.bun.price * 2;
+  }, [statesData.burgerCreation]);
 
   function openOrderPopup() {
     setOrderModal(true);
@@ -36,7 +36,7 @@ function BurgerConstructor({ statesData }) {
           </div>
         </div>
         <Button
-          disabled={false} //!statesData.burgerBun.type
+          disabled={false}
           htmlType="button"
           type="primary"
           size="large"

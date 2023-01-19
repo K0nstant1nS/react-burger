@@ -6,29 +6,27 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Api from "../../API";
 
 function App() {
-  const [burgerCreation, setBurgerCreation] = useState([]);
-  const [burgerBun, setBurgerBun] = useState({
-    price: 0,
-    name: "default",
-    image: "default",
+  const [burgerCreation, setBurgerCreation] = useState({
+    bun: {
+      price: 0,
+      name: "default",
+      image: "default",
+    },
+    common: [],
   });
   const [data, setData] = useState([]);
   const statesData = {
     burgerCreation,
     setBurgerCreation,
-    burgerBun,
-    setBurgerBun,
   };
 
   useEffect(() => {
     Api.getIngredients()
       .then((data) => {
         setData(data.data);
-        setBurgerBun(
-          data.data.reduce((sum, item) => {
-            return item.type === "bun" ? (sum = item) : sum;
-          }, "")
-        );
+        const bun = data.data.filter((item) => item.type === "bun")[0];
+        const common = data.data.filter((item) => item.type !== "bun");
+        setBurgerCreation({ bun: bun, common: common });
       })
       .catch((err) =>
         console.log(`А у вас ошибочка в getIngredients: ${err.message}`)

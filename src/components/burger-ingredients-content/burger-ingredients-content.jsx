@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import styles from "./burger-ingredients-content.module.css";
 import SortedByType from "../sorted-by-type/sorted-by-type";
-import { dataProps } from "../../utils/propTypes";
 import PropTypes from "prop-types";
+import { IngredientsContext } from "../../context/ingredients-context";
 
-function BurgerIngredientsContent({ data, setIngredientModal }) {
+function BurgerIngredientsContent({ setIngredientModal }) {
+  const data = useContext(IngredientsContext);
   const [bun, main, sauce] = ["bun", "main", "sauce"];
   const bunsData = useMemo(
     () =>
@@ -52,7 +53,6 @@ function BurgerIngredientsContent({ data, setIngredientModal }) {
 }
 
 BurgerIngredientsContent.propTypes = {
-  data: dataProps,
   setIngredientModal: PropTypes.func.isRequired,
 };
 

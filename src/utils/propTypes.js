@@ -1,12 +1,5 @@
 import PropTypes from "prop-types";
 
-export const statesDataProps = PropTypes.shape({
-  burgerCreation: PropTypes.array.isRequired,
-  setBurgerCreation: PropTypes.func.isRequired,
-  burgerBun: PropTypes.object.isRequired,
-  setBurgerBun: PropTypes.func.isRequired,
-}).isRequired;
-
 export const ingredientProps = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

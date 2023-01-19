@@ -2,7 +2,7 @@ import React from "react";
 import IngredientElement from "../ingredient-element/ingredient-element";
 import styles from "./sorted-by-type.module.css";
 import PropTypes from "prop-types";
-import { dataProps, statesDataProps } from "../../utils/propTypes";
+import { dataProps } from "../../utils/propTypes";
 
 function SortedByType({ header, indents = "", data, setIngredientModal }) {
   return (
@@ -27,7 +27,6 @@ SortedByType.propTypes = {
   header: PropTypes.string.isRequired,
   indents: PropTypes.string,
   data: dataProps,
-  statesData: statesDataProps,
   setIngredientModal: PropTypes.func.isRequired,
 };
 

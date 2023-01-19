@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useMemo, useContext } from "react";
 import styles from "./ingredient-element.module.css";
-import { ingredientProps, statesDataProps } from "../../utils/propTypes";
+import { ingredientProps } from "../../utils/propTypes";
 import PropTypes from "prop-types";
 import { ConstructorContext } from "../../context/constructor-context";
 
@@ -48,7 +48,6 @@ function IngredientElement({ ingredient, setIngredientModal }) {
 
 IngredientElement.propTypes = {
   ingredient: ingredientProps,
-  statesData: statesDataProps,
   setIngredientModal: PropTypes.func.isRequired,
 };
 

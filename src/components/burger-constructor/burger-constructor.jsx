@@ -10,7 +10,6 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { statesDataProps } from "../../utils/propTypes";
 import ScrollableConstructContainer from "../scrollable-construct-container/scrollable-construct-container";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -36,7 +35,7 @@ function BurgerConstructor() {
     orderNumber: 0,
     isOpened: false,
   });
-  const { burgerCreation, setBurgerCreation } = useContext(ConstructorContext);
+  const { burgerCreation } = useContext(ConstructorContext);
   const [state, dispatch] = useReducer(sumReducer, initialState);
 
   /*const sum = useMemo(() => {
@@ -107,9 +106,5 @@ function BurgerConstructor() {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  statesData: statesDataProps,
-};
 
 export default BurgerConstructor;

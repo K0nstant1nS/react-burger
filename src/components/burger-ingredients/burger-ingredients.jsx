@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./burger-ingredients.module.css";
-import { statesDataProps, dataProps } from "../../utils/propTypes";
+import { dataProps } from "../../utils/propTypes";
 import BurgerIngredientsNav from "../burger-ingredients-nav/burger-ingredients-nav";
 import BurgerIngredientsContent from "../burger-ingredients-content/burger-ingredients-content";
 import Modal from "../modal/modal";
@@ -31,7 +31,6 @@ function BurgerIngredients({ data }) {
 }
 
 BurgerIngredients.propTypes = {
-  statesData: statesDataProps,
   data: dataProps,
 };
 

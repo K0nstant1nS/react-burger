@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import styles from "./burger-ingredients-content.module.css";
 import SortedByType from "../sorted-by-type/sorted-by-type";
-import { statesDataProps, dataProps } from "../../utils/propTypes";
+import { dataProps } from "../../utils/propTypes";
 import PropTypes from "prop-types";
 
-function BurgerIngredientsContent({ data, statesData, setIngredientModal }) {
+function BurgerIngredientsContent({ data, setIngredientModal }) {
   const [bun, main, sauce] = ["bun", "main", "sauce"];
   const bunsData = useMemo(
     () =>
@@ -52,7 +52,6 @@ function BurgerIngredientsContent({ data, statesData, setIngredientModal }) {
 }
 
 BurgerIngredientsContent.propTypes = {
-  statesData: statesDataProps,
   data: dataProps,
   setIngredientModal: PropTypes.func.isRequired,
 };

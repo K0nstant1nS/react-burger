@@ -2,7 +2,6 @@ import React, { useMemo, useContext } from "react";
 import styles from "./scrollable-construct-container.module.css";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import { v4 as uuid } from "uuid";
-import { statesDataProps } from "../../utils/propTypes";
 import { ConstructorContext } from "../../context/constructor-context";
 
 function ScrollableConstructContainer() {
@@ -57,9 +56,5 @@ function ScrollableConstructContainer() {
     </>
   );
 }
-
-ScrollableConstructContainer.propTypes = {
-  statesData: statesDataProps,
-};
 
 export default ScrollableConstructContainer;

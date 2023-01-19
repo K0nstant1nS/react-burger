@@ -31,10 +31,7 @@ const initialState = {
 };
 
 function BurgerConstructor() {
-  const [orderModal, setOrderModal] = useState({
-    orderNumber: 0,
-    isOpened: false,
-  });
+  const [orderModal, setOrderModal] = useState();
   const { burgerCreation } = useContext(ConstructorContext);
   const [state, dispatch] = useReducer(sumReducer, initialState);
 
@@ -58,7 +55,7 @@ function BurgerConstructor() {
       burgerCreation.bun._id,
     ])
       .then((data) => {
-        setOrderModal({ isOpened: true, orderNumber: data.order.number });
+        setOrderModal(data.order.number);
       })
       .catch((err) => {
         console.log(err.message);
@@ -85,13 +82,13 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      {orderModal.isOpened && (
+      {orderModal && (
         <Modal
           closeModal={() => {
-            setOrderModal({ ...orderModal, isOpened: false });
+            setOrderModal(null);
           }}
         >
-          <OrderDetails orderNumber={orderModal.orderNumber} />
+          <OrderDetails orderNumber={orderModal} />
         </Modal>
       )}
     </section>

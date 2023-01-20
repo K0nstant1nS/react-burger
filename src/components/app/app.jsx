@@ -36,14 +36,14 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <div className={`mb-10 ${styles.main}`}>
+      <main className={`mb-10 ${styles.main}`}>
         <ConstructorContext.Provider value={constructorState}>
           <IngredientsContext.Provider value={data}>
             <BurgerIngredients />
           </IngredientsContext.Provider>
           <BurgerConstructor />
         </ConstructorContext.Provider>
-      </div>
+      </main>
     </div>
   );
 }

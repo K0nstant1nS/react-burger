@@ -15,10 +15,12 @@ function Modal({ children, closeModal }) {
   }
 
   useEffect(() => {
+    console.log("Mount");
     setTimeout(() => {
       document.addEventListener("keydown", escCloseHandler);
     }, 0);
     return () => {
+      console.log("Unmount");
       document.removeEventListener("keydown", escCloseHandler);
     };
   });

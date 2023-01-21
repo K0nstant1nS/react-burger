@@ -1,10 +1,4 @@
-import React, {
-  useMemo,
-  useState,
-  useContext,
-  useReducer,
-  useEffect,
-} from "react";
+import React, { useState, useContext, useReducer, useEffect } from "react";
 import styles from "./burger-constructor.module.css";
 import {
   Button,
@@ -13,61 +7,38 @@ import {
 import ScrollableConstructContainer from "../scrollable-construct-container/scrollable-construct-container";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { ConstructorContext } from "../../context/constructor-context";
 import Api from "../../API";
-
-const sumReducer = (state, action) => {
-  switch (action.type) {
-    case "SET_SUM":
-      return { sum: action.sum };
-
-    default:
-      return state;
-  }
-};
-
-const initialState = {
-  sum: 0,
-};
+import { useDispatch, useSelector } from "react-redux";
+import { MAKE_ORDER } from "../../services/actions/order-modal";
+import { makeOrder } from "../../services/actions/order-modal";
 
 function BurgerConstructor() {
-  const [orderModal, setOrderModal] = useState();
-  const { burgerCreation } = useContext(ConstructorContext);
-  const [state, dispatch] = useReducer(sumReducer, initialState);
+  const { constructorData, orderData } = useSelector((store) => store);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({
-      type: "SET_SUM",
-      sum:
-        burgerCreation.common.length > 0
-          ? burgerCreation.common.reduce((sum, element) => {
-              return (sum += element.price);
-            }, 0) +
-            burgerCreation.bun.price * 2
-          : burgerCreation.bun.price * 2,
-    });
-  }, [burgerCreation]);
-
-  function makeOrder() {
+  /*function makeOrder() {
     Api.makeOrder([
-      ...burgerCreation.common.map((item) => item._id.toString()),
-      burgerCreation.bun._id,
-      burgerCreation.bun._id,
+      ...constructorData.common.map((item) => item._id.toString()),
+      constructorData.bun._id,
+      constructorData.bun._id,
     ])
       .then((data) => {
-        setOrderModal(data.order.number);
+        dispatch({ type: MAKE_ORDER, order: data.order });
+        console.log(orderData);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  }*/
 
   return (
     <section className={`pt-25 ${styles.content}`}>
       <ScrollableConstructContainer />
       <div className={`pt-10 ${styles.order}`}>
         <div className={`pr-10 ${styles.cost}`}>
-          <span className="text text_type_digits-medium pr-3">{state.sum}</span>
+          <span className="text text_type_digits-medium pr-3">
+            {constructorData.sum}
+          </span>
           <div className={styles.icon}>
             <CurrencyIcon type="primary" />
           </div>
@@ -77,18 +48,26 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={makeOrder}
+          onClick={() => {
+            dispatch(
+              makeOrder([
+                ...constructorData.common.map((item) => item._id.toString()),
+                constructorData.bun._id,
+                constructorData.bun._id,
+              ])
+            );
+          }}
         >
           Оформить заказ
         </Button>
       </div>
-      {orderModal && (
+      {orderData && (
         <Modal
           closeModal={() => {
-            setOrderModal(null);
+            dispatch({ type: MAKE_ORDER, order: null });
           }}
         >
-          <OrderDetails orderNumber={orderModal} />
+          <OrderDetails orderNumber={orderData.number} />
         </Modal>
       )}
     </section>

@@ -6,8 +6,12 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Api from "../../API";
 import { ConstructorContext } from "../../context/constructor-context";
 import { IngredientsContext } from "../../context/ingredients-context";
+import { useSelector, useDispatch } from "react-redux";
+import { initData } from "../../services/actions/ingredients";
 
 function App() {
+  const ingredients = useSelector((store) => store);
+  const dispatch = useDispatch();
   const [burgerCreation, setBurgerCreation] = useState({
     bun: {
       price: 0,
@@ -29,6 +33,7 @@ function App() {
         const bun = data.data.filter((item) => item.type === "bun")[0];
         const common = data.data.filter((item) => item.type !== "bun");
         setBurgerCreation({ bun: bun, common: common });
+        dispatch(initData());
       })
       .catch((err) => console.log(err.message));
   }, []);

@@ -4,50 +4,22 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from "./app.module.css";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Api from "../../API";
-import { ConstructorContext } from "../../context/constructor-context";
-import { IngredientsContext } from "../../context/ingredients-context";
 import { useSelector, useDispatch } from "react-redux";
 import { initData } from "../../services/actions/ingredients";
 
 function App() {
-  const ingredients = useSelector((store) => store);
   const dispatch = useDispatch();
-  const [burgerCreation, setBurgerCreation] = useState({
-    bun: {
-      price: 0,
-      name: "default",
-      image: "default",
-    },
-    common: [],
-  });
-  const [data, setData] = useState([]);
-  const constructorState = {
-    burgerCreation,
-    setBurgerCreation,
-  };
 
   useEffect(() => {
-    Api.getIngredients()
-      .then((data) => {
-        setData(data.data);
-        const bun = data.data.filter((item) => item.type === "bun")[0];
-        const common = data.data.filter((item) => item.type !== "bun");
-        setBurgerCreation({ bun: bun, common: common });
-        dispatch(initData());
-      })
-      .catch((err) => console.log(err.message));
+    dispatch(initData());
   }, []);
 
   return (
     <div className="App">
       <AppHeader />
       <main className={`mb-10 ${styles.main}`}>
-        <ConstructorContext.Provider value={constructorState}>
-          <IngredientsContext.Provider value={data}>
-            <BurgerIngredients />
-          </IngredientsContext.Provider>
-          <BurgerConstructor />
-        </ConstructorContext.Provider>
+        <BurgerIngredients />
+        <BurgerConstructor />
       </main>
     </div>
   );

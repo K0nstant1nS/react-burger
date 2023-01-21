@@ -6,13 +6,13 @@ import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 
 const modalRoot = document.getElementById("modal-root");
-
 function Modal({ children, closeModal }) {
   function escCloseHandler(e) {
     if (e.key === "Escape") {
       closeModal();
     }
   }
+  console.log(modalRoot);
 
   useEffect(() => {
     console.log("Mount");
@@ -30,7 +30,9 @@ function Modal({ children, closeModal }) {
       {createPortal(
         <div className={styles.modal}>
           <ModalOverlay closeModal={closeModal} />
-          <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={styles.popup} /*onClick={(e) => e.stopPropagation()}*/
+          >
             {children}
             <div className={styles.close} onClick={closeModal}>
               <CloseIcon type="primary" />

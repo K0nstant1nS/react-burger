@@ -4,18 +4,14 @@ import styles from "./sorted-by-type.module.css";
 import PropTypes from "prop-types";
 import { dataProps } from "../../utils/propTypes";
 
-function SortedByType({ header, indents = "", data, setIngredientModal }) {
+function SortedByType({ header, indents = "", data }) {
   return (
     <div className={indents}>
       <h1 className="text text_type_main-medium">{header}</h1>
       <div className={`pl-4 pr-2 ${styles.content}`}>
         {data.map((ingredient) => {
           return (
-            <IngredientElement
-              key={ingredient._id}
-              ingredient={ingredient}
-              setIngredientModal={setIngredientModal}
-            />
+            <IngredientElement key={ingredient._id} ingredient={ingredient} />
           );
         })}
       </div>
@@ -27,7 +23,6 @@ SortedByType.propTypes = {
   header: PropTypes.string.isRequired,
   indents: PropTypes.string,
   data: dataProps,
-  setIngredientModal: PropTypes.func.isRequired,
 };
 
 export default SortedByType;

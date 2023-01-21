@@ -43,7 +43,7 @@ export const constructorReducer = (state = initialState, action) => {
           ...state.common.slice(0, action.index),
           ...state.common.slice(action.index + 1),
         ],
-        sum: state.sum - action.ingredient.price,
+        sum: state.sum - action.price,
       };
     }
     default:

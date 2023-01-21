@@ -7,7 +7,6 @@ import {
 import ScrollableConstructContainer from "../scrollable-construct-container/scrollable-construct-container";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import Api from "../../API";
 import { useDispatch, useSelector } from "react-redux";
 import { MAKE_ORDER } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
@@ -15,21 +14,6 @@ import { makeOrder } from "../../services/actions/order-modal";
 function BurgerConstructor() {
   const { constructorData, orderData } = useSelector((store) => store);
   const dispatch = useDispatch();
-
-  /*function makeOrder() {
-    Api.makeOrder([
-      ...constructorData.common.map((item) => item._id.toString()),
-      constructorData.bun._id,
-      constructorData.bun._id,
-    ])
-      .then((data) => {
-        dispatch({ type: MAKE_ORDER, order: data.order });
-        console.log(orderData);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }*/
 
   return (
     <section className={`pt-25 ${styles.content}`}>
@@ -67,7 +51,7 @@ function BurgerConstructor() {
             dispatch({ type: MAKE_ORDER, order: null });
           }}
         >
-          <OrderDetails orderNumber={orderData.number} />
+          <OrderDetails />
         </Modal>
       )}
     </section>

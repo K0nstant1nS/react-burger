@@ -4,7 +4,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 
-function OrderDetails({ orderNumber }) {
+function OrderDetails() {
+  const orderNumber = useSelector((store) => store.orderData.number);
   return (
     <>
       <h2 className={`text text_type_digits-large pt-30 ${styles.id}`}>
@@ -29,9 +30,5 @@ function OrderDetails({ orderNumber }) {
     </>
   );
 }
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
-};
 
 export default OrderDetails;

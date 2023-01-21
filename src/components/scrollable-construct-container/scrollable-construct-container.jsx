@@ -1,24 +1,14 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo } from "react";
 import styles from "./scrollable-construct-container.module.css";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import { v4 as uuid } from "uuid";
-import { ConstructorContext } from "../../context/constructor-context";
+import { useSelector } from "react-redux";
 
 function ScrollableConstructContainer() {
-  const { burgerCreation, setBurgerCreation } = useContext(ConstructorContext);
-
-  function deleteHandler(itemIndex) {
-    setBurgerCreation({
-      ...burgerCreation,
-      common: [
-        ...burgerCreation.common.slice(0, itemIndex),
-        ...burgerCreation.common.slice(itemIndex + 1),
-      ],
-    });
-  }
+  const { constructorData } = useSelector((store) => store);
 
   const burgerElementsArr = useMemo(() => {
-    return burgerCreation.common.map((burgerElement, index) => {
+    return constructorData.common.map((burgerElement, index) => {
       return (
         <ConstructorElementWrapper
           key={uuid()}
@@ -26,11 +16,10 @@ function ScrollableConstructContainer() {
           price={burgerElement.price}
           thumbnail={burgerElement.image}
           index={index}
-          handleClose={deleteHandler}
         />
       );
     });
-  }, [burgerCreation]);
+  }, [constructorData]);
 
   return (
     <>
@@ -38,9 +27,9 @@ function ScrollableConstructContainer() {
         indents="pb-4 pl-4"
         type="top"
         isLocked={true}
-        text={`${burgerCreation.bun.name}(верх)`}
-        price={burgerCreation.bun.price}
-        thumbnail={burgerCreation.bun.image}
+        text={`${constructorData.bun.name}(верх)`}
+        price={constructorData.bun.price}
+        thumbnail={constructorData.bun.image}
       />
       <div className={`pl-4 pr-2 ${styles.constructor}`}>
         {burgerElementsArr}
@@ -49,9 +38,9 @@ function ScrollableConstructContainer() {
         indents="pt-4 pl-4"
         type="bottom"
         isLocked={true}
-        text={`${burgerCreation.bun.name}(низ)`}
-        price={burgerCreation.bun.price}
-        thumbnail={burgerCreation.bun.image}
+        text={`${constructorData.bun.name}(низ)`}
+        price={constructorData.bun.price}
+        thumbnail={constructorData.bun.image}
       />
     </>
   );

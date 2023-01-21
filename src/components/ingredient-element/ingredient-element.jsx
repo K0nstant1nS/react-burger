@@ -2,35 +2,32 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useMemo, useContext } from "react";
+import React, { useMemo } from "react";
 import styles from "./ingredient-element.module.css";
 import { ingredientProps } from "../../utils/propTypes";
-import PropTypes from "prop-types";
-import { ConstructorContext } from "../../context/constructor-context";
+import { useSelector, useDispatch } from "react-redux";
+import { openIngredientModal } from "../../services/actions/ingredient-modal";
 
-function IngredientElement({ ingredient, setIngredientModal }) {
-  const { burgerCreation } = useContext(ConstructorContext);
+function IngredientElement({ ingredient }) {
+  const { constructorData } = useSelector((store) => store);
+  const dispatch = useDispatch();
 
   let counter = useMemo(() => {
-    if (ingredient._id === burgerCreation.bun._id) {
+    if (ingredient._id === constructorData.bun._id) {
       return 1;
     }
-    return burgerCreation.common.reduce((sum, item) => {
+    return constructorData.common.reduce((sum, item) => {
       if (item._id === ingredient._id) {
         return (sum += 1);
       }
       return sum;
     }, 0);
-  }, [burgerCreation]);
-
-  function openModal() {
-    setIngredientModal(ingredient);
-  }
+  }, [constructorData]);
 
   return (
     <article
       className={styles.element}
-      onClick={openModal} // () => addBurgerElement(ingredient) openModal
+      onClick={() => openIngredientModal(dispatch, ingredient)} // () => addBurgerElement(ingredient) openModal
     >
       <img src={ingredient.image} className="pb-2"></img>
       <div className={`pb-2 text text_type_digits-default ${styles.price}`}>
@@ -48,7 +45,6 @@ function IngredientElement({ ingredient, setIngredientModal }) {
 
 IngredientElement.propTypes = {
   ingredient: ingredientProps,
-  setIngredientModal: PropTypes.func.isRequired,
 };
 
 export default IngredientElement;

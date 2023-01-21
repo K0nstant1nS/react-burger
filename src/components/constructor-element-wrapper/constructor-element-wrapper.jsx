@@ -5,6 +5,8 @@ import {
 import styles from "./constructor-element-wrapper.module.css";
 import React from "react";
 import PropTypes from "prop-types";
+import { deleteHandler } from "../../services/actions/constructor";
+import { useDispatch } from "react-redux";
 
 function ConstructorElementWrapper({
   indents,
@@ -14,8 +16,8 @@ function ConstructorElementWrapper({
   thumbnail,
   price,
   index,
-  handleClose,
 }) {
+  const dispatch = useDispatch();
   return (
     <div className={`${indents} ${styles.wrapperElement}`}>
       {!isLocked && <DragIcon type="primary" />}
@@ -26,7 +28,7 @@ function ConstructorElementWrapper({
           text={text}
           thumbnail={thumbnail}
           price={price}
-          handleClose={() => handleClose(index)}
+          handleClose={() => deleteHandler(dispatch, { index, price })}
         />
       </div>
     </div>

@@ -12,7 +12,9 @@ function BurgerIngredientsNav() {
         <li>
           <Tab
             active={activeButtonNumber === activeButtonBuns}
-            onClick={() => setActiveButtonNumber(1)}
+            onClick={() => {
+              setActiveButtonNumber(1);
+            }}
           >
             Булки
           </Tab>

@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
+import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { ingredientsReducer } from "../reducers/ingredients";
 import { constructorReducer } from "../reducers/constructor";
@@ -12,4 +12,11 @@ const rootReducer = combineReducers({
   orderData: orderReducer,
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enchancer = composeEnhancers(applyMiddleware(thunk));
+
+export const store = createStore(rootReducer, enchancer);

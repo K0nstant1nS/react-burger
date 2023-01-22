@@ -8,7 +8,7 @@ import ScrollableConstructContainer from "../scrollable-construct-container/scro
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { MAKE_ORDER } from "../../services/actions/order-modal";
+import { MAKE_ORDER, CLOSE_MODAL } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
 
 function BurgerConstructor() {
@@ -45,10 +45,10 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      {orderData && (
+      {orderData.modalOpened && (
         <Modal
           closeModal={() => {
-            dispatch({ type: MAKE_ORDER, order: null });
+            dispatch({ type: CLOSE_MODAL });
           }}
         >
           <OrderDetails />

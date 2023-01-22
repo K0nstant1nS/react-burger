@@ -4,12 +4,14 @@ import { ingredientsReducer } from "../reducers/ingredients";
 import { constructorReducer } from "../reducers/constructor";
 import { ingredientDetailsReducer } from "../reducers/ingredient-modal";
 import { orderReducer } from "../reducers/order-modal";
+import { ingredientsScrollReducer } from "../reducers/ingredients-scroll";
 
 const rootReducer = combineReducers({
   ingredientDetails: ingredientDetailsReducer,
   ingredients: ingredientsReducer,
   constructorData: constructorReducer,
   orderData: orderReducer,
+  ingredientsScroll: ingredientsScrollReducer,
 });
 
 const composeEnhancers =

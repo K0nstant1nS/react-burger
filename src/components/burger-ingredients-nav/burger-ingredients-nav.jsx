@@ -1,19 +1,25 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./burger-ingredients-nav.module.css";
+import {
+  SCROLL_ON_BUN,
+  SCROLL_ON_SAUCE,
+  SCROLL_ON_MAIN,
+} from "../../services/actions/ingredients-scroll";
 
 function BurgerIngredientsNav() {
-  const [activeButtonNumber, setActiveButtonNumber] = useState(1);
-  const [activeButtonBuns, activeButtonSauces, activeButtonMains] = [1, 2, 3]; // Здесь я и выношу значения в константы, не понял замечания
+  const dispatch = useDispatch();
+  const { ingredientsScroll } = useSelector((store) => store);
 
   return (
     <nav>
       <ul className={`text text_type_main-default mt-5 ${styles.menuNav}`}>
         <li>
           <Tab
-            active={activeButtonNumber === activeButtonBuns}
+            active={ingredientsScroll.scrolledOn === "bun"}
             onClick={() => {
-              setActiveButtonNumber(1);
+              dispatch({ type: SCROLL_ON_BUN });
             }}
           >
             Булки
@@ -21,16 +27,16 @@ function BurgerIngredientsNav() {
         </li>
         <li>
           <Tab
-            active={activeButtonNumber === activeButtonSauces}
-            onClick={() => setActiveButtonNumber(2)}
+            active={ingredientsScroll.scrolledOn === "sauce"}
+            onClick={() => dispatch({ type: SCROLL_ON_SAUCE })}
           >
             Соусы
           </Tab>
         </li>
         <li>
           <Tab
-            active={activeButtonNumber === activeButtonMains}
-            onClick={() => setActiveButtonNumber(3)}
+            active={ingredientsScroll.scrolledOn === "main"}
+            onClick={() => dispatch({ type: SCROLL_ON_MAIN })}
           >
             Начинки
           </Tab>

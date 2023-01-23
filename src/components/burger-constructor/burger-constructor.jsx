@@ -10,13 +10,22 @@ import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { MAKE_ORDER, CLOSE_MODAL } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
+import { useDrop } from "react-dnd/dist/hooks";
+import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
 
 function BurgerConstructor() {
   const { constructorData, orderData } = useSelector((store) => store);
   const dispatch = useDispatch();
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      console.log(1);
+      dispatch({ type: ADD_CONSTRUCTOR_ELEMENT, ingredient: item });
+    },
+  });
 
   return (
-    <section className={`pt-25 ${styles.content}`}>
+    <section ref={dropTarget} className={`pt-25 ${styles.content}`}>
       <ScrollableConstructContainer />
       <div className={`pt-10 ${styles.order}`}>
         <div className={`pr-10 ${styles.cost}`}>

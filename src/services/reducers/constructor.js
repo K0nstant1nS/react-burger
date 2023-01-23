@@ -30,11 +30,19 @@ export const constructorReducer = (state = initialState, action) => {
       };
     }
     case ADD_CONSTRUCTOR_ELEMENT: {
-      return {
-        ...state,
-        common: [...state.common, action.ingredient],
-        sum: state.sum + action.ingredient.price,
-      };
+      if (action.ingredient.type === "bun") {
+        return {
+          ...state,
+          bun: action.ingredient,
+          sum: state.sum - state.bun.price * 2 + action.ingredient.price * 2,
+        };
+      } else {
+        return {
+          ...state,
+          common: [...state.common, action.ingredient],
+          sum: state.sum + action.ingredient.price,
+        };
+      }
     }
     case REMOVE_CONSTRUCTOR_ELEMENT: {
       return {

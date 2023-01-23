@@ -7,10 +7,15 @@ import styles from "./ingredient-element.module.css";
 import { ingredientProps } from "../../utils/propTypes";
 import { useSelector, useDispatch } from "react-redux";
 import { openIngredientModal } from "../../services/actions/ingredient-modal";
+import { useDrag } from "react-dnd";
 
 function IngredientElement({ ingredient }) {
   const { constructorData } = useSelector((store) => store);
   const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+  });
 
   let counter = useMemo(() => {
     if (ingredient._id === constructorData.bun._id) {
@@ -26,6 +31,7 @@ function IngredientElement({ ingredient }) {
 
   return (
     <article
+      ref={dragRef}
       className={styles.element}
       onClick={() => openIngredientModal(dispatch, ingredient)} // () => addBurgerElement(ingredient) openModal
     >

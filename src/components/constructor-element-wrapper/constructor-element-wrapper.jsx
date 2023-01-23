@@ -7,6 +7,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { deleteHandler } from "../../services/actions/constructor";
 import { useDispatch } from "react-redux";
+import { useDrag, useDrop } from "react-dnd/dist/hooks";
 
 function ConstructorElementWrapper({
   indents,
@@ -17,11 +18,21 @@ function ConstructorElementWrapper({
   price,
   index,
 }) {
+  const [, dragRef] = useDrag({
+    type: "constructor",
+    item: index,
+  });
+  const [, dropTarget] = useDrop({
+    accept: "constructor",
+    drop(item) {
+      dispatch();
+    },
+  });
   const dispatch = useDispatch();
   return (
-    <div className={`${indents} ${styles.wrapperElement}`}>
+    <div ref={dragRef} className={`${indents} ${styles.wrapperElement}`}>
       {!isLocked && <DragIcon type="primary" />}
-      <div className={`pl-2 ${styles.constructorElement}`}>
+      <div ref={dropTarget} className={`pl-2 ${styles.constructorElement}`}>
         <ConstructorElement
           type={type}
           isLocked={isLocked}

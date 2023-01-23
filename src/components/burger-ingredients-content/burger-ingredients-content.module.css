@@ -2,6 +2,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     max-height: 756px;
+    scroll-behavior: smooth;
 }
 
 .content::-webkit-scrollbar {

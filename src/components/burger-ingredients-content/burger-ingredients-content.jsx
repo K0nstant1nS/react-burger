@@ -1,12 +1,8 @@
 import React, { useMemo, useRef, useEffect } from "react";
-import {
-  SCROLL_ON_BUN,
-  SCROLL_ON_SAUCE,
-  SCROLL_ON_MAIN,
-} from "../../services/actions/ingredients-scroll";
 import styles from "./burger-ingredients-content.module.css";
 import SortedByType from "../sorted-by-type/sorted-by-type";
 import { useSelector, useDispatch } from "react-redux";
+import { handleScrollIniter } from "../../utils";
 
 function BurgerIngredientsContent() {
   const ref = useRef(null);
@@ -35,25 +31,20 @@ function BurgerIngredientsContent() {
     [ingredients]
   );
 
+  const scrollHandler = handleScrollIniter(ingredientsScroll, dispatch);
+
   useEffect(() => {
     if (ref) {
-      ref.current.addEventListener("scroll", (e) => {
-        if (
-          e.target.scrollTop >= 0 &&
-          e.target.scrollTop < ingredientsScroll.sauceY
-        ) {
-          dispatch({ type: SCROLL_ON_BUN });
-        } else if (
-          e.target.scrollTop > ingredientsScroll.sauceY &&
-          e.target.scrollTop < ingredientsScroll.mainY
-        ) {
-          dispatch({ type: SCROLL_ON_SAUCE });
-        } else {
-          dispatch({ type: SCROLL_ON_MAIN });
-        }
-      });
+      ref.current.addEventListener("scroll", scrollHandler);
     }
+    return () => {
+      ref.current.removeEventListener("scroll", scrollHandler);
+    };
   }, [ref, ingredients]);
+
+  useEffect(() => {
+    ref.current.scrollTo(0, ingredientsScroll.scrollTo + 1);
+  }, [ingredientsScroll.scrollTo]);
 
   return (
     <div ref={ref} className={styles.content}>

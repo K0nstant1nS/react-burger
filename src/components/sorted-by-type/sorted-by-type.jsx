@@ -8,7 +8,6 @@ import { SET_STARTS } from "../../services/actions/ingredients-scroll";
 
 function SortedByType({ type, header, indents = "", data }) {
   const dispatch = useDispatch();
-  const scrolledOn = useSelector((store) => store.ingredientsScroll.scrolledOn);
   const ref = useRef(null);
   useEffect(() => {
     if (ref) {

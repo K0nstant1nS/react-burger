@@ -2,6 +2,7 @@ import {
   SET_CONSTRUCTOR_DATA,
   ADD_CONSTRUCTOR_ELEMENT,
   REMOVE_CONSTRUCTOR_ELEMENT,
+  SWAP_IN_CONSTRUCTOR,
 } from "../actions/constructor";
 
 const initialState = {
@@ -18,6 +19,7 @@ export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CONSTRUCTOR_DATA: {
       return {
+        ...state,
         bun: action.bun,
         common: action.common,
         sum:
@@ -52,6 +54,19 @@ export const constructorReducer = (state = initialState, action) => {
           ...state.common.slice(action.index + 1),
         ],
         sum: state.sum - action.price,
+      };
+    }
+    case SWAP_IN_CONSTRUCTOR: {
+      const newArr = [
+        ...state.common.slice(0, action.dragIndex),
+        ...state.common.slice(action.dragIndex + 1),
+      ];
+      const targetElement = state.common[action.dragIndex];
+
+      newArr.splice(action.dropIndex, 0, targetElement);
+      return {
+        ...state,
+        common: newArr,
       };
     }
     default:

@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { deleteHandler } from "../../services/actions/constructor";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
+import { SWAP_IN_CONSTRUCTOR } from "../../services/actions/constructor";
 
 function ConstructorElementWrapper({
   indents,
@@ -18,31 +19,48 @@ function ConstructorElementWrapper({
   price,
   index,
 }) {
-  const [, dragRef] = useDrag({
+  const [{ isDrag }, dragRef] = useDrag({
     type: "constructor",
-    item: index,
+    item: { index },
+    collect: (monitor) => {
+      return {
+        isDrag: monitor.isDragging(),
+      };
+    },
   });
   const [, dropTarget] = useDrop({
     accept: "constructor",
     drop(item) {
-      dispatch();
+      dispatch({
+        type: SWAP_IN_CONSTRUCTOR,
+        dragIndex: item.index,
+        dropIndex: index,
+      });
     },
   });
   const dispatch = useDispatch();
+  const dragProp = {
+    ref: type ? null : dragRef,
+  };
+  const dropProp = {
+    ref: type ? null : dropTarget,
+  };
   return (
-    <div ref={dragRef} className={`${indents} ${styles.wrapperElement}`}>
-      {!isLocked && <DragIcon type="primary" />}
-      <div ref={dropTarget} className={`pl-2 ${styles.constructorElement}`}>
-        <ConstructorElement
-          type={type}
-          isLocked={isLocked}
-          text={text}
-          thumbnail={thumbnail}
-          price={price}
-          handleClose={() => deleteHandler(dispatch, { index, price })}
-        />
+    !isDrag && (
+      <div {...dropProp} className={`${indents} ${styles.wrapperElement}`}>
+        {!isLocked && <DragIcon type="primary" />}
+        <div {...dragProp} className={`pl-2 ${styles.constructorElement}`}>
+          <ConstructorElement
+            type={type}
+            isLocked={isLocked}
+            text={text}
+            thumbnail={thumbnail}
+            price={price}
+            handleClose={() => deleteHandler(dispatch, { index, price })}
+          />
+        </div>
       </div>
-    </div>
+    )
   );
 }
 

@@ -19,7 +19,6 @@ function BurgerConstructor() {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
-      console.log(1);
       dispatch({ type: ADD_CONSTRUCTOR_ELEMENT, ingredient: item });
     },
   });

@@ -11,24 +11,24 @@ function BurgerIngredientsContent() {
   const [bun, main, sauce] = ["bun", "main", "sauce"];
   const bunsData = useMemo(
     () =>
-      ingredients.filter((item) => {
+      ingredients.data.filter((item) => {
         return item.type === bun;
       }),
-    [ingredients]
+    [ingredients.data]
   );
   const mainsData = useMemo(
     () =>
-      ingredients.filter((item) => {
+      ingredients.data.filter((item) => {
         return item.type === main;
       }),
-    [ingredients]
+    [ingredients.data]
   );
   const saucesData = useMemo(
     () =>
-      ingredients.filter((item) => {
+      ingredients.data.filter((item) => {
         return item.type === sauce;
       }),
-    [ingredients]
+    [ingredients.data]
   );
 
   const scrollHandler = handleScrollIniter(ingredientsScroll, dispatch);

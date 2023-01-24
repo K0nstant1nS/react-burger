@@ -1,16 +1,31 @@
-import { SET_CONSTRUCTOR_DATA } from "./constructor";
+import {
+  GET_CONSTRUCTOR_DATA_SUCCESS,
+  GET_CONSTRUCTOR_DATA_ERROR,
+  GET_CONSTRUCTOR_DATA_REQUEST,
+} from "./constructor";
 import Api from "../../API";
-export const SET_INGREDIENTS_DATA = "GET_INGREDIENTS_DATA";
+export const GET_INGREDIENTS_DATA_SUCCES = "GET_INGREDIENTS_DATA_SUCCES";
+export const GET_INGREDIENTS_DATA_ERROR = "GET_INGREDIENTS_DATA_ERROR";
+export const GET_INGREDIENTS_DATA_REQUEST = "GET_INGREDIENTS_DATA_REQUEST";
 
 export function initData() {
   return (dispatch) => {
+    dispatch({ type: GET_CONSTRUCTOR_DATA_REQUEST });
+    dispatch({ type: GET_INGREDIENTS_DATA_REQUEST });
     Api.getIngredients()
       .then((data) => {
         const bun = data.data.filter((item) => item.type === "bun")[0];
         const common = data.data.filter((item) => item.type !== "bun");
-        dispatch({ type: SET_INGREDIENTS_DATA, data: data.data });
-        dispatch({ type: SET_CONSTRUCTOR_DATA, bun: bun, common: common });
+        dispatch({ type: GET_INGREDIENTS_DATA_SUCCES, data: data.data });
+        dispatch({
+          type: GET_CONSTRUCTOR_DATA_SUCCESS,
+          bun: bun,
+          common: common,
+        });
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        dispatch({ type: GET_INGREDIENTS_DATA_ERROR, err: err.message });
+        dispatch({ type: GET_CONSTRUCTOR_DATA_ERROR });
+      });
   };
 }

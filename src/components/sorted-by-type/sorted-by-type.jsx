@@ -19,7 +19,7 @@ function SortedByType({ type, header, indents = "", data }) {
           ref.current.parentNode.getBoundingClientRect().top,
       });
     }
-  }, [ref, data]);
+  }, [data]);
   return (
     <div ref={ref} className={indents}>
       <h1 className="text text_type_main-medium">{header}</h1>

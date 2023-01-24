@@ -1,4 +1,4 @@
-import { MAKE_ORDER, CLOSE_MODAL } from "../actions/order-modal";
+import { MAKE_ORDER, CLOSE_MODAL, ORDER_ERROR } from "../actions/order-modal";
 
 const initialState = {
   number: null,
@@ -9,6 +9,10 @@ export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case MAKE_ORDER: {
       return { number: action.number, modalOpened: true };
+    }
+    case ORDER_ERROR: {
+      console.log(action.err);
+      return state;
     }
     case CLOSE_MODAL: {
       return { ...state, modalOpened: false };

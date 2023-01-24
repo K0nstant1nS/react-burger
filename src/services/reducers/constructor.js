@@ -1,11 +1,14 @@
 import {
-  SET_CONSTRUCTOR_DATA,
+  GET_CONSTRUCTOR_DATA_SUCCESS,
+  GET_CONSTRUCTOR_DATA_ERROR,
+  GET_CONSTRUCTOR_DATA_REQUEST,
   ADD_CONSTRUCTOR_ELEMENT,
   REMOVE_CONSTRUCTOR_ELEMENT,
   SWAP_IN_CONSTRUCTOR,
 } from "../actions/constructor";
 
 const initialState = {
+  status: null,
   bun: {
     price: 0,
     name: "default",
@@ -17,9 +20,10 @@ const initialState = {
 
 export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CONSTRUCTOR_DATA: {
+    case GET_CONSTRUCTOR_DATA_SUCCESS: {
       return {
         ...state,
+        status: "success",
         bun: action.bun,
         common: action.common,
         sum:
@@ -30,6 +34,12 @@ export const constructorReducer = (state = initialState, action) => {
               action.bun.price * 2
             : action.bun.price * 2,
       };
+    }
+    case GET_CONSTRUCTOR_DATA_ERROR: {
+      return { ...state, status: "failed" };
+    }
+    case GET_CONSTRUCTOR_DATA_REQUEST: {
+      return { ...state, status: "loading" };
     }
     case ADD_CONSTRUCTOR_ELEMENT: {
       if (action.ingredient.type === "bun") {

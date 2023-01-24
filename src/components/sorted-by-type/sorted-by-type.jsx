@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import IngredientElement from "../ingredient-element/ingredient-element";
 import styles from "./sorted-by-type.module.css";
 import PropTypes from "prop-types";

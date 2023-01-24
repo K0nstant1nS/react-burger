@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./burger-ingredients.module.css";
 import BurgerIngredientsNav from "../burger-ingredients-nav/burger-ingredients-nav";
 import BurgerIngredientsContent from "../burger-ingredients-content/burger-ingredients-content";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useSelector, useDispatch } from "react-redux";
-import { closeIngredientModal } from "../../services/actions/ingredient-modal";
+import { closeIngredientModal } from "../../utils";
 
 function BurgerIngredients() {
   const { ingredientDetails } = useSelector((store) => store);

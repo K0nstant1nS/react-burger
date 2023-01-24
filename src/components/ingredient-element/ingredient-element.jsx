@@ -6,7 +6,7 @@ import React, { useMemo } from "react";
 import styles from "./ingredient-element.module.css";
 import { ingredientProps } from "../../utils/propTypes";
 import { useSelector, useDispatch } from "react-redux";
-import { openIngredientModal } from "../../services/actions/ingredient-modal";
+import { openIngredientModal } from "../../utils";
 import { useDrag } from "react-dnd";
 
 function IngredientElement({ ingredient }) {

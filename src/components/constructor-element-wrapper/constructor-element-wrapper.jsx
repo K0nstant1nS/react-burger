@@ -5,7 +5,7 @@ import {
 import styles from "./constructor-element-wrapper.module.css";
 import React from "react";
 import PropTypes from "prop-types";
-import { deleteHandler } from "../../services/actions/constructor";
+import { deleteHandler } from "../../utils";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { SWAP_IN_CONSTRUCTOR } from "../../services/actions/constructor";
@@ -45,22 +45,27 @@ function ConstructorElementWrapper({
   const dropProp = {
     ref: type ? null : dropTarget,
   };
+  const style = {
+    opacity: isDrag ? "0.5" : "1",
+  };
   return (
-    !isDrag && (
-      <div {...dropProp} className={`${indents} ${styles.wrapperElement}`}>
-        {!isLocked && <DragIcon type="primary" />}
-        <div {...dragProp} className={`pl-2 ${styles.constructorElement}`}>
-          <ConstructorElement
-            type={type}
-            isLocked={isLocked}
-            text={text}
-            thumbnail={thumbnail}
-            price={price}
-            handleClose={() => deleteHandler(dispatch, { index, price })}
-          />
-        </div>
+    /*!isDrag && */ <div
+      {...dropProp}
+      style={style}
+      className={`${indents} ${styles.wrapperElement}`}
+    >
+      {!isLocked && <DragIcon type="primary" />}
+      <div {...dragProp} className={`pl-2 ${styles.constructorElement}`}>
+        <ConstructorElement
+          type={type}
+          isLocked={isLocked}
+          text={text}
+          thumbnail={thumbnail}
+          price={price}
+          handleClose={() => deleteHandler(dispatch, { index, price })}
+        />
       </div>
-    )
+    </div>
   );
 }
 

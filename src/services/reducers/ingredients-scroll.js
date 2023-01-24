@@ -11,7 +11,7 @@ const initialState = {
   bunY: "",
   sauceY: "",
   mainY: "",
-  scrollTo: "",
+  scrollTo: { y: "" },
 };
 
 export function ingredientsScrollReducer(state = initialState, action) {
@@ -26,7 +26,7 @@ export function ingredientsScrollReducer(state = initialState, action) {
       return { ...state, scrolledOn: "main" };
     }
     case SCROLL_TO: {
-      return { ...state, scrollTo: action.scrollTo };
+      return { ...state, scrollTo: { y: action.scrollTo } };
     }
     case SET_STARTS: {
       return {

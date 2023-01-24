@@ -4,6 +4,13 @@ import {
   SCROLL_ON_MAIN,
 } from "../services/actions/ingredients-scroll";
 
+import {
+  SET_INGREDIENT_DETAILS,
+  REMOVE_INGREDIENT_DETAILS,
+} from "../services/actions/ingredient-modal";
+
+import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
+
 export const handleScrollIniter = (target, dispatch) => {
   return (e) => {
     if (e.target.scrollTop < (target.sauceY + target.bunY) / 2) {
@@ -18,3 +25,19 @@ export const handleScrollIniter = (target, dispatch) => {
     }
   };
 };
+
+export function openIngredientModal(dispatch, ingredient) {
+  dispatch({ type: SET_INGREDIENT_DETAILS, ingredient });
+}
+
+export function closeIngredientModal(dispatch) {
+  dispatch({ type: REMOVE_INGREDIENT_DETAILS });
+}
+
+export function deleteHandler(dispatch, { index, price }) {
+  dispatch({
+    type: REMOVE_CONSTRUCTOR_ELEMENT,
+    index,
+    price,
+  });
+}

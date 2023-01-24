@@ -43,7 +43,7 @@ function BurgerIngredientsContent() {
   }, [ref, ingredients]);
 
   useEffect(() => {
-    ref.current.scrollTo(0, ingredientsScroll.scrollTo + 1);
+    ref.current.scrollTo(0, ingredientsScroll.scrollTo.y + 1);
   }, [ingredientsScroll.scrollTo]);
 
   return (

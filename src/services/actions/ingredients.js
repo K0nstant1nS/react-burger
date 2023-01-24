@@ -4,7 +4,7 @@ import {
   GET_CONSTRUCTOR_DATA_REQUEST,
 } from "./constructor";
 import Api from "../../API";
-export const GET_INGREDIENTS_DATA_SUCCES = "GET_INGREDIENTS_DATA_SUCCES";
+export const GET_INGREDIENTS_DATA_SUCCESS = "GET_INGREDIENTS_DATA_SUCCES";
 export const GET_INGREDIENTS_DATA_ERROR = "GET_INGREDIENTS_DATA_ERROR";
 export const GET_INGREDIENTS_DATA_REQUEST = "GET_INGREDIENTS_DATA_REQUEST";
 
@@ -16,7 +16,7 @@ export function initData() {
       .then((data) => {
         const bun = data.data.filter((item) => item.type === "bun")[0];
         const common = data.data.filter((item) => item.type !== "bun");
-        dispatch({ type: GET_INGREDIENTS_DATA_SUCCES, data: data.data });
+        dispatch({ type: GET_INGREDIENTS_DATA_SUCCESS, data: data.data });
         dispatch({
           type: GET_CONSTRUCTOR_DATA_SUCCESS,
           bun: bun,

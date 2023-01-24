@@ -16,6 +16,7 @@ function ScrollableConstructContainer() {
           price={burgerElement.price}
           thumbnail={burgerElement.image}
           index={index}
+          indents="pt-4"
         />
       );
     });
@@ -24,7 +25,7 @@ function ScrollableConstructContainer() {
   return (
     <>
       <ConstructorElementWrapper
-        indents="pb-4 pl-4"
+        indents="pl-4"
         type="top"
         isLocked={true}
         text={`${constructorData.bun.name}(верх)`}

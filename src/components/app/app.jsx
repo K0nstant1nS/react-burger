@@ -3,13 +3,35 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from "./app.module.css";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { initData } from "../../services/actions/ingredients";
 import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import Loader from "../loader/loader";
+import ErrorReport from "../error-report/error-report";
 
 function App() {
   const dispatch = useDispatch();
+  const { status } = useSelector((store) => store.ingredients);
+
+  function rednderer(status) {
+    switch (status) {
+      case "loading": {
+        return <Loader />;
+      }
+      case "success": {
+        return (
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
+        );
+      }
+      case "failed": {
+        return <ErrorReport />;
+      }
+    }
+  }
 
   useEffect(() => {
     dispatch(initData());
@@ -18,11 +40,10 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <main className={`mb-10 ${styles.main}`}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
+      <main
+        className={status === "success" ? `mb-10 ${styles.main}` : styles.main}
+      >
+        {rednderer(status)}
       </main>
     </div>
   );

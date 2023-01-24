@@ -8,7 +8,7 @@ import {
 } from "../actions/constructor";
 
 const initialState = {
-  status: null,
+  status: "loading",
   bun: {
     price: 0,
     name: "default",

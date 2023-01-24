@@ -5,7 +5,7 @@ import {
 } from "../actions/ingredients";
 
 const initialState = {
-  status: null,
+  status: "loading",
   data: [],
 };
 

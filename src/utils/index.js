@@ -45,3 +45,5 @@ export function deleteHandler(dispatch, { index, price }) {
 export const getStore = (store) => store;
 
 export const getIngredients = (store) => store.ingredients;
+
+export const getOrderNumber = (store) => store.orderData.number;

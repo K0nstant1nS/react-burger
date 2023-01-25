@@ -1,11 +1,16 @@
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 import React from "react";
 import styles from "./order-details.module.css";
+import { getOrderNumber } from "../../utils";
 
 function OrderDetails() {
+  const orderNumber = useSelector(getOrderNumber);
   return (
     <>
-      <h2 className={`text text_type_digits-large pt-30 ${styles.id}`}>123</h2>
+      <h2 className={`text text_type_digits-large pt-30 ${styles.id}`}>
+        {orderNumber}
+      </h2>
       <span className={`text text_type_main-medium pt-8 ${styles.idCapt}`}>
         идентификатор заказа
       </span>

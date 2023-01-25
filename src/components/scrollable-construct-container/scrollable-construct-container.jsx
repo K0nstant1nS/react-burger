@@ -2,20 +2,14 @@ import React, { useMemo } from "react";
 import styles from "./scrollable-construct-container.module.css";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import { v4 as uuid } from "uuid";
-import { statesDataProps } from "../../utils/propTypes";
+import { useSelector } from "react-redux";
+import { getStore } from "../../utils";
 
-function ScrollableConstructContainer({ statesData }) {
-  const { burgerCreation, setBurgerCreation, burgerBun } = { ...statesData };
-
-  function deleteHandler(itemIndex) {
-    setBurgerCreation([
-      ...burgerCreation.slice(0, itemIndex),
-      ...burgerCreation.slice(itemIndex + 1),
-    ]);
-  }
+function ScrollableConstructContainer() {
+  const { constructorData } = useSelector(getStore);
 
   const burgerElementsArr = useMemo(() => {
-    return burgerCreation.map((burgerElement, index) => {
+    return constructorData.common.map((burgerElement, index) => {
       return (
         <ConstructorElementWrapper
           key={uuid()}
@@ -23,21 +17,21 @@ function ScrollableConstructContainer({ statesData }) {
           price={burgerElement.price}
           thumbnail={burgerElement.image}
           index={index}
-          handleClose={deleteHandler}
+          indents="pt-4"
         />
       );
     });
-  }, [burgerCreation]);
+  }, [constructorData]);
 
   return (
     <>
       <ConstructorElementWrapper
-        indents="pb-4 pl-4"
+        indents="pl-4"
         type="top"
         isLocked={true}
-        text={burgerBun.name}
-        price={burgerBun.price}
-        thumbnail={burgerBun.image}
+        text={`${constructorData.bun.name}(верх)`}
+        price={constructorData.bun.price}
+        thumbnail={constructorData.bun.image}
       />
       <div className={`pl-4 pr-2 ${styles.constructor}`}>
         {burgerElementsArr}
@@ -46,16 +40,12 @@ function ScrollableConstructContainer({ statesData }) {
         indents="pt-4 pl-4"
         type="bottom"
         isLocked={true}
-        text={burgerBun.name}
-        price={burgerBun.price}
-        thumbnail={burgerBun.image}
+        text={`${constructorData.bun.name}(низ)`}
+        price={constructorData.bun.price}
+        thumbnail={constructorData.bun.image}
       />
     </>
   );
 }
-
-ScrollableConstructContainer.propTypes = {
-  statesData: statesDataProps,
-};
 
 export default ScrollableConstructContainer;

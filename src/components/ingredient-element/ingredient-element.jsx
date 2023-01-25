@@ -4,42 +4,36 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useMemo } from "react";
 import styles from "./ingredient-element.module.css";
-import { ingredientProps, statesDataProps } from "../../utils/propTypes";
-import PropTypes from "prop-types";
+import { ingredientProps } from "../../utils/propTypes";
+import { useSelector, useDispatch } from "react-redux";
+import { getStore, openIngredientModal } from "../../utils";
+import { useDrag } from "react-dnd";
 
-function IngredientElement({ ingredient, statesData, setIngredientModal }) {
-  const { burgerCreation, setBurgerCreation, burgerBun, setBurgerBun } = {
-    ...statesData,
-  };
+function IngredientElement({ ingredient }) {
+  const { constructorData } = useSelector(getStore);
+  const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+  });
 
-  let counter = useMemo(() => {
-    if (ingredient._id === burgerBun._id) {
+  const counter = useMemo(() => {
+    if (ingredient._id === constructorData.bun._id) {
       return 1;
     }
-    return burgerCreation.reduce((sum, item) => {
+    return constructorData.common.reduce((sum, item) => {
       if (item._id === ingredient._id) {
         return (sum += 1);
       }
       return sum;
     }, 0);
-  }, [burgerCreation, burgerBun]);
-
-  function addBurgerElement(elementData) {
-    if (elementData.type === "bun") {
-      setBurgerBun(elementData);
-    } else {
-      setBurgerCreation([...burgerCreation, elementData]);
-    }
-  }
-
-  function openModal() {
-    setIngredientModal(ingredient);
-  }
+  }, [constructorData]);
 
   return (
     <article
+      ref={dragRef}
       className={styles.element}
-      onClick={openModal} // () => addBurgerElement(ingredient) openModal
+      onClick={() => openIngredientModal(dispatch, ingredient)} // () => addBurgerElement(ingredient) openModal
     >
       <img src={ingredient.image} className="pb-2"></img>
       <div className={`pb-2 text text_type_digits-default ${styles.price}`}>
@@ -57,8 +51,6 @@ function IngredientElement({ ingredient, statesData, setIngredientModal }) {
 
 IngredientElement.propTypes = {
   ingredient: ingredientProps,
-  statesData: statesDataProps,
-  setIngredientModal: PropTypes.func.isRequired,
 };
 
 export default IngredientElement;

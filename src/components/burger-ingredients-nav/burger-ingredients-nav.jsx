@@ -1,34 +1,46 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./burger-ingredients-nav.module.css";
+import { SCROLL_TO } from "../../services/actions/ingredients-scroll";
+import { getStore } from "../../utils";
 
 function BurgerIngredientsNav() {
-  const [activeButtonNumber, setActiveButtonNumber] = useState(1);
-  const [activeButtonBuns, activeButtonSauces, activeButtonMains] = [1, 2, 3]; // Здесь я и выношу значения в константы, не понял замечания
+  const dispatch = useDispatch();
+  const { ingredientsScroll } = useSelector(getStore);
 
   return (
     <nav>
       <ul className={`text text_type_main-default mt-5 ${styles.menuNav}`}>
         <li>
           <Tab
-            active={activeButtonNumber === activeButtonBuns}
-            onClick={() => setActiveButtonNumber(1)}
+            active={ingredientsScroll.scrolledOn === "bun"}
+            onClick={() => {
+              dispatch({ type: SCROLL_TO, scrollTo: ingredientsScroll.bunY });
+            }}
           >
             Булки
           </Tab>
         </li>
         <li>
           <Tab
-            active={activeButtonNumber === activeButtonSauces}
-            onClick={() => setActiveButtonNumber(2)}
+            active={ingredientsScroll.scrolledOn === "sauce"}
+            onClick={() => {
+              dispatch({ type: SCROLL_TO, scrollTo: ingredientsScroll.sauceY });
+            }}
           >
             Соусы
           </Tab>
         </li>
         <li>
           <Tab
-            active={activeButtonNumber === activeButtonMains}
-            onClick={() => setActiveButtonNumber(3)}
+            active={ingredientsScroll.scrolledOn === "main"}
+            onClick={() => {
+              dispatch({
+                type: SCROLL_TO,
+                scrollTo: ingredientsScroll.mainY,
+              });
+            }}
           >
             Начинки
           </Tab>

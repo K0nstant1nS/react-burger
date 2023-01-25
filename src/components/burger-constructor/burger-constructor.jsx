@@ -1,54 +1,63 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import styles from "./burger-constructor.module.css";
 import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { statesDataProps } from "../../utils/propTypes";
 import ScrollableConstructContainer from "../scrollable-construct-container/scrollable-construct-container";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { useDispatch, useSelector } from "react-redux";
+import { MAKE_ORDER, CLOSE_MODAL } from "../../services/actions/order-modal";
+import { makeOrder } from "../../services/actions/order-modal";
+import { useDrop } from "react-dnd/dist/hooks";
+import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
+import { getStore } from "../../utils";
 
-function BurgerConstructor({ statesData }) {
-  const [orderModal, setOrderModal] = useState(null);
-
-  const sum = useMemo(() => {
-    return statesData.burgerCreation.length > 0
-      ? statesData.burgerCreation.reduce((sum, element) => {
-          return (sum += element.price);
-        }, 0) +
-          statesData.burgerBun.price * 2
-      : statesData.burgerBun.price * 2;
-  }, [statesData.burgerCreation, statesData.burgerBun]);
-
-  function openOrderPopup() {
-    setOrderModal(true);
-  }
+function BurgerConstructor() {
+  const { constructorData, orderData } = useSelector(getStore);
+  const dispatch = useDispatch();
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      dispatch({ type: ADD_CONSTRUCTOR_ELEMENT, ingredient: item });
+    },
+  });
 
   return (
-    <section className={`pt-25 ${styles.content}`}>
-      <ScrollableConstructContainer statesData={statesData} />
+    <section ref={dropTarget} className={`pt-25 ${styles.content}`}>
+      <ScrollableConstructContainer />
       <div className={`pt-10 ${styles.order}`}>
         <div className={`pr-10 ${styles.cost}`}>
-          <span className="text text_type_digits-medium pr-3">{sum}</span>
+          <span className="text text_type_digits-medium pr-3">
+            {constructorData.sum}
+          </span>
           <div className={styles.icon}>
             <CurrencyIcon type="primary" />
           </div>
         </div>
         <Button
-          disabled={false} //!statesData.burgerBun.type
+          disabled={false}
           htmlType="button"
           type="primary"
           size="large"
-          onClick={openOrderPopup}
+          onClick={() => {
+            dispatch(
+              makeOrder([
+                ...constructorData.common.map((item) => item._id.toString()),
+                constructorData.bun._id,
+                constructorData.bun._id,
+              ])
+            );
+          }}
         >
           Оформить заказ
         </Button>
       </div>
-      {orderModal && (
+      {orderData.modalOpened && (
         <Modal
           closeModal={() => {
-            setOrderModal(false);
+            dispatch({ type: CLOSE_MODAL });
           }}
         >
           <OrderDetails />
@@ -57,9 +66,5 @@ function BurgerConstructor({ statesData }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  statesData: statesDataProps,
-};
 
 export default BurgerConstructor;

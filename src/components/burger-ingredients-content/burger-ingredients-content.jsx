@@ -1,63 +1,68 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
 import styles from "./burger-ingredients-content.module.css";
 import SortedByType from "../sorted-by-type/sorted-by-type";
-import { statesDataProps, dataProps } from "../../utils/propTypes";
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { getStore, handleScrollIniter } from "../../utils";
 
-function BurgerIngredientsContent({ data, statesData, setIngredientModal }) {
+function BurgerIngredientsContent() {
+  const ref = useRef(null);
+  const dispatch = useDispatch();
+  const { ingredients, ingredientsScroll } = useSelector(getStore);
   const [bun, main, sauce] = ["bun", "main", "sauce"];
   const bunsData = useMemo(
     () =>
-      data.filter((item) => {
+      ingredients.data.filter((item) => {
         return item.type === bun;
       }),
-    [data]
+    [ingredients.data]
   );
   const mainsData = useMemo(
     () =>
-      data.filter((item) => {
+      ingredients.data.filter((item) => {
         return item.type === main;
       }),
-    [data]
+    [ingredients.data]
   );
   const saucesData = useMemo(
     () =>
-      data.filter((item) => {
+      ingredients.data.filter((item) => {
         return item.type === sauce;
       }),
-    [data]
+    [ingredients.data]
   );
 
+  const scrollHandler = handleScrollIniter(ingredientsScroll, dispatch);
+
+  useEffect(() => {
+    if (ref) {
+      ref.current.addEventListener("scroll", scrollHandler);
+    }
+    return () => {
+      ref.current.removeEventListener("scroll", scrollHandler);
+    };
+  }, [ref, ingredients]);
+
+  useEffect(() => {
+    ref.current.scrollTo(0, ingredientsScroll.scrollTo.y + 1);
+  }, [ingredientsScroll.scrollTo]);
+
   return (
-    <div className={styles.content}>
+    <div ref={ref} className={styles.content}>
       <SortedByType
-        statesData={statesData}
         indents="mt-10 mb-10"
         data={bunsData}
+        type="bun"
         header="Булки"
-        setIngredientModal={setIngredientModal}
       />
       <SortedByType
-        statesData={statesData}
         indents="mb-10"
         data={saucesData}
+        type="sauce"
         header="Соусы"
-        setIngredientModal={setIngredientModal}
       />
-      <SortedByType
-        statesData={statesData}
-        data={mainsData}
-        header="Начинки"
-        setIngredientModal={setIngredientModal}
-      />
+      <SortedByType data={mainsData} type="main" header="Начинки" />
     </div>
   );
 }
-
-BurgerIngredientsContent.propTypes = {
-  statesData: statesDataProps,
-  data: dataProps,
-  setIngredientModal: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredientsContent;

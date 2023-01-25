@@ -1,43 +1,49 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import { ingredientProps } from "../../utils/propTypes";
+import { useSelector } from "react-redux";
+import { getStore } from "../../utils";
 
-function IngredientDetails({ data }) {
+function IngredientDetails() {
+  const { ingredientDetails } = useSelector(getStore);
   return (
     <>
       <div className={`pl-10 pt-10 ${styles.detailsWrapper}`}>
         <h2 className="text text_type_main-large">Детали ингредиента</h2>
       </div>
-      <img alt={data.name} src={data.image_large} />
-      <p className={`text text_type_main-medium pt-4`}>{data.name}</p>
+      <img alt={ingredientDetails.name} src={ingredientDetails.image_large} />
+      <p className={`text text_type_main-medium pt-4`}>
+        {ingredientDetails.name}
+      </p>
       <ul
         className={`pt-8 pb-15 text text_type_main-default text_color_inactive ${styles.table}`}
       >
         <li>
           <p>Калории,ккал</p>
-          <p className="text text_type_digits-default pt-2">{data.calories}</p>
+          <p className="text text_type_digits-default pt-2">
+            {ingredientDetails.calories}
+          </p>
         </li>
         <li>
           <p>Белки, г</p>
-          <p className="text text_type_digits-default pt-2">{data.proteins}</p>
+          <p className="text text_type_digits-default pt-2">
+            {ingredientDetails.proteins}
+          </p>
         </li>
         <li>
           <p>Жиры, г</p>
-          <p className="text text_type_digits-default pt-2">{data.fat}</p>
+          <p className="text text_type_digits-default pt-2">
+            {ingredientDetails.fat}
+          </p>
         </li>
         <li>
           <p>Углеводы, г</p>
           <p className="text text_type_digits-default pt-2">
-            {data.carbohydrates}
+            {ingredientDetails.carbohydrates}
           </p>
         </li>
       </ul>
     </>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: ingredientProps,
-};
 
 export default IngredientDetails;

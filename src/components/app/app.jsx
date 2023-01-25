@@ -9,10 +9,11 @@ import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Loader from "../loader/loader";
 import ErrorReport from "../error-report/error-report";
+import { getIngredients } from "../../utils";
 
 function App() {
   const dispatch = useDispatch();
-  const { status } = useSelector((store) => store.ingredients);
+  const { status } = useSelector(getIngredients);
 
   function rednderer(status) {
     switch (status) {

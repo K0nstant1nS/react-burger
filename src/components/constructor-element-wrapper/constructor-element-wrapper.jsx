@@ -49,21 +49,19 @@ function ConstructorElementWrapper({
     opacity: isDrag ? "0.5" : "1",
   };
   return (
-    /*!isDrag && */ <div
-      {...dropProp}
-      style={style}
-      className={`${indents} ${styles.wrapperElement}`}
-    >
-      {!isLocked && <DragIcon type="primary" />}
-      <div {...dragProp} className={`pl-2 ${styles.constructorElement}`}>
-        <ConstructorElement
-          type={type}
-          isLocked={isLocked}
-          text={text}
-          thumbnail={thumbnail}
-          price={price}
-          handleClose={() => deleteHandler(dispatch, { index, price })}
-        />
+    <div {...dropProp} style={style} className={indents}>
+      <div className={styles.wrapperElement} {...dragProp}>
+        {!isLocked && <DragIcon type="primary" />}
+        <div className={`pl-2 ${styles.constructorElement}`}>
+          <ConstructorElement
+            type={type}
+            isLocked={isLocked}
+            text={text}
+            thumbnail={thumbnail}
+            price={price}
+            handleClose={() => deleteHandler(dispatch, { index, price })}
+          />
+        </div>
       </div>
     </div>
   );

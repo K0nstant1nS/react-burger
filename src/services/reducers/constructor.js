@@ -36,7 +36,7 @@ export const constructorReducer = (state = initialState, action) => {
       };
     }
     case GET_CONSTRUCTOR_DATA_ERROR: {
-      return { ...state, status: "failed" };
+      return { ...initialState, status: "failed" };
     }
     case GET_CONSTRUCTOR_DATA_REQUEST: {
       return { ...state, status: "loading" };

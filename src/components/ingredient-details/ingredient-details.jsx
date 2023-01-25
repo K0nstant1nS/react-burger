@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
+import { getStore } from "../../utils";
 
 function IngredientDetails() {
-  const { ingredientDetails } = useSelector((store) => store);
+  const { ingredientDetails } = useSelector(getStore);
   return (
     <>
       <div className={`pl-10 pt-10 ${styles.detailsWrapper}`}>

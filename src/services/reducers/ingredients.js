@@ -16,7 +16,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_INGREDIENTS_DATA_ERROR: {
       console.log(action.err);
-      return { ...state, status: "failed" };
+      return { ...initialState, status: "failed" };
     }
     case GET_INGREDIENTS_DATA_REQUEST: {
       return { ...state, status: "loading" };

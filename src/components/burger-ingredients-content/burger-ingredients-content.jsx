@@ -2,12 +2,12 @@ import React, { useMemo, useRef, useEffect } from "react";
 import styles from "./burger-ingredients-content.module.css";
 import SortedByType from "../sorted-by-type/sorted-by-type";
 import { useSelector, useDispatch } from "react-redux";
-import { handleScrollIniter } from "../../utils";
+import { getStore, handleScrollIniter } from "../../utils";
 
 function BurgerIngredientsContent() {
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const { ingredients, ingredientsScroll } = useSelector((store) => store);
+  const { ingredients, ingredientsScroll } = useSelector(getStore);
   const [bun, main, sauce] = ["bun", "main", "sauce"];
   const bunsData = useMemo(
     () =>

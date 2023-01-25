@@ -12,9 +12,10 @@ import { MAKE_ORDER, CLOSE_MODAL } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
 import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
+import { getStore } from "../../utils";
 
 function BurgerConstructor() {
-  const { constructorData, orderData } = useSelector((store) => store);
+  const { constructorData, orderData } = useSelector(getStore);
   const dispatch = useDispatch();
   const [, dropTarget] = useDrop({
     accept: "ingredient",

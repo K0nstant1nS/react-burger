@@ -41,3 +41,7 @@ export function deleteHandler(dispatch, { index, price }) {
     price,
   });
 }
+
+export const getStore = (store) => store;
+
+export const getIngredients = (store) => store.ingredients;

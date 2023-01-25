@@ -5,10 +5,10 @@ import BurgerIngredientsContent from "../burger-ingredients-content/burger-ingre
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useSelector, useDispatch } from "react-redux";
-import { closeIngredientModal } from "../../utils";
+import { closeIngredientModal, getStore } from "../../utils";
 
 function BurgerIngredients() {
-  const { ingredientDetails } = useSelector((store) => store);
+  const { ingredientDetails } = useSelector(getStore);
   const dispatch = useDispatch();
 
   return (

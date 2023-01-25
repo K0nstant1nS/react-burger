@@ -12,7 +12,7 @@ export const orderReducer = (state = initialState, action) => {
     }
     case ORDER_ERROR: {
       console.log(action.err);
-      return state;
+      return initialState;
     }
     case CLOSE_MODAL: {
       return { ...state, modalOpened: false };

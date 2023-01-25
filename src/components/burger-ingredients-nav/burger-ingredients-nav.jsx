@@ -3,10 +3,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./burger-ingredients-nav.module.css";
 import { SCROLL_TO } from "../../services/actions/ingredients-scroll";
+import { getStore } from "../../utils";
 
 function BurgerIngredientsNav() {
   const dispatch = useDispatch();
-  const { ingredientsScroll } = useSelector((store) => store);
+  const { ingredientsScroll } = useSelector(getStore);
 
   return (
     <nav>

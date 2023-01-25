@@ -3,9 +3,10 @@ import styles from "./scrollable-construct-container.module.css";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
+import { getStore } from "../../utils";
 
 function ScrollableConstructContainer() {
-  const { constructorData } = useSelector((store) => store);
+  const { constructorData } = useSelector(getStore);
 
   const burgerElementsArr = useMemo(() => {
     return constructorData.common.map((burgerElement, index) => {

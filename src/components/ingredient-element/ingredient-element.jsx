@@ -6,18 +6,18 @@ import React, { useMemo } from "react";
 import styles from "./ingredient-element.module.css";
 import { ingredientProps } from "../../utils/propTypes";
 import { useSelector, useDispatch } from "react-redux";
-import { openIngredientModal } from "../../utils";
+import { getStore, openIngredientModal } from "../../utils";
 import { useDrag } from "react-dnd";
 
 function IngredientElement({ ingredient }) {
-  const { constructorData } = useSelector((store) => store);
+  const { constructorData } = useSelector(getStore);
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
   });
 
-  let counter = useMemo(() => {
+  const counter = useMemo(() => {
     if (ingredient._id === constructorData.bun._id) {
       return 1;
     }

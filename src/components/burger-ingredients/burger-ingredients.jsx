@@ -6,6 +6,7 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useSelector, useDispatch } from "react-redux";
 import { closeIngredientModal, getStore } from "../../utils";
+import { ingredientDetailsActions } from "../../services/reducers/ingredient-modal";
 
 function BurgerIngredients() {
   const { ingredientDetails } = useSelector(getStore);
@@ -17,7 +18,14 @@ function BurgerIngredients() {
       <BurgerIngredientsNav />
       <BurgerIngredientsContent />
       {ingredientDetails && (
-        <Modal closeModal={() => closeIngredientModal(dispatch)}>
+        <Modal
+          closeModal={() =>
+            closeIngredientModal(
+              dispatch,
+              ingredientDetailsActions.removeIngredientDetails
+            )
+          }
+        >
           <IngredientDetails />
         </Modal>
       )}

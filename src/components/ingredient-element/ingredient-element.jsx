@@ -8,6 +8,7 @@ import { ingredientProps } from "../../utils/propTypes";
 import { useSelector, useDispatch } from "react-redux";
 import { getStore, openIngredientModal } from "../../utils";
 import { useDrag } from "react-dnd";
+import { ingredientDetailsActions } from "../../services/reducers/ingredient-modal";
 
 function IngredientElement({ ingredient }) {
   const { constructorData } = useSelector(getStore);
@@ -16,6 +17,7 @@ function IngredientElement({ ingredient }) {
     type: "ingredient",
     item: ingredient,
   });
+  const actions = ingredientDetailsActions;
 
   const counter = useMemo(() => {
     if (ingredient._id === constructorData.bun._id) {
@@ -33,7 +35,13 @@ function IngredientElement({ ingredient }) {
     <article
       ref={dragRef}
       className={styles.element}
-      onClick={() => openIngredientModal(dispatch, ingredient)} // () => addBurgerElement(ingredient) openModal
+      onClick={() =>
+        /*dispatch(actions.setIngredientDetails(ingredient))*/ openIngredientModal(
+          dispatch,
+          actions.setIngredientDetails,
+          ingredient
+        )
+      } // () => addBurgerElement(ingredient) openModal
     >
       <img src={ingredient.image} className="pb-2"></img>
       <div className={`pb-2 text text_type_digits-default ${styles.price}`}>

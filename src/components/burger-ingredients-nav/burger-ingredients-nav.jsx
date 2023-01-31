@@ -2,8 +2,8 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./burger-ingredients-nav.module.css";
-import { SCROLL_TO } from "../../services/actions/ingredients-scroll";
 import { getStore } from "../../utils";
+import { ingredientsScrollActions } from "../../services/reducers/ingredients-scroll";
 
 function BurgerIngredientsNav() {
   const dispatch = useDispatch();
@@ -16,7 +16,9 @@ function BurgerIngredientsNav() {
           <Tab
             active={ingredientsScroll.scrolledOn === "bun"}
             onClick={() => {
-              dispatch({ type: SCROLL_TO, scrollTo: ingredientsScroll.bunY });
+              dispatch(
+                ingredientsScrollActions.scrollTo(ingredientsScroll.bunY)
+              );
             }}
           >
             Булки
@@ -26,7 +28,9 @@ function BurgerIngredientsNav() {
           <Tab
             active={ingredientsScroll.scrolledOn === "sauce"}
             onClick={() => {
-              dispatch({ type: SCROLL_TO, scrollTo: ingredientsScroll.sauceY });
+              dispatch(
+                ingredientsScrollActions.scrollTo(ingredientsScroll.sauceY)
+              );
             }}
           >
             Соусы
@@ -36,10 +40,9 @@ function BurgerIngredientsNav() {
           <Tab
             active={ingredientsScroll.scrolledOn === "main"}
             onClick={() => {
-              dispatch({
-                type: SCROLL_TO,
-                scrollTo: ingredientsScroll.mainY,
-              });
+              dispatch(
+                ingredientsScrollActions.scrollTo(ingredientsScroll.mainY)
+              );
             }}
           >
             Начинки

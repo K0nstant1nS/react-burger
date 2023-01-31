@@ -1,45 +1,31 @@
-import {
-  SCROLL_ON_BUN,
-  SCROLL_ON_SAUCE,
-  SCROLL_ON_MAIN,
-} from "../services/actions/ingredients-scroll";
-
-import {
-  SET_INGREDIENT_DETAILS,
-  REMOVE_INGREDIENT_DETAILS,
-} from "../services/actions/ingredient-modal";
-
-import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
+import { ingredientsScrollActions } from "../services/reducers/ingredients-scroll";
+import { constructorActions } from "../services/reducers/constructor";
 
 export const handleScrollIniter = (target, dispatch) => {
   return (e) => {
     if (e.target.scrollTop < (target.sauceY + target.bunY) / 2) {
-      dispatch({ type: SCROLL_ON_BUN });
+      dispatch(ingredientsScrollActions.scrollOnBun());
     } else if (
       e.target.scrollTop >= (target.sauceY + target.bunY) / 2 &&
       e.target.scrollTop < (target.mainY + target.sauceY) / 2
     ) {
-      dispatch({ type: SCROLL_ON_SAUCE });
+      dispatch(ingredientsScrollActions.scrollOnSauce());
     } else {
-      dispatch({ type: SCROLL_ON_MAIN });
+      dispatch(ingredientsScrollActions.scrollOnMain());
     }
   };
 };
 
-export function openIngredientModal(dispatch, ingredient) {
-  dispatch({ type: SET_INGREDIENT_DETAILS, ingredient });
+export function openIngredientModal(dispatch, action, ingredient) {
+  dispatch(action(ingredient));
 }
 
-export function closeIngredientModal(dispatch) {
-  dispatch({ type: REMOVE_INGREDIENT_DETAILS });
+export function closeIngredientModal(dispatch, action) {
+  dispatch(action());
 }
 
 export function deleteHandler(dispatch, { index, price }) {
-  dispatch({
-    type: REMOVE_CONSTRUCTOR_ELEMENT,
-    index,
-    price,
-  });
+  dispatch(constructorActions.removeElement({ index, price }));
 }
 
 export const getStore = (store) => store;

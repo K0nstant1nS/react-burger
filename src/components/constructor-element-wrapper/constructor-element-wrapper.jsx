@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { deleteHandler } from "../../utils";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
-import { SWAP_IN_CONSTRUCTOR } from "../../services/actions/constructor";
+import { constructorActions } from "../../services/reducers/constructor";
 
 function ConstructorElementWrapper({
   indents,
@@ -28,18 +28,17 @@ function ConstructorElementWrapper({
       };
     },
   });
+  /*
   const [, dropTarget] = useDrop({
     accept: "constructor",
     drop(item) {
-      dispatch({
-        type: SWAP_IN_CONSTRUCTOR,
-        dragIndex: item.index,
-        dropIndex: index,
-      });
+      dispatch(
+        constructorActions.swap({ dragIndex: item.index, dropIndex: index })
+      );
     },
-  });
+  }); */
   const dispatch = useDispatch();
-  const dragProp = {
+  /*const dragProp = {
     ref: type ? null : dragRef,
   };
   const dropProp = {
@@ -47,10 +46,10 @@ function ConstructorElementWrapper({
   };
   const style = {
     opacity: isDrag ? "0.5" : "1",
-  };
+  };*/
   return (
-    <div {...dropProp} style={style} className={indents}>
-      <div className={styles.wrapperElement} {...dragProp}>
+    <div /*{...dropProp}*/ /*style={style}*/ className={indents}>
+      <div className={styles.wrapperElement} /*{...dragProp}*/>
         {!isLocked && <DragIcon type="primary" />}
         <div className={`pl-2 ${styles.constructorElement}`}>
           <ConstructorElement

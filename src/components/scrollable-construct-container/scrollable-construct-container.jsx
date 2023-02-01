@@ -1,9 +1,12 @@
 import React, { useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { constructorActions } from "../../services/reducers/constructor";
 import styles from "./scrollable-construct-container.module.css";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import { getStore } from "../../utils";
+import { useDrop } from "react-dnd";
 
 function ScrollableConstructContainer() {
   const { constructorData } = useSelector(getStore);

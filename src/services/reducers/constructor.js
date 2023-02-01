@@ -8,6 +8,11 @@ const initialState = {
     image: "default",
   },
   common: [],
+  beforeDrag: [],
+  dragItem: null,
+  dragIndex: null,
+  overItem: {},
+  overIndex: null,
   sum: 0,
 };
 
@@ -27,6 +32,7 @@ const constructor = createSlice({
             }, 0) +
             action.payload.bun.price * 2
           : action.payload.bun.price * 2,
+      beforeDrag: action.payload.common,
     }),
     getDataError: (state, action) => ({ ...initialState, status: "failed" }),
     getDataRequest: (state, action) => ({ ...state, status: "loading" }),
@@ -57,7 +63,7 @@ const constructor = createSlice({
       sum: state.sum - action.payload.price,
     }),
     swap: (state, action) => {
-      const newArr = [
+      /*const newArr = [
         ...state.common.slice(0, action.payload.dragIndex),
         ...state.common.slice(action.payload.dragIndex + 1),
       ];
@@ -67,6 +73,39 @@ const constructor = createSlice({
       return {
         ...state,
         common: newArr,
+      };*/
+      const newArr = state.common.map((item, index) => {
+        if (index === state.dragIndex) {
+          return state.overItem;
+        }
+        if (index === state.overIndex) {
+          return state.dragItem;
+        }
+        return item;
+      });
+      console.log(newArr);
+
+      return {
+        ...state,
+        common: newArr,
+        dragItem: null,
+        dragIndex: null,
+        overItem: {},
+        overIndex: null,
+      };
+    },
+    setDragItem: (state, action) => {
+      return {
+        ...state,
+        dragItem: state.common[action.payload],
+        dragIndex: action.payload,
+      };
+    },
+    setOverItem: (state, action) => {
+      return {
+        ...state,
+        overItem: state.common[action.payload],
+        overIndex: action.payload,
       };
     },
   },

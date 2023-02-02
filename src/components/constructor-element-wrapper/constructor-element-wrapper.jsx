@@ -19,6 +19,10 @@ function ConstructorElementWrapper({
   price,
   index,
 }) {
+  const { constructorData } = useSelector((store) => store);
+  const { dragIndex, overIndex } = useSelector(
+    (store) => store.constructorData
+  );
   const [{ isDrag }, dragRef] = useDrag({
     type: "constructor",
     item: { index },
@@ -37,6 +41,9 @@ function ConstructorElementWrapper({
         didDrop: monitor.didDrop(),
       };
     },
+    drop(item) {
+      dispatch(constructorActions.swap());
+    },
   });
 
   useEffect(() => {
@@ -46,14 +53,8 @@ function ConstructorElementWrapper({
   }, [isDrag]);
 
   useEffect(() => {
-    if (didDrop) {
-      dispatch(constructorActions.swap());
-    }
-  }, [didDrop]);
-
-  useEffect(() => {
-    if (isOver) {
-      dispatch(constructorActions.onOver(index));
+    if (isOver && overIndex !== index) {
+      dispatch(constructorActions.setOverItem(index));
     }
   }, [isOver]);
 
@@ -74,14 +75,36 @@ function ConstructorElementWrapper({
       <div className={styles.wrapperElement} {...dragProp}>
         {!isLocked && <DragIcon type="primary" />}
         <div className={`pl-2 ${styles.constructorElement}`}>
-          <ConstructorElement
-            type={type}
-            isLocked={isLocked}
-            text={text}
-            thumbnail={thumbnail}
-            price={price}
-            handleClose={() => deleteHandler(dispatch, { index, price })}
-          />
+          {index === dragIndex && (
+            <ConstructorElement
+              type={type}
+              isLocked={isLocked}
+              text={constructorData.common[overIndex].name}
+              thumbnail={constructorData.common[overIndex].image}
+              price={constructorData.common[overIndex].price}
+              handleClose={() => deleteHandler(dispatch, { index, price })}
+            />
+          )}
+          {index !== dragIndex && isOver && (
+            <ConstructorElement
+              type={type}
+              isLocked={isLocked}
+              text={constructorData.common[dragIndex].name}
+              thumbnail={constructorData.common[dragIndex].image}
+              price={constructorData.common[dragIndex].price}
+              handleClose={() => deleteHandler(dispatch, { index, price })}
+            />
+          )}
+          {index !== dragIndex && !isOver && (
+            <ConstructorElement
+              type={type}
+              isLocked={isLocked}
+              text={text}
+              thumbnail={thumbnail}
+              price={price}
+              handleClose={() => deleteHandler(dispatch, { index, price })}
+            />
+          )}
         </div>
       </div>
     </div>

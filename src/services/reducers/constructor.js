@@ -63,42 +63,18 @@ const constructor = createSlice({
       sum: state.sum - action.payload.price,
     }),
     swap: (state, action) => {
-      /*const newArr = [
-        ...state.common.slice(0, action.payload.dragIndex),
-        ...state.common.slice(action.payload.dragIndex + 1),
-      ];
-      const targetElement = state.common[action.payload.dragIndex];
-
-      newArr.splice(action.payload.dropIndex, 0, targetElement);
       return {
         ...state,
-        common: newArr,
-      };*/
-      const newArr = state.common.map((item, index) => {
-        if (index === state.dragIndex) {
-          return state.overItem;
-        }
-        if (index === state.overIndex) {
-          return state.dragItem;
-        }
-        return item;
-      });
-      console.log(newArr);
-
-      return {
-        ...state,
-        common: newArr,
-        dragItem: null,
         dragIndex: null,
-        overItem: {},
-        overIndex: null,
+        beforeDrag: state.common,
       };
     },
-    setDragItem: (state, action) => {
+    /*setDragItem: (state, action) => {
       return {
         ...state,
         dragItem: state.common[action.payload],
         dragIndex: action.payload,
+        beforeDrag: state.common,
       };
     },
     setOverItem: (state, action) => {
@@ -106,6 +82,24 @@ const constructor = createSlice({
         ...state,
         overItem: state.common[action.payload],
         overIndex: action.payload,
+      };
+    },*/
+    onOver: (state, action) => {
+      const newArr = [
+        ...state.beforeDrag.slice(0, state.dragIndex),
+        ...state.beforeDrag.slice(state.dragIndex + 1),
+      ];
+
+      newArr.splice(action.payload, 0, state.beforeDrag[state.dragIndex]);
+      return {
+        ...state,
+        common: newArr,
+      };
+    },
+    onDragStart: (state, action) => {
+      return {
+        ...state,
+        dragIndex: action.payload,
       };
     },
   },

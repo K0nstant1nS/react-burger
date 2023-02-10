@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { constructorActions } from "../../services/reducers/constructor";
 import styles from "./scrollable-construct-container.module.css";
@@ -10,6 +10,12 @@ import { useDrop } from "react-dnd";
 
 function ScrollableConstructContainer() {
   const { constructorData } = useSelector(getStore);
+  const [cords, setCords] = useState(null);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    setCords(window.pageYOffset + ref.current.getBoundingClientRect().top);
+  }, []);
 
   const burgerElementsArr = useMemo(() => {
     return constructorData.common.map((burgerElement, index) => {
@@ -36,7 +42,7 @@ function ScrollableConstructContainer() {
         price={constructorData.bun.price}
         thumbnail={constructorData.bun.image}
       />
-      <div className={`pl-4 pr-2 ${styles.constructor}`}>
+      <div ref={ref} className={`pl-4 pr-2 ${styles.constructor}`}>
         {burgerElementsArr}
       </div>
       <ConstructorElementWrapper

@@ -1,10 +1,9 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
-import Api from "../../API";
-import { useAuth } from "../../services/auth";
+import { signUp } from "../../services/actions/auth";
 
 function RegisterPage() {
-  const onSubmit = useAuth().signUp;
+  const onSubmit = signUp;
 
   const formSettings = {
     title: "Регистрация",

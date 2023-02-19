@@ -1,8 +1,11 @@
 import React from "react";
 import styles from "./profile.module.css";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 
 function ProfilePage() {
+  const { auth } = useSelector((store) => store);
+  console.log(auth);
   return (
     <main className={`${styles.main} pt-30`}>
       <div className={`${styles.buttons} pr-15`}>

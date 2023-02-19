@@ -1,8 +1,10 @@
 import checkResponse from "../utils/checkResponse";
+import { getCookie } from "../utils";
 
 const dataBaseAddres = "https://norma.nomoreparties.space/api";
 const authAddres = "https://norma.nomoreparties.space/api/auth/login";
 const regAddres = "https://norma.nomoreparties.space/api/auth/register";
+const getUserAddres = "https://norma.nomoreparties.space/api/auth/user";
 const logoutAddres = "https://norma.nomoreparties.space/api/auth/logout";
 const tokenAddres = "https://norma.nomoreparties.space/api/auth/token";
 
@@ -44,6 +46,16 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    }).then((res) => checkResponse(res));
+  }
+
+  static async getUserRequest() {
+    return await fetch(getUserAddres, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${getCookie("accessToken")}`,
+      },
     }).then((res) => checkResponse(res));
   }
 }

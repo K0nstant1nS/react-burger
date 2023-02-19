@@ -1,9 +1,12 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
-import { useAuth } from "../../services/auth";
+import { signIn } from "../../services/actions/auth";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 function LoginPage() {
-  const onSubmit = useAuth().signIn;
+  const { user } = useSelector((store) => store.auth);
+  const onSubmit = signIn;
   const formSettings = {
     title: "Вход",
     email: {
@@ -28,6 +31,7 @@ function LoginPage() {
       linkTo: "/forgot-password",
     },
   ];
+
   return (
     <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />
   );

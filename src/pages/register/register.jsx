@@ -1,7 +1,11 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
+import Api from "../../API";
+import { useAuth } from "../../services/auth";
 
 function RegisterPage() {
+  const onSubmit = useAuth().signUp;
+
   const formSettings = {
     title: "Регистрация",
     name: {
@@ -22,7 +26,9 @@ function RegisterPage() {
     { text: "Уже зарегистрированы?", linkText: "Войти", linkTo: "/login" },
   ];
 
-  return <FormPage formSettings={formSettings} footer={footer} />;
+  return (
+    <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />
+  );
 }
 
 export default RegisterPage;

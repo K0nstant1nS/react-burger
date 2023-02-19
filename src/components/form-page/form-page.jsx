@@ -4,10 +4,10 @@ import Form from "../form/form";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 
-function FormPage({ formSettings, footer }) {
+function FormPage({ formSettings, footer, onSubmit }) {
   return (
     <main className={styles.formContainer}>
-      <Form formSettings={formSettings} />
+      <Form formSettings={formSettings} onSubmit={onSubmit} />
       {footer && (
         <div className={`pt-20 ${styles.linksContainer}`}>
           {footer.map((item) => {

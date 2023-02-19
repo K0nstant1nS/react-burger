@@ -1,7 +1,9 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
+import { useAuth } from "../../services/auth";
 
 function LoginPage() {
+  const onSubmit = useAuth().signIn;
   const formSettings = {
     title: "Вход",
     email: {
@@ -16,7 +18,7 @@ function LoginPage() {
   };
   const footer = [
     {
-      text: "Вы — новый пользователь?",
+      text: "Вы — новый пользователь?",
       linkText: "Зарегистрироваться",
       linkTo: "/register",
     },
@@ -26,7 +28,9 @@ function LoginPage() {
       linkTo: "/forgot-password",
     },
   ];
-  return <FormPage formSettings={formSettings} footer={footer} />;
+  return (
+    <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />
+  );
 }
 
 export default LoginPage;

@@ -2,9 +2,14 @@ import React from "react";
 import styles from "./form-page.module.css";
 import Form from "../form/form";
 import { v4 as uuid } from "uuid";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../../services/auth";
 
 function FormPage({ formSettings, footer, onSubmit }) {
+  const { user } = useAuth();
+  if (user) {
+    return <Navigate to="/profile" />;
+  }
   return (
     <main className={styles.formContainer}>
       <Form formSettings={formSettings} onSubmit={onSubmit} />

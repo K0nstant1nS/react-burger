@@ -1,7 +1,17 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
+import Api from "../../API";
+import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function ResetPasswordPage() {
+  const navigate = useNavigate();
+  const onSubmit = (form) => {
+    Api.confirmPasswordResetRequest(form).then((data) => {
+      if (data.success) {
+        navigate("/login");
+      }
+    });
+  };
   const formSettings = {
     title: "Вход",
     password: {
@@ -21,7 +31,9 @@ function LoginPage() {
       linkTo: "/login",
     },
   ];
-  return <FormPage formSettings={formSettings} footer={footer} />;
+  return (
+    <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />
+  );
 }
 
-export default LoginPage;
+export default ResetPasswordPage;

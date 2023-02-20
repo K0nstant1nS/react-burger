@@ -6,24 +6,33 @@ import {
   BurgerIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useLocation } from "react-router-dom";
 
-function HeaderButton({ iconType, text, indents, isActive, onClick }) {
+function HeaderButton({ iconType, text, indents, to }) {
+  const location = useLocation();
+  console.log(location);
+
   const icons = {
     ListIcon: ListIcon,
     BurgerIcon: BurgerIcon,
     ProfileIcon: ProfileIcon,
   };
 
-  const className = isActive
-    ? indents + " " + styles.button + " " + styles.button_active
-    : indents + " " + styles.button;
+  const className =
+    location.pathname === to
+      ? indents + " " + styles.button + " " + styles.button_active
+      : indents + " " + styles.button;
 
   const Icon = icons[iconType];
   return (
-    <a href="#" className={className} onClick={onClick}>
-      {isActive ? <Icon type="primary" /> : <Icon type="secondary" />}
+    <Link className={className} to={to}>
+      {location.pathname === to ? (
+        <Icon type="primary" />
+      ) : (
+        <Icon type="secondary" />
+      )}
       <span className={`pl-2 text text_type_main-default`}>{text}</span>
-    </a>
+    </Link>
   );
 }
 
@@ -31,8 +40,7 @@ HeaderButton.propTypes = {
   iconType: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   indents: PropTypes.string,
-  isActive: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 export default HeaderButton;

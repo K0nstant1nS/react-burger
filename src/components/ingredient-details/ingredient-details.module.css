@@ -1,7 +1,13 @@
-.detailsWrapper{
+.detailsWrapperModal{
     display: flex;
     align-items: center;
     align-self: flex-start;
+    height: 64px;
+}
+
+.detailsWrapper{
+    display: flex;
+    align-items: center;
     height: 64px;
 }
 

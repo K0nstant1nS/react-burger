@@ -8,10 +8,16 @@ import { ingredientProps } from "../../utils/propTypes";
 import { useSelector, useDispatch } from "react-redux";
 import { getStore, openIngredientModal } from "../../utils";
 import { useDrag } from "react-dnd";
+import { useNavigate } from "react-router-dom";
 
 function IngredientElement({ ingredient }) {
-  const { constructorData } = useSelector(getStore);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { constructorData } = useSelector(getStore);
+  const onClick = () => {
+    openIngredientModal(dispatch);
+    navigate(`/ingredients/${ingredient._id}`);
+  };
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
@@ -33,7 +39,7 @@ function IngredientElement({ ingredient }) {
     <article
       ref={dragRef}
       className={styles.element}
-      onClick={() => openIngredientModal(dispatch, ingredient)} // () => addBurgerElement(ingredient) openModal
+      onClick={onClick} // () => addBurgerElement(ingredient) openModal
     >
       <img src={ingredient.image} className="pb-2"></img>
       <div className={`pb-2 text text_type_digits-default ${styles.price}`}>

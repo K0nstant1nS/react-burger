@@ -1,12 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import FormPage from "../../components/form-page/form-page";
-import { signIn } from "../../services/actions/auth";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useAuth } from "../../services/auth";
 
 function LoginPage() {
-  const { user } = useSelector((store) => store.auth);
-  const onSubmit = signIn;
+  const navigate = useNavigate();
+  const { signIn, user } = useAuth();
+  const onSubmit = async (form) => {
+    await signIn(form);
+    if (user) {
+      navigate("/profile");
+    }
+  };
   const formSettings = {
     title: "Вход",
     email: {

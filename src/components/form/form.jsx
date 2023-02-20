@@ -7,11 +7,9 @@ import {
 import styles from "./form.module.css";
 import { v4 as uuid } from "uuid";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 function Form({ formSettings, onSubmit }) {
   const [formData, setFormData] = useState({});
-  const dispatch = useDispatch();
 
   const onChange = (e) => {
     console.log(formData);
@@ -20,7 +18,7 @@ function Form({ formSettings, onSubmit }) {
 
   function submitHandler(e) {
     e.preventDefault();
-    dispatch(onSubmit(formData));
+    onSubmit(formData);
   }
   return (
     <>
@@ -56,6 +54,7 @@ function Form({ formSettings, onSubmit }) {
             placeholder={formSettings.code.placeholder}
             value={formData.code}
             onChange={onChange}
+            data-type={"token"}
           />
         )}
         <Button onClick={submitHandler} size="medium" htmlType="submit">

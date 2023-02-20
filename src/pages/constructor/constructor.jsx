@@ -11,12 +11,7 @@ import { getIngredients } from "../../utils";
 import { initData } from "../../services/actions/ingredients";
 
 function ConstructorPage() {
-  const dispatch = useDispatch();
   const { status } = useSelector(getIngredients);
-
-  useEffect(() => {
-    dispatch(initData());
-  }, []);
 
   function rednderer(status) {
     switch (status) {

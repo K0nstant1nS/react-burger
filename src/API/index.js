@@ -2,11 +2,13 @@ import checkResponse from "../utils/checkResponse";
 import { getCookie } from "../utils";
 
 const dataBaseAddres = "https://norma.nomoreparties.space/api";
-const authAddres = "https://norma.nomoreparties.space/api/auth/login";
-const regAddres = "https://norma.nomoreparties.space/api/auth/register";
-const getUserAddres = "https://norma.nomoreparties.space/api/auth/user";
-const logoutAddres = "https://norma.nomoreparties.space/api/auth/logout";
-const tokenAddres = "https://norma.nomoreparties.space/api/auth/token";
+const authAddres = "/auth/login";
+const regAddres = "/auth/register";
+const getUserAddres = "/auth/user";
+const resetPasswordAddres = "/password-reset";
+const confirmPasswordResetAddres = "/password-reset/reset";
+const logoutAddres = "/auth/logout";
+const tokenAddres = "/auth/token";
 
 export default class Api {
   static async request(additionalAddres, options = {}) {
@@ -30,32 +32,52 @@ export default class Api {
   }
 
   static async registerUser(data) {
-    return await fetch(regAddres, {
+    return await this.request(regAddres, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => checkResponse(res));
+    });
   }
 
   static async loginRequest(data) {
-    return await fetch(authAddres, {
+    return this.request(authAddres, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => checkResponse(res));
+    });
   }
 
   static async getUserRequest() {
-    return await fetch(getUserAddres, {
+    return await this.request(getUserAddres, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${getCookie("accessToken")}`,
       },
-    }).then((res) => checkResponse(res));
+    });
+  }
+
+  static async resetPasswordRequest(form) {
+    return await this.request(resetPasswordAddres, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+  }
+
+  static async confirmPasswordResetRequest(form) {
+    return await this.request(confirmPasswordResetAddres, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
   }
 }

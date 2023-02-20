@@ -13,8 +13,25 @@ import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
 import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
 import { getStore } from "../../utils";
+import { useAuth } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const onSubmit = () => {
+    if (user) {
+      dispatch(
+        makeOrder([
+          ...constructorData.common.map((item) => item._id.toString()),
+          constructorData.bun._id,
+          constructorData.bun._id,
+        ])
+      );
+    } else {
+      navigate("/login");
+    }
+  };
   const { constructorData, orderData } = useSelector(getStore);
   const dispatch = useDispatch();
   const [, dropTarget] = useDrop({
@@ -41,15 +58,7 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => {
-            dispatch(
-              makeOrder([
-                ...constructorData.common.map((item) => item._id.toString()),
-                constructorData.bun._id,
-                constructorData.bun._id,
-              ])
-            );
-          }}
+          onClick={onSubmit}
         >
           Оформить заказ
         </Button>

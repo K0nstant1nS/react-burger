@@ -34,13 +34,15 @@ function BurgerIngredientsContent() {
   const scrollHandler = handleScrollIniter(ingredientsScroll, dispatch);
 
   useEffect(() => {
-    if (ref) {
+    if (ref.current) {
       ref.current.addEventListener("scroll", scrollHandler);
     }
     return () => {
-      ref.current.removeEventListener("scroll", scrollHandler);
+      if (ref.current) {
+        ref.current.removeEventListener("scroll", scrollHandler);
+      }
     };
-  }, [ref, ingredients]);
+  }, [ingredients]);
 
   useEffect(() => {
     ref.current.scrollTo(0, ingredientsScroll.scrollTo.y + 1);

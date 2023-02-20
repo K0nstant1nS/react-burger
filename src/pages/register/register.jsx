@@ -1,9 +1,17 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
-import { signUp } from "../../services/actions/auth";
+import { useAuth } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
-  const onSubmit = signUp;
+  const navigate = useNavigate();
+  const { signUp, user } = useAuth();
+  const onSubmit = (form) => {
+    signUp(form);
+    if (user) {
+      navigate("/profile");
+    }
+  };
 
   const formSettings = {
     title: "Регистрация",

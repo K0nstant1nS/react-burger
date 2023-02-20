@@ -1,16 +1,16 @@
 import {
-  SET_INGREDIENT_DETAILS,
-  REMOVE_INGREDIENT_DETAILS,
+  SET_INGREDIENT_MODAL,
+  REMOVE_INGREDIENT_MODAL,
 } from "../actions/ingredient-modal";
-const initialState = null;
+const initialState = { modal: false };
 
-export const ingredientDetailsReducer = (state = initialState, action) => {
+export const ingredientModalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_INGREDIENT_DETAILS: {
-      return { ...action.ingredient };
+    case SET_INGREDIENT_MODAL: {
+      return { modal: true };
     }
-    case REMOVE_INGREDIENT_DETAILS: {
-      return null;
+    case REMOVE_INGREDIENT_MODAL: {
+      return { modal: false };
     }
     default:
       return state;

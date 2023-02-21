@@ -1,13 +1,15 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
-import { useAuth } from "../../services/auth";
+import { signUp } from "../../services/actions/user";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function RegisterPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { signUp, user } = useAuth();
+  const { user } = useSelector((store) => store.user);
   const onSubmit = (form) => {
-    signUp(form);
+    dispatch(signUp(form));
     if (user) {
       navigate("/profile");
     }

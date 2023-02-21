@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../services/auth";
+import { getUser } from "../services/actions/user";
 
 function ProtectedRouteElement({ element }) {
-  const { user, setUser, getUser } = useAuth();
-  const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch();
+  const { user, onLoad } = useSelector((store) => store.user);
 
-  const init = async () => {
-    const status = await getUser();
-    setLoaded(status);
+  const init = () => {
+    dispatch(getUser());
   };
 
   useEffect(() => {
     if (!user) {
       init();
-    } else {
-      setLoaded(true);
     }
   }, []);
 
-  if (!loaded) {
+  if (onLoad) {
     return null;
   }
-  console.log(user);
 
   return user ? element : <Navigate to="/login" />;
 }

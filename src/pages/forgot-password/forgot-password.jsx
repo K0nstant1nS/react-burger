@@ -1,19 +1,19 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
 import styles from "./forgot-password.module.css";
-import Api from "../../API";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changePassword } from "../../services/actions/user";
 
 function ForgotPasswordPage() {
+  const { changingPassword } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmit = (form) => {
-    Api.resetPasswordRequest(form).then((data) => {
-      if (data.success) {
-        navigate("/reset-password");
-      } else {
-        console.log("Произошла ошибка");
-      }
-    });
+    dispatch(changePassword(form));
+    if (changePassword) {
+      navigate("/reset-password");
+    }
   };
   const formSettings = {
     title: "Восстановление пароля",

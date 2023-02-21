@@ -4,25 +4,52 @@ import {
   EmailInput,
   Input,
   PasswordInput,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useLocation } from "react-router-dom";
-import { useAuth } from "../../services/auth";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  logout,
+  patchUser,
+  START_CHANGING,
+  STOP_CHANGING,
+} from "../../services/actions/user";
 
 function ProfilePage() {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { user } = useAuth();
+  const { user, onChange } = useSelector((store) => store.user);
   const [userState, setUserState] = useState(null);
+
+  const onLogout = () => {
+    dispatch(logout());
+  };
 
   useEffect(() => {
     setUserState({ ...user });
   }, [user]);
 
   const changeName = (e) => {
+    if (!onChange) {
+      dispatch({ type: START_CHANGING });
+    }
     setUserState({ ...userState, name: e.target.value });
   };
 
   const changeLogin = (e) => {
+    if (!onChange) {
+      dispatch({ type: START_CHANGING });
+    }
     setUserState({ ...userState, email: e.target.value });
+  };
+
+  const stopChanging = () => {
+    setUserState({ ...user });
+    dispatch({ type: STOP_CHANGING });
+  };
+
+  const onSave = () => {
+    dispatch(patchUser(userState));
   };
 
   return (
@@ -44,6 +71,7 @@ function ProfilePage() {
         </button>
         <button
           className={`${styles.button} text text_type_main-medium text_color_inactive`}
+          onClick={onLogout}
         >
           Выход
         </button>
@@ -51,7 +79,7 @@ function ProfilePage() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <div className={styles.inputs}>
+      <form className={styles.inputs}>
         {userState && (
           <>
             <Input
@@ -68,7 +96,27 @@ function ProfilePage() {
           </>
         )}
         <PasswordInput placeholder="Пароль" icon="EditIcon" />
-      </div>
+        {onChange && (
+          <div className={styles.formButtons}>
+            <Button
+              onClick={stopChanging}
+              htmlType="button"
+              type="secondary"
+              size="medium"
+            >
+              Отмена
+            </Button>
+            <Button
+              onClick={onSave}
+              htmlType="button"
+              type="primary"
+              size="medium"
+            >
+              Сохранить
+            </Button>
+          </div>
+        )}
+      </form>
     </main>
   );
 }

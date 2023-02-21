@@ -4,7 +4,7 @@ import { getCookie, setCookie } from "../utils";
 const dataBaseAddres = "https://norma.nomoreparties.space/api";
 const authAddres = "/auth/login";
 const regAddres = "/auth/register";
-const getUserAddres = "/auth/user";
+const userAddres = "/auth/user";
 const resetPasswordAddres = "/password-reset";
 const confirmPasswordResetAddres = "/password-reset/reset";
 const logoutAddres = "/auth/logout";
@@ -52,7 +52,7 @@ export default class Api {
   }
 
   static async getUserRequest() {
-    return await this.request(getUserAddres, {
+    return await this.request(userAddres, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -92,6 +92,27 @@ export default class Api {
       console.log("cookieSetted");
       setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
       setCookie("refreshToken", data.refreshToken);
+    });
+  }
+
+  static async logoutRequest(refreshToken) {
+    return await this.request(logoutAddres, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: refreshToken }),
+    });
+  }
+
+  static async patchUserRequest(form) {
+    return await this.request(userAddres, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      body: JSON.stringify(form),
     });
   }
 }

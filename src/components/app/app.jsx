@@ -12,18 +12,18 @@ import RegisterPage from "../../pages/register/register";
 import ProfilePage from "../../pages/profile/profile";
 import ProtectedRouteElement from "../protected-route-element";
 import IngredientPage from "../../pages/ingredient/ingredient";
-import { useAuth } from "../../services/auth";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
+import { getUser } from "../../services/actions/user";
 
 function App() {
   const dispatch = useDispatch();
-  const { getUser, user } = useAuth();
+  const { user } = useSelector((store) => store.user);
 
   const { status } = useSelector(getIngredients);
 
   useEffect(() => {
     if (!user) {
-      getUser(true);
+      dispatch(getUser());
     }
     dispatch(initData());
   }, []);

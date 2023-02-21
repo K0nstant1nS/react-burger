@@ -13,11 +13,10 @@ import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
 import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
 import { getStore } from "../../utils";
-import { useAuth } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
-  const { user } = useAuth();
+  const { user } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const onSubmit = () => {
     if (user) {

@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     if (!user) {
-      getUser();
+      getUser(true);
     }
     dispatch(initData());
   }, []);

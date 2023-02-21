@@ -33,13 +33,22 @@ export function useProvideAuth() {
     });
   };
 
-  const getUser = async () => {
+  const getUser = async (isRefresh = false) => {
     return await Api.getUserRequest()
       .then((data) => {
         setUser(data.user);
         return true;
       })
-      .catch(() => true);
+      .catch(() => {
+        if (isRefresh) {
+          const refreshToken = getCookie("refreshToken");
+          return Api.refreshTokenRequest(refreshToken).then(() => {
+            return getUser();
+          });
+        } else {
+          return true;
+        }
+      });
   };
 
   const logOut = async () => {};

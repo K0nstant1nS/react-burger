@@ -1,5 +1,5 @@
 import checkResponse from "../utils/checkResponse";
-import { getCookie } from "../utils";
+import { getCookie, setCookie } from "../utils";
 
 const dataBaseAddres = "https://norma.nomoreparties.space/api";
 const authAddres = "/auth/login";
@@ -78,6 +78,20 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(form),
+    });
+  }
+
+  static async refreshTokenRequest(refreshToken) {
+    return await this.request(tokenAddres, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: refreshToken }),
+    }).then((data) => {
+      console.log("cookieSetted");
+      setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
+      setCookie("refreshToken", data.refreshToken);
     });
   }
 }

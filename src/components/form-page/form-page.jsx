@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import { Link, Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getUserFromStore } from "../../utils";
+import FormError from "../form-error/form-error";
 
 function FormPage({ formSettings, footer, onSubmit }) {
   const { user } = useSelector(getUserFromStore);

@@ -7,6 +7,7 @@ import { orderReducer } from "../reducers/order-modal";
 import { ingredientsScrollReducer } from "../reducers/ingredients-scroll";
 import { userReducer } from "../reducers/user";
 import { userMiddleware } from "../middleware/user";
+import { formErrorReducer } from "../reducers/form-errors";
 
 const rootReducer = combineReducers({
   modal: ingredientModalReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   orderData: orderReducer,
   ingredientsScroll: ingredientsScrollReducer,
   user: userReducer,
+  formError: formErrorReducer,
 });
 
 const composeEnhancers =

@@ -4,12 +4,15 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import FormError from "../form-error/form-error";
 import styles from "./form.module.css";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { initFormState } from "../../utils";
+import { initFormState, getFormError } from "../../utils";
+import { useSelector } from "react-redux";
 
 function Form({ formSettings, onSubmit }) {
+  const { error } = useSelector(getFormError);
   const [formData, setFormData] = useState(initFormState(formSettings));
 
   const onChange = (e) => {
@@ -57,6 +60,7 @@ function Form({ formSettings, onSubmit }) {
             data-type={"token"}
           />
         )}
+        {error && <FormError />}
         <Button size="medium" htmlType="submit">
           {formSettings.buttonSettings.text}
         </Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./profile.module.css";
 import {
   EmailInput,
@@ -36,7 +36,7 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    setUserState({ ...user, password: getCookie("password") });
+    setUserState({ ...user, password: "" });
   }, [user]);
 
   const changeName = (e) => {
@@ -61,7 +61,7 @@ function ProfilePage() {
   };
 
   const stopChanging = () => {
-    setUserState({ ...user, password: getCookie("password") });
+    setUserState({ ...user, password: "" });
     dispatch({ type: STOP_CHANGING });
   };
 
@@ -117,7 +117,6 @@ function ProfilePage() {
               value={userState.email}
               onChange={changeLogin}
             />
-
             <PasswordInput
               placeholder="Пароль"
               icon="EditIcon"

@@ -1,18 +1,19 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
 import { confirmPasswordChange } from "../../services/actions/user";
-import { Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserFromStore } from "../../utils";
 
 function ResetPasswordPage() {
-  const { changingPassword } = useSelector(getUserFromStore);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { changingPassword } = useSelector(getUserFromStore);
   const onSubmit = (form) => {
-    dispatch(confirmPasswordChange(form));
+    dispatch(confirmPasswordChange(form, navigate));
   };
   const formSettings = {
-    title: "Вход",
+    title: "Восстановление пароля",
     password: {
       placeholder: "Введите новый пароль",
     },
@@ -30,9 +31,11 @@ function ResetPasswordPage() {
       linkTo: "/login",
     },
   ];
+
   if (!changingPassword) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/forgot-password" />;
   }
+
   return (
     <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />
   );

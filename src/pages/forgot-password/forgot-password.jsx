@@ -5,13 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changePassword } from "../../services/actions/user";
 import { getUserFromStore } from "../../utils";
-import { Navigate } from "react-router-dom";
 
 function ForgotPasswordPage() {
-  const { changingPassword } = useSelector(getUserFromStore);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const onSubmit = (form) => {
-    dispatch(changePassword(form));
+    dispatch(changePassword(form, navigate));
   };
   const formSettings = {
     title: "Восстановление пароля",
@@ -25,10 +24,6 @@ function ForgotPasswordPage() {
   const footer = [
     { text: "Вспомнили пароль?", linkText: "Войти", linkTo: "/login" },
   ];
-
-  if (changingPassword) {
-    return <Navigate to="/reset-password" />;
-  }
 
   return (
     <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />

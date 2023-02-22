@@ -52,6 +52,8 @@ export const getOrderNumber = (store) => store.orderData.number;
 
 export const getUserFromStore = (store) => store.user;
 
+export const getFormError = (store) => store.formError;
+
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp(

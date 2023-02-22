@@ -1,5 +1,6 @@
 import Api from "../../API";
 import { setCookie, getCookie } from "../../utils";
+import { SET_ERROR, REMOVE_ERROR } from "./form-errors";
 
 export const SET_USER = "SET_USER";
 export const SET_ONLOAD = "SET_ONLOAD";
@@ -19,12 +20,17 @@ export function signUp(form) {
           path: "/",
         });
         setCookie("refreshToken", data.refreshToken, { path: "/" });
-        setCookie("password", form.password, { path: "/" });
         dispatch({ type: SET_USER, user: data.user });
         dispatch({ type: SET_LOADED });
+        dispatch({ type: REMOVE_ERROR });
       })
       .catch((err) => {
         console.log(err);
+        dispatch({
+          type: SET_ERROR,
+          message:
+            "Произошла ошибка при регистрации, проверьте данные или попробуйте позднее",
+        });
       });
   };
 }
@@ -38,12 +44,13 @@ export function signIn(form) {
           path: "/",
         });
         setCookie("refreshToken", data.refreshToken, { path: "/" });
-        setCookie("password", form.password, { path: "/" });
         dispatch({ type: SET_USER, user: data.user });
         dispatch({ type: SET_LOADED });
+        dispatch({ type: REMOVE_ERROR });
       })
       .catch((err) => {
         console.log(err);
+        dispatch({ type: SET_ERROR, message: "Не удается найти пользователя" });
       });
   };
 }
@@ -73,27 +80,37 @@ export function getUser(isRefresh = false) {
   };
 }
 
-export function changePassword(form) {
+export function changePassword(form, navigate) {
   return (dispatch) => {
     Api.resetPasswordRequest(form)
       .then((data) => {
         if (data.success) {
           dispatch({ type: SET_PASSWORD_ONCHANGE });
+          dispatch({ type: REMOVE_ERROR });
+          navigate("/reset-password");
         }
       })
       .catch((err) => {
         console.log(err);
+        dispatch({ type: SET_ERROR, message: "Пользователь не найден" });
       });
   };
 }
 
-export function confirmPasswordChange(form) {
+export function confirmPasswordChange(form, navigate) {
   return (dispatch) => {
     Api.confirmPasswordResetRequest(form)
       .then(() => {
         dispatch({ type: SET_PASSWORD_DEFAULT });
+        dispatch({ type: REMOVE_ERROR });
+        navigate("/login");
       })
       .catch((err) => {
+        dispatch({
+          type: SET_ERROR,
+          message:
+            "произошла ошибка, перепроверьте правильность введенных данных",
+        });
         console.log(err);
       });
   };

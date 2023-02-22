@@ -8,15 +8,15 @@ import ScrollableConstructContainer from "../scrollable-construct-container/scro
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { MAKE_ORDER, CLOSE_MODAL } from "../../services/actions/order-modal";
+import { CLOSE_MODAL } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
 import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
-import { getStore } from "../../utils";
+import { getStore, getUserFromStore } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
-  const { user } = useSelector((store) => store.user);
+  const { user } = useSelector(getUserFromStore);
   const navigate = useNavigate();
   const onSubmit = () => {
     if (user) {

@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
-import { getStore } from "../../utils";
+import { getIngredients, getModal } from "../../utils";
 import { useParams } from "react-router-dom";
 
 function IngredientDetails() {
   const { id } = useParams();
-  const ingredients = useSelector((store) => store.ingredients.data);
-  const { modal } = useSelector((store) => store.modal);
+  const { data } = useSelector(getIngredients);
+  const { modal } = useSelector(getModal);
 
-  const ingredientDetails = ingredients.find(({ _id }) => _id === id);
+  const ingredientDetails = data.find(({ _id }) => _id === id);
 
   return (
     <>

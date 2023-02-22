@@ -3,11 +3,11 @@ import styles from "./ingredient.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "../../components/modal/modal";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
-import { closeIngredientModal } from "../../utils";
+import { closeIngredientModal, getModal } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 function IngredientPage() {
-  const { modal } = useSelector((store) => store.modal);
+  const { modal } = useSelector(getModal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeModal = () => {

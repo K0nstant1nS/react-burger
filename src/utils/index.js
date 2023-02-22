@@ -44,9 +44,13 @@ export function deleteHandler(dispatch, { index, price }) {
 
 export const getStore = (store) => store;
 
+export const getModal = (store) => store.modal;
+
 export const getIngredients = (store) => store.ingredients;
 
 export const getOrderNumber = (store) => store.orderData.number;
+
+export const getUserFromStore = (store) => store.user;
 
 export function getCookie(name) {
   const matches = document.cookie.match(
@@ -84,4 +88,18 @@ export function setCookie(name, value, props) {
 
 export function deleteCookie(name) {
   setCookie(name, null, { expires: -1 });
+}
+
+export function initFormState(formSettings) {
+  const keys = Object.keys(formSettings).filter((item) => {
+    return item === "title" || item === "buttonSettings" ? false : true;
+  });
+
+  const inputsObj = {};
+
+  keys.forEach((item) => {
+    inputsObj[item] = "";
+  });
+
+  return inputsObj;
 }

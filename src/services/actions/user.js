@@ -13,29 +13,38 @@ export const STOP_CHANGING = "STOP_CHANGING";
 export function signUp(form) {
   return (dispatch) => {
     dispatch({ type: SET_ONLOAD });
-    Api.registerUser(form).then((data) => {
-      setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
-      setCookie("refreshToken", data.refreshToken);
-      dispatch({ type: SET_USER, user: data.user });
-      dispatch({ type: SET_LOADED });
-    });
+    Api.registerUser(form)
+      .then((data) => {
+        setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
+        setCookie("refreshToken", data.refreshToken);
+        setCookie("password", form.password);
+        dispatch({ type: SET_USER, user: data.user });
+        dispatch({ type: SET_LOADED });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 
 export function signIn(form) {
   return (dispatch) => {
     dispatch({ type: SET_ONLOAD });
-    Api.loginRequest(form).then((data) => {
-      setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
-      setCookie("refreshToken", data.refreshToken);
-      dispatch({ type: SET_USER, user: data.user });
-      dispatch({ type: SET_LOADED });
-    });
+    Api.loginRequest(form)
+      .then((data) => {
+        setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
+        setCookie("refreshToken", data.refreshToken);
+        setCookie("password", form.password);
+        dispatch({ type: SET_USER, user: data.user });
+        dispatch({ type: SET_LOADED });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 
-export function getUser() {
-  let isRefresh = true;
+export function getUser(isRefresh = false) {
   return (dispatch) => {
     dispatch({ type: SET_ONLOAD });
     Api.getUserRequest()
@@ -44,15 +53,11 @@ export function getUser() {
         dispatch({ type: SET_LOADED });
       })
       .catch(() => {
-        if (isRefresh) {
-          isRefresh = false;
-          const refreshToken = getCookie("refreshToken");
+        const refreshToken = getCookie("refreshToken");
+        if (isRefresh && refreshToken) {
           Api.refreshTokenRequest(refreshToken)
             .then(() => {
-              Api.getUserRequest().then((data) => {
-                dispatch({ type: SET_USER, user: data.user });
-                dispatch({ type: SET_LOADED });
-              });
+              dispatch(getUser());
             })
             .catch(() => {
               dispatch({ type: SET_LOADED });
@@ -66,38 +71,42 @@ export function getUser() {
 
 export function changePassword(form) {
   return (dispatch) => {
-    Api.resetPasswordRequest(form).then(() => {
-      dispatch({ type: SET_PASSWORD_ONCHANGE });
-    });
+    Api.resetPasswordRequest(form)
+      .then((data) => {
+        if (data.success) {
+          dispatch({ type: SET_PASSWORD_ONCHANGE });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 
 export function confirmPasswordChange(form) {
   return (dispatch) => {
-    Api.confirmPasswordResetRequest(form).then(() => {
-      dispatch({ type: SET_PASSWORD_DEFAULT });
-    });
+    Api.confirmPasswordResetRequest(form)
+      .then(() => {
+        dispatch({ type: SET_PASSWORD_DEFAULT });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 
-export function patchUser(form) {
-  let isRefresh = true;
+export function patchUser(form, isRefresh = false) {
   return (dispatch) => {
     Api.patchUserRequest(form)
       .then((data) => {
-        console.log("patch");
         dispatch({ type: SET_USER, user: data.user });
-        dispatch({ type: STOP_CHANGING });
+        dispatch({ type: STOP_CHANGING, password: form.password });
       })
       .catch(() => {
-        if (isRefresh) {
-          isRefresh = false;
-          const refreshToken = getCookie("refreshToken");
+        const refreshToken = getCookie("refreshToken");
+        if (isRefresh && refreshToken) {
           Api.refreshTokenRequest(refreshToken).then(() => {
-            Api.patchUserRequest(form).then((data) => {
-              dispatch({ type: SET_USER, user: data.user });
-              dispatch({ type: STOP_CHANGING });
-            });
+            dispatch(patchUser(form));
           });
         }
       });
@@ -106,8 +115,12 @@ export function patchUser(form) {
 
 export function logout() {
   return (dispatch) => {
-    Api.logoutRequest(getCookie("refreshToken")).then(() => {
-      dispatch({ type: LOGOUT });
-    });
+    Api.logoutRequest(getCookie("refreshToken"))
+      .then(() => {
+        dispatch({ type: LOGOUT });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }

@@ -6,7 +6,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   logout,
@@ -14,19 +14,29 @@ import {
   START_CHANGING,
   STOP_CHANGING,
 } from "../../services/actions/user";
+import { getCookie, getUserFromStore } from "../../utils";
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { user, onChange } = useSelector((store) => store.user);
+  const { user, onChange } = useSelector(getUserFromStore);
   const [userState, setUserState] = useState(null);
 
   const onLogout = () => {
     dispatch(logout());
   };
 
+  const onOrders = () => {
+    navigate("/profile/orders");
+  };
+
+  const onProfile = () => {
+    navigate("/profile");
+  };
+
   useEffect(() => {
-    setUserState({ ...user });
+    setUserState({ ...user, password: getCookie("password") });
   }, [user]);
 
   const changeName = (e) => {
@@ -43,13 +53,20 @@ function ProfilePage() {
     setUserState({ ...userState, email: e.target.value });
   };
 
+  const changePassword = (e) => {
+    if (!onChange) {
+      dispatch({ type: START_CHANGING });
+    }
+    setUserState({ ...userState, password: e.target.value });
+  };
+
   const stopChanging = () => {
-    setUserState({ ...user });
+    setUserState({ ...user, password: getCookie("password") });
     dispatch({ type: STOP_CHANGING });
   };
 
   const onSave = () => {
-    dispatch(patchUser(userState));
+    dispatch(patchUser(userState, true));
   };
 
   return (
@@ -61,11 +78,17 @@ function ProfilePage() {
           } text text_type_main-medium text_color_inactive ${
             pathname === "/profile" && styles.buttonActive
           }`}
+          onClick={onProfile}
         >
           Профиль
         </button>
         <button
-          className={`${styles.button} text text_type_main-medium text_color_inactive`}
+          className={`${
+            styles.button
+          } text text_type_main-medium text_color_inactive ${
+            pathname === "/profile/orders" && styles.buttonActive
+          }`}
+          onClick={onOrders}
         >
           История заказов
         </button>
@@ -79,7 +102,7 @@ function ProfilePage() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <form className={styles.inputs}>
+      <form className={styles.inputs} onSubmit={onSave}>
         {userState && (
           <>
             <Input
@@ -93,9 +116,15 @@ function ProfilePage() {
               value={userState.email}
               onChange={changeLogin}
             />
+
+            <PasswordInput
+              placeholder="Пароль"
+              icon="EditIcon"
+              value={userState.password}
+              onChange={changePassword}
+            />
           </>
         )}
-        <PasswordInput placeholder="Пароль" icon="EditIcon" />
         {onChange && (
           <div className={styles.formButtons}>
             <Button
@@ -106,12 +135,7 @@ function ProfilePage() {
             >
               Отмена
             </Button>
-            <Button
-              onClick={onSave}
-              htmlType="button"
-              type="primary"
-              size="medium"
-            >
+            <Button htmlType="submit" type="primary" size="medium">
               Сохранить
             </Button>
           </div>

@@ -42,7 +42,7 @@ function BurgerIngredientsContent() {
         ref.current.removeEventListener("scroll", scrollHandler);
       }
     };
-  }, [ingredients]);
+  }, [ingredients, ref.current]);
 
   useEffect(() => {
     ref.current.scrollTo(0, ingredientsScroll.scrollTo.y + 1);

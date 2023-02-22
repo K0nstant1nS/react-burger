@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./app-header.module.css";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import HeaderButton from "../header-button/header-button";
 
 function AppHeader() {
-  const [burger, orders, profile] = ["constructor", "orders", "profile"];
-
   return (
     <header className={styles.header}>
       <nav className={styles.content}>

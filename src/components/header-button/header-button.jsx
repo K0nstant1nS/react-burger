@@ -10,7 +10,6 @@ import { Link, useLocation } from "react-router-dom";
 
 function HeaderButton({ iconType, text, indents, to }) {
   const location = useLocation();
-  console.log(location);
 
   const icons = {
     ListIcon: ListIcon,

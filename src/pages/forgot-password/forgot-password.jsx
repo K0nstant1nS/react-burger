@@ -4,14 +4,15 @@ import styles from "./forgot-password.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changePassword } from "../../services/actions/user";
+import { getUserFromStore } from "../../utils";
 
 function ForgotPasswordPage() {
-  const { changingPassword } = useSelector((store) => store.user);
+  const { changingPassword } = useSelector(getUserFromStore);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmit = (form) => {
     dispatch(changePassword(form));
-    if (changePassword) {
+    if (changingPassword) {
       navigate("/reset-password");
     }
   };

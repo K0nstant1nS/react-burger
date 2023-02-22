@@ -1,12 +1,12 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
-import Api from "../../API";
 import { confirmPasswordChange } from "../../services/actions/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { getUserFromStore } from "../../utils";
 
 function ResetPasswordPage() {
-  const { changingPassword } = useSelector((store) => store.user);
+  const { changingPassword } = useSelector(getUserFromStore);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmit = (form) => {
@@ -20,7 +20,7 @@ function ResetPasswordPage() {
     password: {
       placeholder: "Введите новый пароль",
     },
-    code: {
+    token: {
       placeholder: "Введите код из письма",
     },
     buttonSettings: {

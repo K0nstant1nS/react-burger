@@ -1,21 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./form-page.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Form from "../form/form";
 import { v4 as uuid } from "uuid";
 import { Link, Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getUserFromStore } from "../../utils";
-import FormError from "../form-error/form-error";
+import { REMOVE_ERROR } from "../../services/actions/form-errors";
 
 function FormPage({ formSettings, footer, onSubmit }) {
-  const { user } = useSelector(getUserFromStore);
-  if (user) {
-    if (window.history.length) {
-      return window.history.go(-1);
-    }
-    return <Navigate to="/" replace={false} />;
-  }
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: REMOVE_ERROR });
+  }, []);
   return (
     <main className={styles.formContainer}>
       <Form formSettings={formSettings} onSubmit={onSubmit} />

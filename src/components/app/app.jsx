@@ -10,6 +10,7 @@ import LoginPage from "../../pages/login/login";
 import RegisterPage from "../../pages/register/register";
 import ProfilePage from "../../pages/profile/profile";
 import ProtectedRouteElement from "../protected-route-element";
+import UnAuthRoute from "../un-auth-route";
 import IngredientPage from "../../pages/ingredient/ingredient";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import { getUser } from "../../services/actions/user";
@@ -45,10 +46,22 @@ function App() {
                 element={<ProtectedRouteElement element={<OrdersPage />} />}
               />
             </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route
+              path="/login"
+              element={<UnAuthRoute element={<LoginPage />} />}
+            />
+            <Route
+              path="/register"
+              element={<UnAuthRoute element={<RegisterPage />} />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<UnAuthRoute element={<ForgotPasswordPage />} />}
+            />
+            <Route
+              path="/reset-password"
+              element={<UnAuthRoute element={<ResetPasswordPage />} />}
+            />
             <Route path="/ingredients/:id" element={<IngredientPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>

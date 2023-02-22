@@ -4,7 +4,6 @@ import styles from "./forgot-password.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changePassword } from "../../services/actions/user";
-import { getUserFromStore } from "../../utils";
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();

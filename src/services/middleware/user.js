@@ -4,7 +4,7 @@ import {
   SET_USER,
   STOP_CHANGING,
 } from "../actions/user";
-import { deleteCookie, setCookie } from "../../utils";
+import { deleteCookie } from "../../utils";
 
 export const userMiddleware = (store) => (next) => (action) => {
   if (action.type === SET_USER) {

@@ -1,12 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { getUserFromStore } from "../utils";
 
-function UnAuthRoute({element}) {
+function UnAuthRoute({ element }) {
+  const { user } = useSelector(getUserFromStore);
 
-    const { user } = useSelector(getUserFromStore);
+  if (user) {
+    return <Navigate to="/" replace={true} />;
+  }
 
-    return (  );
+  return element;
 }
 
-export default UnAuthRoute;{element}
+export default UnAuthRoute;

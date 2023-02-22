@@ -65,7 +65,8 @@ function ProfilePage() {
     dispatch({ type: STOP_CHANGING });
   };
 
-  const onSave = () => {
+  const onSave = (e) => {
+    e.preventDefault();
     dispatch(patchUser(userState, true));
   };
 

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./app-header.module.css";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import HeaderButton from "../header-button/header-button";
+import { Link } from "react-router-dom";
 
 function AppHeader() {
   return (
@@ -27,9 +28,9 @@ function AppHeader() {
           indents="pl-5 pr-5"
           iconType="ProfileIcon"
         />
-        <div className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           <Logo />
-        </div>
+        </Link>
       </nav>
     </header>
   );

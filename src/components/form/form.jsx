@@ -51,7 +51,7 @@ function Form({ formSettings, onSubmit }) {
         )}
         {formSettings.token && (
           <PasswordInput
-            placeholder={formSettings.code.placeholder}
+            placeholder={formSettings.token.placeholder}
             value={formData.token}
             onChange={onChange}
             data-type={"token"}

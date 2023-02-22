@@ -89,8 +89,10 @@ export default class Api {
       },
       body: JSON.stringify({ token: refreshToken }),
     }).then((data) => {
-      setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
-      setCookie("refreshToken", data.refreshToken);
+      setCookie("accessToken", data.accessToken.split("Bearer ")[1], {
+        path: "/",
+      });
+      setCookie("refreshToken", data.refreshToken, { path: "/" });
     });
   }
 

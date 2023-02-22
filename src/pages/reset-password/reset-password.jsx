@@ -1,19 +1,15 @@
 import React from "react";
 import FormPage from "../../components/form-page/form-page";
 import { confirmPasswordChange } from "../../services/actions/user";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserFromStore } from "../../utils";
 
 function ResetPasswordPage() {
   const { changingPassword } = useSelector(getUserFromStore);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const onSubmit = (form) => {
     dispatch(confirmPasswordChange(form));
-    if (!changingPassword) {
-      navigate("/login");
-    }
   };
   const formSettings = {
     title: "Вход",
@@ -35,7 +31,7 @@ function ResetPasswordPage() {
     },
   ];
   if (!changingPassword) {
-    navigate("/");
+    return <Navigate to="/login" />;
   }
   return (
     <FormPage formSettings={formSettings} footer={footer} onSubmit={onSubmit} />

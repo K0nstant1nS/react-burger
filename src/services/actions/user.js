@@ -15,9 +15,11 @@ export function signUp(form) {
     dispatch({ type: SET_ONLOAD });
     Api.registerUser(form)
       .then((data) => {
-        setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
-        setCookie("refreshToken", data.refreshToken);
-        setCookie("password", form.password);
+        setCookie("accessToken", data.accessToken.split("Bearer ")[1], {
+          path: "/",
+        });
+        setCookie("refreshToken", data.refreshToken, { path: "/" });
+        setCookie("password", form.password, { path: "/" });
         dispatch({ type: SET_USER, user: data.user });
         dispatch({ type: SET_LOADED });
       })
@@ -32,9 +34,11 @@ export function signIn(form) {
     dispatch({ type: SET_ONLOAD });
     Api.loginRequest(form)
       .then((data) => {
-        setCookie("accessToken", data.accessToken.split("Bearer ")[1]);
-        setCookie("refreshToken", data.refreshToken);
-        setCookie("password", form.password);
+        setCookie("accessToken", data.accessToken.split("Bearer ")[1], {
+          path: "/",
+        });
+        setCookie("refreshToken", data.refreshToken, { path: "/" });
+        setCookie("password", form.password, { path: "/" });
         dispatch({ type: SET_USER, user: data.user });
         dispatch({ type: SET_LOADED });
       })

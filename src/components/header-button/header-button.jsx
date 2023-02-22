@@ -18,7 +18,7 @@ function HeaderButton({ iconType, text, indents, to }) {
   };
 
   const className =
-    location.pathname === to
+    location.pathname.indexOf(to) === 0 && location.pathname[1] === to[1]
       ? indents + " " + styles.button + " " + styles.button_active
       : indents + " " + styles.button;
 

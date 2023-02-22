@@ -8,7 +8,7 @@ export const userMiddleware = (store) => (next) => (action) => {
     deleteCookie("password");
   }
   if (action.type === STOP_CHANGING && action.password) {
-    setCookie("password", action.password);
+    setCookie("password", action.password, { path: "/" });
   }
   next(action);
 };

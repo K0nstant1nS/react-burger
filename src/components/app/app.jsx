@@ -16,6 +16,7 @@ import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import { getUser } from "../../services/actions/user";
 import ErrorPage from "../../pages/error/error";
 import OrdersPage from "../../pages/orders/orders";
+import Feed from "../../pages/feed/feed";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
         {status === "success" && (
           <Routes>
             <Route path="/" element={<ConstructorPage />} />
+            <Route path="ingredients/:id" element={<IngredientPage />} />
             <Route
               path="/profile"
               element={<ProtectedRouteElement element={<ProfilePage />} />}
@@ -62,7 +64,7 @@ function App() {
               path="/reset-password"
               element={<UnAuthRoute element={<ResetPasswordPage />} />}
             />
-            <Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route path="/feed" element={<Feed />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         )}

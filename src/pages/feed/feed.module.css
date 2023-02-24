@@ -1,0 +1,17 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 1240px;
+}
+
+.contentContainer{
+    display: flex;
+    flex-direction: row;
+    width: 1240px;
+}

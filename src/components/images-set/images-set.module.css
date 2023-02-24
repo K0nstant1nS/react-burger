@@ -1,0 +1,78 @@
+.container{
+    position: relative;
+    height: 64px;
+}
+
+.last{
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    left: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.absoluteWrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.overlay{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 1;
+    height: 60px;
+    width: 60px;
+    border-radius: 100px;
+    background: #1C1C21;
+    opacity: 0.6;
+}
+
+.default0{
+    z-index: 7;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.default1{
+    z-index: 6;
+    position: absolute;
+    top: 0;
+    left: 48px
+}
+
+.default2{
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 96px;
+}
+
+.default3{
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 144px;
+}
+
+.default4{
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 192px;
+}
+
+.default5{
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 240px;
+}
+
+.others{
+    z-index: 5;
+}

@@ -9,6 +9,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getStore, openIngredientModal } from "../../utils";
 import { useDrag } from "react-dnd";
 import { useNavigate } from "react-router-dom";
+import {
+  SCROLL_ON_BUN,
+  SCROLL_TO,
+} from "../../services/actions/ingredients-scroll";
 
 function IngredientElement({ ingredient }) {
   const navigate = useNavigate();
@@ -16,6 +20,8 @@ function IngredientElement({ ingredient }) {
   const { constructorData } = useSelector(getStore);
   const onClick = () => {
     openIngredientModal(dispatch);
+    dispatch({ type: SCROLL_TO, scrollTo: { y: "" } });
+    dispatch({ type: SCROLL_ON_BUN });
     navigate(`/ingredients/${ingredient._id}`);
   };
   const [, dragRef] = useDrag({

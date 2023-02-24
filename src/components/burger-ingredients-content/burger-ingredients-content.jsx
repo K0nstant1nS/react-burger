@@ -45,7 +45,11 @@ function BurgerIngredientsContent() {
   }, [ingredients, ref.current]);
 
   useEffect(() => {
-    ref.current.scrollTo(0, ingredientsScroll.scrollTo.y + 1);
+    ref.current.scrollTo({
+      left: 0,
+      top: ingredientsScroll.scrollTo.y + 1,
+      behaivor: "smooth",
+    });
   }, [ingredientsScroll.scrollTo]);
 
   return (

@@ -8,12 +8,14 @@ import { ingredientsScrollReducer } from "../reducers/ingredients-scroll";
 import { userReducer } from "../reducers/user";
 import { userMiddleware } from "../middleware/user";
 import { formErrorReducer } from "../reducers/form-errors";
+import { ordersReducer } from "../reducers/orders";
 
 const rootReducer = combineReducers({
   modal: ingredientModalReducer,
   ingredients: ingredientsReducer,
   constructorData: constructorReducer,
   orderData: orderReducer,
+  orders: ordersReducer,
   ingredientsScroll: ingredientsScrollReducer,
   user: userReducer,
   formError: formErrorReducer,

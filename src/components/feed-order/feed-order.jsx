@@ -7,9 +7,16 @@ import {
 import { useSelector } from "react-redux";
 import { getIngredients } from "../../utils";
 import ImagesSet from "../images-set/images-set";
+import { useNavigate } from "react-router-dom";
 
 function FeedOrder({ status, ingredients, _id, number, createdAt, updatedAt }) {
   const { data } = useSelector(getIngredients);
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    console.log(_id);
+    navigate(`/feed/${_id}`);
+  };
 
   const ingredientsArr = ingredients.map((id) => {
     return data.find(({ _id }) => {
@@ -22,11 +29,18 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, updatedAt }) {
   const imagesArr = ingredientsArr.map(({ image }) => {
     return image;
   });
-  const sum = ingredientsArr.reduce((sum, { price }) => {
+  const sum = ingredientsArr.reduce((sum, { price, type }) => {
+    if (type === "bun") {
+      return (sum += price * 2);
+    }
     return (sum += price);
   }, 0);
   return (
-    <article className={`${styles.order} mb-4`}>
+    <article
+      onClick={onClick}
+      to={`/feed/${_id}`}
+      className={`${styles.order} mb-4`}
+    >
       <div className={`${styles.orderString} pt-6 pr-6 pl-6`}>
         <span className="text text_type_digits-default">#{number}</span>
         <span className="text text_type_main-default text_color_inactive">

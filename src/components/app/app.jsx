@@ -17,6 +17,7 @@ import { getUser } from "../../services/actions/user";
 import ErrorPage from "../../pages/error/error";
 import OrdersPage from "../../pages/orders/orders";
 import Feed from "../../pages/feed/feed";
+import OrderPage from "../../pages/order/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ function App() {
               element={<UnAuthRoute element={<ResetPasswordPage />} />}
             />
             <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/:id" element={<OrderPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         )}

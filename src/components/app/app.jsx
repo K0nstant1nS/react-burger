@@ -38,7 +38,7 @@ function App() {
         <AppHeader />
         {status === "success" && (
           <Routes>
-            <Route path="/" element={<ConstructorPage />} />
+            <Route path="/*" element={<ConstructorPage />} />
             <Route path="ingredients/:id" element={<IngredientPage />} />
             <Route
               path="/profile/*"
@@ -69,9 +69,7 @@ function App() {
               path="/reset-password"
               element={<UnAuthRoute element={<ResetPasswordPage />} />}
             />
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/feed/:id" element={<OrderPage />} />
-            <Route path="/profile/orders/:id" element={<OrderPage />} />
+            <Route path="/feed/*" element={<Feed />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         )}

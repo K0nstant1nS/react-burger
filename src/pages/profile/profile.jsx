@@ -59,7 +59,7 @@ function ProfilePage({ children, isRoute = false }) {
       {isRoute && (
         <Routes>
           <Route path="/" element={<ProfileForm />} />
-          <Route path="/orders" element={<ProfileOrders />} />
+          <Route path="/orders/*" element={<ProfileOrders />} />
         </Routes>
       )}
     </main>

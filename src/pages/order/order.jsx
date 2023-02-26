@@ -47,52 +47,38 @@ function OrderPage() {
   };
 
   return modal ? (
-    <>
-      {isFeed ? (
-        <Feed />
-      ) : (
-        <>
-          <ProfilePage>
-            <ProfileOrders />
-          </ProfilePage>
-        </>
-      )}
-
-      <Modal closeModal={closeModal}>
-        <div className={styles.page}>
-          <div className={styles.container}>
+    <Modal closeModal={closeModal}>
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <span
+            className={`${styles.number} text text_type_digits-default pb-10`}
+          >
+            #{number}
+          </span>
+          <span className="text text_type_main-medium pb-3">
+            Black Hole Singularity острый бургер
+          </span>
+          {status === "done" && (
             <span
-              className={`${styles.number} text text_type_digits-default pb-10`}
+              className={`${styles.done} text text_type_main-default pb-15`}
             >
-              #{number}
+              выполнен
             </span>
-            <span className="text text_type_main-medium pb-3">
-              Black Hole Singularity острый бургер
-            </span>
-            {status === "done" && (
-              <span
-                className={`${styles.done} text text_type_main-default pb-15`}
-              >
-                выполнен
-              </span>
-            )}
-            <span className="text text_type_main-medium pb-6">Состав:</span>
-            <div className={`${styles.ingredients} pr-8`}>
-              {ingredientsList}
-            </div>
-            <div className={`${styles.footer} pt-10`}>
-              <p className="text text_type_main-default text_color_inactive">
-                <FormattedDate date={new Date(createdAt)} /> i-GMT+3
-              </p>
-              <div className={styles.cost}>
-                <span className="text text_type_digits-default">{sum}</span>
-                <CurrencyIcon type="primary" />
-              </div>
+          )}
+          <span className="text text_type_main-medium pb-6">Состав:</span>
+          <div className={`${styles.ingredients} pr-8`}>{ingredientsList}</div>
+          <div className={`${styles.footer} pt-10`}>
+            <p className="text text_type_main-default text_color_inactive">
+              <FormattedDate date={new Date(createdAt)} /> i-GMT+3
+            </p>
+            <div className={styles.cost}>
+              <span className="text text_type_digits-default">{sum}</span>
+              <CurrencyIcon type="primary" />
             </div>
           </div>
         </div>
-      </Modal>
-    </>
+      </div>
+    </Modal>
   ) : (
     <div className={styles.page}>
       <div className={styles.container}>

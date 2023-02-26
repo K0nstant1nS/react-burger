@@ -41,8 +41,12 @@ function App() {
             <Route path="/" element={<ConstructorPage />} />
             <Route path="ingredients/:id" element={<IngredientPage />} />
             <Route
-              path="/profile"
-              element={<ProtectedRouteElement element={<ProfilePage />} />}
+              path="/profile/*"
+              element={
+                <ProtectedRouteElement
+                  element={<ProfilePage isRoute={true} />}
+                />
+              }
             >
               <Route
                 path="orders"
@@ -67,6 +71,7 @@ function App() {
             />
             <Route path="/feed" element={<Feed />} />
             <Route path="/feed/:id" element={<OrderPage />} />
+            <Route path="/profile/orders/:id" element={<OrderPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         )}

@@ -10,17 +10,6 @@
     justify-self: right;
 }
 
-.formButtons{
-    display: flex;
-    align-self: flex-end;
-}
-
-.inputs{
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
 .button{
     height: 64px;
     text-align: start;

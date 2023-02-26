@@ -1,27 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import styles from "./profile.module.css";
-import {
-  EmailInput,
-  Input,
-  PasswordInput,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  logout,
-  patchUser,
-  START_CHANGING,
-  STOP_CHANGING,
-} from "../../services/actions/user";
-import { getCookie, getUserFromStore } from "../../utils";
-
-function ProfilePage() {
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../services/actions/user";
+import ProfileForm from "../profile-form/profile-form";
+import ProfileOrders from "../profile-orders/profile-orders";
+function ProfilePage({ children, isRoute = false }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { user, onChange } = useSelector(getUserFromStore);
-  const [userState, setUserState] = useState(null);
 
   const onLogout = () => {
     dispatch(logout());
@@ -35,44 +22,9 @@ function ProfilePage() {
     navigate("/profile");
   };
 
-  useEffect(() => {
-    setUserState({ ...user, password: "" });
-  }, [user]);
-
-  const changeName = (e) => {
-    if (!onChange) {
-      dispatch({ type: START_CHANGING });
-    }
-    setUserState({ ...userState, name: e.target.value });
-  };
-
-  const changeLogin = (e) => {
-    if (!onChange) {
-      dispatch({ type: START_CHANGING });
-    }
-    setUserState({ ...userState, email: e.target.value });
-  };
-
-  const changePassword = (e) => {
-    if (!onChange) {
-      dispatch({ type: START_CHANGING });
-    }
-    setUserState({ ...userState, password: e.target.value });
-  };
-
-  const stopChanging = () => {
-    setUserState({ ...user, password: "" });
-    dispatch({ type: STOP_CHANGING });
-  };
-
-  const onSave = (e) => {
-    e.preventDefault();
-    dispatch(patchUser(userState, true));
-  };
-
   return (
-    <main className={`${styles.main} pt-30`}>
-      <div className={`${styles.buttons} pr-15`}>
+    <main className={`${styles.main} pt-10`}>
+      <div className={`${styles.buttons} pr-15 pt-20`}>
         <button
           className={`${
             styles.button
@@ -103,44 +55,13 @@ function ProfilePage() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <form className={styles.inputs} onSubmit={onSave}>
-        {userState && (
-          <>
-            <Input
-              placeholder="Имя"
-              icon="EditIcon"
-              value={userState.name}
-              onChange={changeName}
-            />
-            <EmailInput
-              icon="EditIcon"
-              value={userState.email}
-              onChange={changeLogin}
-            />
-            <PasswordInput
-              placeholder="Пароль"
-              icon="EditIcon"
-              value={userState.password}
-              onChange={changePassword}
-            />
-          </>
-        )}
-        {onChange && (
-          <div className={styles.formButtons}>
-            <Button
-              onClick={stopChanging}
-              htmlType="button"
-              type="secondary"
-              size="medium"
-            >
-              Отмена
-            </Button>
-            <Button htmlType="submit" type="primary" size="medium">
-              Сохранить
-            </Button>
-          </div>
-        )}
-      </form>
+      {children}
+      {isRoute && (
+        <Routes>
+          <Route path="/" element={<ProfileForm />} />
+          <Route path="/orders" element={<ProfileOrders />} />
+        </Routes>
+      )}
     </main>
   );
 }

@@ -15,3 +15,8 @@
     flex-direction: row;
     width: 1240px;
 }
+
+.feedListContainer{
+    width: 608px;
+    max-height: 852px;
+}

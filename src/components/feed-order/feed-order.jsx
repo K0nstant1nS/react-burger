@@ -4,18 +4,24 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
-import { getIngredients } from "../../utils";
+import { SET_INGREDIENT_MODAL } from "../../services/actions/ingredient-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients, getModal } from "../../utils";
 import ImagesSet from "../images-set/images-set";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "../modal/modal";
 
 function FeedOrder({ status, ingredients, _id, number, createdAt, updatedAt }) {
   const { data } = useSelector(getIngredients);
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const onClick = () => {
-    console.log(_id);
-    navigate(`/feed/${_id}`);
+    dispatch({ type: SET_INGREDIENT_MODAL });
+    pathname === "/feed"
+      ? navigate(`/feed/${_id}`)
+      : navigate(`/profile/orders/${_id}`);
   };
 
   const ingredientsArr = ingredients.map((id) => {

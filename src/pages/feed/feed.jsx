@@ -20,7 +20,9 @@ function Feed() {
         <h1 className="text text_type_main-large">Лента заказов</h1>
       </div>
       <div className={`${styles.contentContainer} pt-5`}>
-        <FeedList orders={orders} />
+        <div className={styles.feedListContainer}>
+          <FeedList orders={orders} />
+        </div>
         <FeedStatus done={done} inWork={inWork} />
       </div>
     </main>

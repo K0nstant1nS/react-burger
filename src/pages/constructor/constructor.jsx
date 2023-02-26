@@ -9,11 +9,16 @@ import ErrorReport from "../../components/error-report/error-report";
 import styles from "./constructor.module.css";
 import { getIngredients } from "../../utils";
 import { initData } from "../../services/actions/ingredients";
+import { Route, Routes, useLocation } from "react-router-dom";
+import IngredientPage from "../ingredient/ingredient";
+import { getModal } from "../../utils";
 
 function ConstructorPage() {
   const { status } = useSelector(getIngredients);
+  const { modal } = useSelector(getModal);
+  const { pathname } = useLocation();
 
-  function rednderer(status) {
+  function renderer(status) {
     switch (status) {
       case "loading": {
         return <Loader />;
@@ -32,11 +37,20 @@ function ConstructorPage() {
     }
   }
   return (
-    <main
-      className={status === "success" ? `mb-10 ${styles.main}` : styles.main}
-    >
-      {rednderer(status)}
-    </main>
+    <>
+      {(modal || pathname === "/") && (
+        <main
+          className={
+            status === "success" ? `mb-10 ${styles.main}` : styles.main
+          }
+        >
+          {renderer(status)}
+        </main>
+      )}
+      <Routes>
+        <Route path="/ingredients/:id" element={<IngredientPage />} />
+      </Routes>
+    </>
   );
 }
 

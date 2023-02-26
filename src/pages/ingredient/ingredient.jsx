@@ -17,12 +17,9 @@ function IngredientPage() {
   };
 
   return modal ? (
-    <>
-      <ConstructorPage />
-      <Modal closeModal={closeModal}>
-        <IngredientDetails />
-      </Modal>
-    </>
+    <Modal closeModal={closeModal}>
+      <IngredientDetails />
+    </Modal>
   ) : (
     <div className={`${styles.container} pt-30`}>
       <IngredientDetails />

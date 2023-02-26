@@ -39,7 +39,6 @@ function App() {
         {status === "success" && (
           <Routes>
             <Route path="/*" element={<ConstructorPage />} />
-            <Route path="ingredients/:id" element={<IngredientPage />} />
             <Route
               path="/profile/*"
               element={

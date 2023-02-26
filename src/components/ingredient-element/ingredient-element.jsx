@@ -20,8 +20,6 @@ function IngredientElement({ ingredient }) {
   const { constructorData } = useSelector(getStore);
   const onClick = () => {
     openIngredientModal(dispatch);
-    dispatch({ type: SCROLL_TO, scrollTo: { y: "" } });
-    dispatch({ type: SCROLL_ON_BUN });
     navigate(`/ingredients/${ingredient._id}`);
   };
   const [, dragRef] = useDrag({

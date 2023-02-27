@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import styles from "./feed-order.module.css";
 import {
   CurrencyIcon,
@@ -11,7 +11,15 @@ import ImagesSet from "../images-set/images-set";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../modal/modal";
 
-function FeedOrder({ status, ingredients, _id, number, createdAt, updatedAt }) {
+function FeedOrder({
+  status,
+  ingredients,
+  _id,
+  number,
+  createdAt,
+  updatedAt,
+  name,
+}) {
   const { data } = useSelector(getIngredients);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -24,23 +32,74 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, updatedAt }) {
       : navigate(`/profile/orders/${_id}`);
   };
 
-  const ingredientsArr = ingredients.map((id) => {
-    return data.find(({ _id }) => {
-      return _id === id;
-    });
-  });
-
-  console.log(ingredientsArr);
-
-  const imagesArr = ingredientsArr.map(({ image }) => {
-    return image;
-  });
-  const sum = ingredientsArr.reduce((sum, { price, type }) => {
-    if (type === "bun") {
-      return (sum += price * 2);
+  const visibleStatus = useCallback(() => {
+    switch (status) {
+      case "done": {
+        return (
+          <div
+            className={`${styles.statusDone} pt-2 pl-6 text text_type_main-default`}
+          >
+            Выполнен
+          </div>
+        );
+      }
+      case "created": {
+        return (
+          <div className="pt-2 pl-6 text text_type_main-default">Создан</div>
+        );
+      }
+      case "pending": {
+        <div className="pt-2 pl-6 text text_type_main-default">Готовится</div>;
+      }
     }
-    return (sum += price);
-  }, 0);
+  }, [status]);
+
+  let ingredientsArr = useMemo(
+    () =>
+      ingredients.map((id) => {
+        return data.find(({ _id }) => {
+          return _id === id;
+        });
+      }),
+    [ingredients]
+  );
+
+  ingredientsArr = useMemo(
+    () =>
+      ingredientsArr.reduce((sum, ingredient) => {
+        if (ingredient === undefined) {
+          return sum;
+        }
+        if (ingredient.type === "bun" && sum[0] && sum[0].type === "bun") {
+          return sum;
+        }
+        if (ingredient.type === "bun") {
+          return [ingredient, ...sum];
+        } else {
+          return [...sum, ingredient];
+        }
+      }, []),
+    [ingredientsArr]
+  );
+
+  const imagesArr = useMemo(
+    () =>
+      ingredientsArr.map(({ image }) => {
+        return image;
+      }),
+    [ingredientsArr]
+  );
+
+  const sum = useMemo(
+    () =>
+      ingredientsArr.reduce((sum, { price, type }) => {
+        if (type === "bun") {
+          return (sum = sum + price * 2);
+        }
+        return (sum = sum + price);
+      }, 0),
+    [ingredientsArr]
+  );
   return (
     <article
       onClick={onClick}
@@ -56,10 +115,10 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, updatedAt }) {
       <div
         className={`${styles.orderString} pt-6 pr-6 pl-6 text text_type_main-medium`}
       >
-        Death Star Starship Main бургер
+        {name}
       </div>
-      {status && <div></div>}
-      <div className={`${styles.orderString} p-6 `}>
+      {status !== "ignore" && visibleStatus()}
+      <div className={`${styles.orderString} p-6`}>
         <div>
           <ImagesSet links={imagesArr} />
         </div>

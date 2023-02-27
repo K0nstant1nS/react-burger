@@ -39,7 +39,7 @@ function ProfilePage({ children, isRoute = false }) {
           className={`${
             styles.button
           } text text_type_main-medium text_color_inactive ${
-            pathname === "/profile/orders" && styles.buttonActive
+            pathname.indexOf("/profile/orders") !== -1 && styles.buttonActive
           }`}
           onClick={onOrders}
         >

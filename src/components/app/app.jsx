@@ -11,13 +11,10 @@ import RegisterPage from "../../pages/register/register";
 import ProfilePage from "../../pages/profile/profile";
 import ProtectedRouteElement from "../protected-route-element";
 import UnAuthRoute from "../un-auth-route";
-import IngredientPage from "../../pages/ingredient/ingredient";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import { getUser } from "../../services/actions/user";
 import ErrorPage from "../../pages/error/error";
-import OrdersPage from "../../pages/orders/orders";
 import Feed from "../../pages/feed/feed";
-import OrderPage from "../../pages/order/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,12 +43,7 @@ function App() {
                   element={<ProfilePage isRoute={true} />}
                 />
               }
-            >
-              <Route
-                path="orders"
-                element={<ProtectedRouteElement element={<OrdersPage />} />}
-              />
-            </Route>
+            />
             <Route
               path="/login"
               element={<UnAuthRoute element={<LoginPage />} />}

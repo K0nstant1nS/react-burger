@@ -26,6 +26,7 @@ export default class Api {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${getCookie("accessToken")}`,
       },
       body: JSON.stringify({ ingredients: idsArr }),
     });

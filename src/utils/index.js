@@ -54,6 +54,8 @@ export const getUserFromStore = (store) => store.user;
 
 export const getFormError = (store) => store.formError;
 
+export const getOrdersData = (store) => store.orders;
+
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp(

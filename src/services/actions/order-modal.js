@@ -7,6 +7,7 @@ export function makeOrder(dataArr) {
   return (dispatch) => {
     Api.makeOrder(dataArr)
       .then((data) => {
+        console.log(data);
         dispatch({ type: MAKE_ORDER, number: data.order.number });
       })
       .catch((err) => {

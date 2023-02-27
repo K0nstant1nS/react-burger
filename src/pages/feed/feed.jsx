@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import FeedList from "../../components/feed-list/feed-list";
 import styles from "./feed.module.css";
 import FeedStatus from "../../components/feed-status/feed-status";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation } from "react-router-dom";
 import OrderPage from "../order/order";
 import { getModal } from "../../utils";
+import {
+  CLOSE_ORDERS_SOCKET,
+  INIT_ORDERS_SOCKET,
+} from "../../services/actions/orders";
+import Loader from "../../components/loader/loader";
 
 function Feed() {
-  const { orders } = useSelector((store) => store.orders);
+  const { orders, connected } = useSelector((store) => store.orders);
   const { pathname } = useLocation();
   const { modal } = useSelector(getModal);
+  const dispatch = useDispatch();
 
-  const done = orders.filter(({ status }) => {
-    return status === "done";
-  });
+  const done = useMemo(
+    () =>
+      orders.filter(({ status }) => {
+        return status === "done";
+      }),
+    [orders]
+  );
 
-  const inWork = orders.filter(({ status }) => {
-    return status === "inWork";
-  });
-  return (
+  const inWork = useMemo(
+    () =>
+      orders.filter(({ status }) => {
+        return status !== "done";
+      }),
+    [orders]
+  );
+
+  useEffect(() => {
+    dispatch({ type: INIT_ORDERS_SOCKET });
+  }, []);
+
+  return connected ? (
     <>
       {(modal || pathname === "/feed") && (
         <main className={`${styles.main} pt-10`}>
@@ -28,16 +47,20 @@ function Feed() {
           </div>
           <div className={`${styles.contentContainer} pt-5`}>
             <div className={styles.feedListContainer}>
-              <FeedList orders={orders} />
+              <FeedList orders={orders} status="ignore" />
             </div>
             <FeedStatus done={done} inWork={inWork} />
           </div>
         </main>
       )}
       <Routes>
-        <Route path="/:id" element={<OrderPage />} />
+        <Route path="/:id" element={<OrderPage storage="orders" />} />
       </Routes>
     </>
+  ) : (
+    <div className={styles.loader}>
+      <Loader />
+    </div>
   );
 }
 

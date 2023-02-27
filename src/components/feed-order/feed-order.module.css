@@ -17,3 +17,7 @@
     flex-direction: row;
     align-items: center;
 }
+
+.statusDone{
+    color: #00CCCC;
+}

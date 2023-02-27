@@ -1,212 +1,44 @@
+import {
+  CLOSE_ORDERS_SOCKET,
+  SET_ORDERS_DATA,
+  SET_USER_ORDERS_DATA,
+  SUCCESS_ORDERS_SOCKET,
+} from "../actions/orders";
+
 const initialState = {
-  orders: [
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-      ],
-      _id: "a",
-      status: "done",
-      number: 0,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "b",
-      status: "done",
-      number: 0,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "c",
-      status: "done",
-      number: 0,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "d",
-      status: "done",
-      number: 0,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "e",
-      status: "done",
-      number: 0,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "f",
-      status: "inWork",
-      number: 1234,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "g",
-      status: "done",
-      number: 12345,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "h",
-      status: "done",
-      number: 167,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "i",
-      status: "done",
-      number: 1365,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "j",
-      status: "inWork",
-      number: 1267,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "k",
-      status: "inWork",
-      number: 1908,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-    {
-      ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733c9",
-        "60d3b41abdacab0026a733ce",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d1",
-        "60d3b41abdacab0026a733d3",
-      ],
-      _id: "l",
-      status: "done",
-      number: 1000,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z",
-    },
-  ],
+  orders: [],
+  userOrders: [],
+  status: {
+    total: null,
+    totalToday: null,
+  },
+  connected: false,
 };
 
 export function ordersReducer(state = initialState, action) {
   switch (action.type) {
+    case SUCCESS_ORDERS_SOCKET: {
+      return { ...state, connected: true };
+    }
+    case CLOSE_ORDERS_SOCKET: {
+      return { ...state, connected: false };
+    }
+    case SET_ORDERS_DATA: {
+      return {
+        ...state,
+        orders: action.payload.orders,
+        status: {
+          total: action.payload.total,
+          totalToday: action.payload.totalToday,
+        },
+      };
+    }
+    case SET_USER_ORDERS_DATA: {
+      return {
+        ...state,
+        userOrders: action.payload.orders,
+      };
+    }
     default: {
       return state;
     }

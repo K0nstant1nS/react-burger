@@ -13,7 +13,7 @@ import {
 import Loader from "../../components/loader/loader";
 
 function Feed() {
-  const { orders, connected } = useSelector((store) => store.orders);
+  const { orders, connectedAll } = useSelector((store) => store.orders);
   const { pathname } = useLocation();
   const { modal } = useSelector(getModal);
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function Feed() {
     dispatch({ type: INIT_ORDERS_SOCKET });
   }, []);
 
-  return connected ? (
+  return connectedAll === "success" ? (
     <>
       {(modal || pathname === "/feed") && (
         <main className={`${styles.main} pt-10`}>

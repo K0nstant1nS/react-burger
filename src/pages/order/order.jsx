@@ -19,6 +19,7 @@ function OrderPage({ storage }) {
   const navigate = useNavigate();
   const { id } = useParams();
   const orders = useSelector((store) => store.orders[storage]);
+  console.log(orders);
   const { data } = useSelector(getIngredients);
   const { ingredients, status, number, createdAt } = orders.find(({ _id }) => {
     return id === _id;

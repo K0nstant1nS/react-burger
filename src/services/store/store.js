@@ -12,20 +12,24 @@ import { formErrorReducer } from "../reducers/form-errors";
 import { ordersReducer } from "../reducers/orders";
 import {
   CLOSE_ORDERS_SOCKET,
+  CLOSE_USER_ORDERS_SOCKET,
   INIT_ORDERS_SOCKET,
   INIT_USER_ORDERS_SOCKET,
   SET_ORDERS_DATA,
   SET_USER_ORDERS_DATA,
   SUCCESS_ORDERS_SOCKET,
+  SUCCESS_USER_ORDERS_SOCKET,
 } from "../actions/orders";
 
 const socketTypes = {
   init: INIT_ORDERS_SOCKET,
   initWithUser: INIT_USER_ORDERS_SOCKET,
   onOpen: SUCCESS_ORDERS_SOCKET,
+  onOpenUser: SUCCESS_USER_ORDERS_SOCKET,
   onMessage: SET_ORDERS_DATA,
   onMessageUser: SET_USER_ORDERS_DATA,
   onClose: CLOSE_ORDERS_SOCKET,
+  onCloseUser: CLOSE_USER_ORDERS_SOCKET,
 };
 
 const rootReducer = combineReducers({

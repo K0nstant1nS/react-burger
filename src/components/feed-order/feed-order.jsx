@@ -49,7 +49,9 @@ function FeedOrder({
         );
       }
       case "pending": {
-        <div className="pt-2 pl-6 text text_type_main-default">Готовится</div>;
+        return (
+          <div className="pt-2 pl-6 text text_type_main-default">Готовится</div>
+        );
       }
     }
   }, [status]);

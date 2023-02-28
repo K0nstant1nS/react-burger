@@ -5,6 +5,8 @@ import {
   SET_USER_ORDERS_DATA,
   SUCCESS_ORDERS_SOCKET,
   SUCCESS_USER_ORDERS_SOCKET,
+  SET_SOCKET_ERROR,
+  SET_USER_SOCKET_ERROR,
 } from "../actions/orders";
 
 const initialState = {
@@ -21,10 +23,10 @@ const initialState = {
 export function ordersReducer(state = initialState, action) {
   switch (action.type) {
     case SUCCESS_ORDERS_SOCKET: {
-      return { ...state, connectedAll: action.status };
+      return { ...state, connectedAll: true };
     }
     case SUCCESS_USER_ORDERS_SOCKET: {
-      return { ...state, connectedUser: action.status };
+      return { ...state, connectedUser: true };
     }
     case CLOSE_ORDERS_SOCKET: {
       return { ...state, connectedAll: false };
@@ -46,6 +48,26 @@ export function ordersReducer(state = initialState, action) {
       return {
         ...state,
         userOrders: { data: action.payload.orders, status: true },
+      };
+    }
+    case SET_SOCKET_ERROR: {
+      return {
+        ...state,
+        orders: {
+          data: [],
+          status: true,
+        },
+        connectedAll: false,
+      };
+    }
+    case SET_USER_SOCKET_ERROR: {
+      return {
+        ...state,
+        userOrders: {
+          data: [],
+          status: true,
+        },
+        connectedUser: false,
       };
     }
     default: {

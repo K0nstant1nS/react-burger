@@ -1,5 +1,4 @@
 import { getCookie } from "../../utils";
-import { SET_ORDERS_DATA } from "../actions/orders";
 import Api from "../../API";
 
 export const socketMiddleware = (url, actions) => {
@@ -8,7 +7,7 @@ export const socketMiddleware = (url, actions) => {
     let userSocket = null;
     return (next) => (action) => {
       const { dispatch } = store;
-      const { type, payload } = action;
+      const { type } = action;
       const {
         init,
         initWithUser,
@@ -22,18 +21,14 @@ export const socketMiddleware = (url, actions) => {
         onErrorUser,
       } = actions;
       if (type === init) {
-        socket = new WebSocket("wss://norma.nomoreparties.space/orders/all");
+        socket = new WebSocket(`${url}/all`);
       }
       if (type === initWithUser) {
-        userSocket = new WebSocket(
-          `wss://norma.nomoreparties.space/orders?token=${getCookie(
-            "accessToken"
-          )}`
-        );
+        userSocket = new WebSocket(`${url}?token=${getCookie("accessToken")}`);
       }
       if (socket) {
         socket.onopen = () => {
-          dispatch({ type: onOpen, status: "success" });
+          dispatch({ type: onOpen });
         };
         socket.onmessage = (event) => {
           const { total, orders, totalToday } = JSON.parse(event.data);
@@ -43,12 +38,14 @@ export const socketMiddleware = (url, actions) => {
           dispatch({ type: onClose, payload: event });
         };
         socket.onerror = (event) => {
-          dispatch({ type: onError, payload: event });
+          console.log(event);
+          dispatch({ type: onError });
+          socket.close();
         };
       }
       if (userSocket) {
         userSocket.onopen = () => {
-          dispatch({ type: onOpenUser, status: "success" });
+          dispatch({ type: onOpenUser });
         };
         userSocket.onmessage = (event) => {
           let { orders } = JSON.parse(event.data);
@@ -71,7 +68,9 @@ export const socketMiddleware = (url, actions) => {
           dispatch({ type: onCloseUser, payload: event });
         };
         userSocket.onerror = (event) => {
-          dispatch({ type: onErrorUser, payload: event });
+          console.log(event);
+          dispatch({ type: onErrorUser });
+          userSocket.close();
         };
       }
       next(action);

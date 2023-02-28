@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from "react";
+import PropTypes from "prop-types";
 import styles from "./feed-order.module.css";
 import {
   CurrencyIcon,
@@ -124,5 +125,14 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
     </article>
   );
 }
+
+FeedOrder.propTypes = {
+  _id: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string),
+  status: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+};
 
 export default FeedOrder;

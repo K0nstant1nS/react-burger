@@ -21,11 +21,14 @@ function BurgerConstructor() {
   const onSubmit = () => {
     if (user) {
       dispatch(
-        makeOrder([
-          ...constructorData.common.map((item) => item._id.toString()),
-          constructorData.bun._id,
-          constructorData.bun._id,
-        ])
+        makeOrder(
+          [
+            ...constructorData.common.map((item) => item._id.toString()),
+            constructorData.bun._id,
+            constructorData.bun._id,
+          ],
+          true
+        )
       );
     } else {
       navigate("/login");

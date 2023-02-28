@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getUserFromStore } from "../utils";
@@ -14,5 +15,9 @@ function UnAuthRoute({ element }) {
 
   return element;
 }
+
+UnAuthRoute.propTypes = {
+  element: PropTypes.element,
+};
 
 export default UnAuthRoute;

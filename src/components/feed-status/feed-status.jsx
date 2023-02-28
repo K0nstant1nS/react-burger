@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { getOrdersData } from "../../utils";
+import { getOrdersData, composeList } from "../../utils";
 import styles from "./feed-status.module.css";
 
 function FeedStatus({ done, inWork }) {
@@ -17,9 +18,6 @@ function FeedStatus({ done, inWork }) {
       )),
     [done]
   );
-  if (doneList.length > 10) {
-    doneList = doneList.slice(0, 10);
-  }
 
   let inWorkList = useMemo(
     () =>
@@ -33,19 +31,19 @@ function FeedStatus({ done, inWork }) {
     [inWork]
   );
 
-  if (inWorkList.length > 10) {
-    inWorkList = inWorkList.slice(0, 10);
-  }
-
   return (
     <div className={`${styles.container} pl-15`}>
       <div className={`${styles.ready} pb-15`}>
         <span className="text text_type_main-medium pb-6">Готовы:</span>
-        <div className={styles.numbersList}>{doneList}</div>
+        <div className={styles.numbersList}>
+          {composeList(doneList, styles.column)}
+        </div>
       </div>
       <div className={`${styles.inWork} pb-15`}>
         <span className="text text_type_main-medium pb-6">В работе:</span>
-        <div className={styles.numbersList}>{inWorkList}</div>
+        <div className={styles.numbersList}>
+          {composeList(inWorkList, styles.column)}
+        </div>
       </div>
       <div className={`${styles.all} pb-15`}>
         <span className="text text_type_main-medium">
@@ -66,5 +64,30 @@ function FeedStatus({ done, inWork }) {
     </div>
   );
 }
+
+FeedStatus.propTypes = {
+  done: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      ingredients: PropTypes.arrayOf(PropTypes.string),
+      status: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired,
+      number: PropTypes.number.isRequired,
+    })
+  ),
+  inWork: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      ingredients: PropTypes.arrayOf(PropTypes.string),
+      status: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired,
+      number: PropTypes.number.isRequired,
+    })
+  ),
+};
 
 export default FeedStatus;

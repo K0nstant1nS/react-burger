@@ -19,6 +19,8 @@ import {
   SET_USER_ORDERS_DATA,
   SUCCESS_ORDERS_SOCKET,
   SUCCESS_USER_ORDERS_SOCKET,
+  SET_SOCKET_ERROR,
+  SET_USER_SOCKET_ERROR,
 } from "../actions/orders";
 
 const socketTypes = {
@@ -30,6 +32,8 @@ const socketTypes = {
   onMessageUser: SET_USER_ORDERS_DATA,
   onClose: CLOSE_ORDERS_SOCKET,
   onCloseUser: CLOSE_USER_ORDERS_SOCKET,
+  onError: SET_SOCKET_ERROR,
+  onErrorUser: SET_USER_SOCKET_ERROR,
 };
 
 const rootReducer = combineReducers({
@@ -52,7 +56,7 @@ const enchancer = composeEnhancers(
   applyMiddleware(
     thunk,
     userMiddleware,
-    socketMiddleware("wss://norma.nomoreparties.space/orders/all", socketTypes)
+    socketMiddleware("wss://norma.nomoreparties.space/orders", socketTypes)
   )
 );
 

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-
+import PropTypes from "prop-types";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./order.module.css";
@@ -12,9 +12,6 @@ import {
 import Modal from "../../components/modal/modal";
 import { REMOVE_INGREDIENT_MODAL } from "../../services/actions/ingredient-modal";
 import { v4 } from "uuid";
-import Feed from "../feed/feed";
-import ProfilePage from "../profile/profile";
-import ProfileOrders from "../profile-orders/profile-orders";
 
 function OrderPage({ storage }) {
   const dispatch = useDispatch();
@@ -165,5 +162,9 @@ function OrderPage({ storage }) {
     </div>
   );
 }
+
+OrderPage.propTypes = {
+  storage: PropTypes.string.isRequired,
+};
 
 export default OrderPage;

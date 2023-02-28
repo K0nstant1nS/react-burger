@@ -107,3 +107,46 @@ export function initFormState(formSettings) {
 
   return inputsObj;
 }
+
+export const composeList = (list, columnClass) => {
+  const length = list.length;
+  if (list.length > 40) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, 20)}</div>
+        <div className={columnClass}>{list.slice(20, 30)}</div>
+        <div className={columnClass}>{list.slice(30, 40)}</div>
+        <div className={columnClass}>{list.slice(40, length)}</div>
+      </>
+    );
+  }
+  if (list.length > 30) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, 20)}</div>
+        <div className={columnClass}>{list.slice(20, 30)}</div>
+        <div className={columnClass}>{list.slice(30, length)}</div>
+      </>
+    );
+  }
+  if (list.length > 20) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, 20)}</div>
+        <div className={columnClass}>{list.slice(20, length)}</div>
+      </>
+    );
+  }
+  if (list.length > 10) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, length)}</div>
+      </>
+    );
+  }
+  return <div className={columnClass}>{list}</div>;
+};

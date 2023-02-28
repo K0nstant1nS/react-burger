@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,7 +86,7 @@ function OrderPage({ storage }) {
     isFeed ? navigate("/feed") : navigate("/profile/orders");
   };
 
-  const renderStatus = () => {
+  const renderStatus = useCallback(() => {
     switch (status) {
       case "done": {
         return (
@@ -106,7 +106,7 @@ function OrderPage({ storage }) {
         );
       }
     }
-  };
+  }, [status]);
 
   return modal ? (
     <Modal closeModal={closeModal}>

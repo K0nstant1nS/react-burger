@@ -15,6 +15,16 @@ export const ingredientProps = PropTypes.shape({
   __v: PropTypes.number.isRequired,
 }).isRequired;
 
+export const orderProps = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string),
+  status: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string,
+  number: PropTypes.number,
+});
+
 export const dataProps = PropTypes.arrayOf(
   PropTypes.shape(ingredientProps.isRequired).isRequired
 ).isRequired;

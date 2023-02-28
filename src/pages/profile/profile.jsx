@@ -7,7 +7,7 @@ import ProfileForm from "../profile-form/profile-form";
 import ProfileOrders from "../profile-orders/profile-orders";
 import { getModal } from "../../utils";
 
-function ProfilePage({ children, isRoute = false }) {
+function ProfilePage({ children }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -64,12 +64,10 @@ function ProfilePage({ children, isRoute = false }) {
         </div>
       )}
       {children}
-      {isRoute && (
-        <Routes>
-          <Route path="/" element={<ProfileForm />} />
-          <Route path="/orders/*" element={<ProfileOrders />} />
-        </Routes>
-      )}
+      <Routes>
+        <Route path="/" element={<ProfileForm />} />
+        <Route path="/orders/*" element={<ProfileOrders />} />
+      </Routes>
     </main>
   );
 }

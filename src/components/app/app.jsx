@@ -38,11 +38,7 @@ function App() {
             <Route path="/*" element={<ConstructorPage />} />
             <Route
               path="/profile/*"
-              element={
-                <ProtectedRouteElement
-                  element={<ProfilePage isRoute={true} />}
-                />
-              }
+              element={<ProtectedRouteElement element={<ProfilePage />} />}
             />
             <Route
               path="/login"

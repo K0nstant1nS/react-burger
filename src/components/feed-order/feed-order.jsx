@@ -11,6 +11,7 @@ import { getIngredients, getModal } from "../../utils";
 import ImagesSet from "../images-set/images-set";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../modal/modal";
+import { orderProps } from "../../utils/propTypes";
 
 function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
   const { data } = useSelector(getIngredients);
@@ -126,13 +127,6 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
   );
 }
 
-FeedOrder.propTypes = {
-  _id: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.string),
-  status: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
-};
+FeedOrder.propTypes = { orderProps };
 
 export default FeedOrder;

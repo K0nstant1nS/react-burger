@@ -28,7 +28,9 @@ function ProfileOrders() {
       </Routes>
     </>
   ) : (
-    <Loader />
+    <div className={styles.loader}>
+      <Loader />
+    </div>
   );
 }
 

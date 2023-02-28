@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { getOrdersData, composeList } from "../../utils";
 import styles from "./feed-status.module.css";
+import { orderProps } from "../../utils/propTypes";
 
 function FeedStatus({ done, inWork }) {
   const { status } = useSelector(getOrdersData);
@@ -66,28 +67,8 @@ function FeedStatus({ done, inWork }) {
 }
 
 FeedStatus.propTypes = {
-  done: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      ingredients: PropTypes.arrayOf(PropTypes.string),
-      status: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired,
-    })
-  ),
-  inWork: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      ingredients: PropTypes.arrayOf(PropTypes.string),
-      status: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired,
-    })
-  ),
+  done: PropTypes.arrayOf(orderProps),
+  inWork: PropTypes.arrayOf(orderProps),
 };
 
 export default FeedStatus;

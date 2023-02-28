@@ -11,15 +11,7 @@ import ImagesSet from "../images-set/images-set";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../modal/modal";
 
-function FeedOrder({
-  status,
-  ingredients,
-  _id,
-  number,
-  createdAt,
-  updatedAt,
-  name,
-}) {
+function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
   const { data } = useSelector(getIngredients);
   const dispatch = useDispatch();
   const { pathname } = useLocation();

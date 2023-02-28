@@ -8,8 +8,8 @@ import {
 } from "../actions/orders";
 
 const initialState = {
-  orders: [],
-  userOrders: [],
+  orders: { data: [], status: false },
+  userOrders: { data: [], status: false },
   status: {
     total: null,
     totalToday: null,
@@ -35,7 +35,7 @@ export function ordersReducer(state = initialState, action) {
     case SET_ORDERS_DATA: {
       return {
         ...state,
-        orders: action.payload.orders,
+        orders: { data: action.payload.orders, status: true },
         status: {
           total: action.payload.total,
           totalToday: action.payload.totalToday,
@@ -45,7 +45,7 @@ export function ordersReducer(state = initialState, action) {
     case SET_USER_ORDERS_DATA: {
       return {
         ...state,
-        userOrders: action.payload.orders,
+        userOrders: { data: action.payload.orders, status: true },
       };
     }
     default: {

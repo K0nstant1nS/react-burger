@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./order.module.css";
@@ -10,6 +11,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../components/modal/modal";
 import { REMOVE_INGREDIENT_MODAL } from "../../services/actions/ingredient-modal";
+import { v4 } from "uuid";
 import Feed from "../feed/feed";
 import ProfilePage from "../profile/profile";
 import ProfileOrders from "../profile-orders/profile-orders";
@@ -18,8 +20,7 @@ function OrderPage({ storage }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const orders = useSelector((store) => store.orders[storage]);
-  console.log(orders);
+  const orders = useSelector((store) => store.orders[storage].data);
   const { data } = useSelector(getIngredients);
   const { ingredients, status, number, createdAt } = orders.find(({ _id }) => {
     return id === _id;
@@ -73,7 +74,11 @@ function OrderPage({ storage }) {
     () =>
       ingredientsArr.map((item) => {
         return (
-          <OrderIngredient ingredient={item.ingredient} factor={item.factor} />
+          <OrderIngredient
+            key={v4()}
+            ingredient={item.ingredient}
+            factor={item.factor}
+          />
         );
       }),
     [ingredientsArr]
@@ -82,6 +87,28 @@ function OrderPage({ storage }) {
   const closeModal = () => {
     dispatch({ type: REMOVE_INGREDIENT_MODAL });
     isFeed ? navigate("/feed") : navigate("/profile/orders");
+  };
+
+  const renderStatus = () => {
+    switch (status) {
+      case "done": {
+        return (
+          <span className={`${styles.done} text text_type_main-default pb-15`}>
+            выполнен
+          </span>
+        );
+      }
+      case "created": {
+        return (
+          <span className="text text_type_main-default pb-15">Создан</span>
+        );
+      }
+      case "pending": {
+        return (
+          <span className="text text_type_main-default pb-15">Готовится</span>
+        );
+      }
+    }
   };
 
   return modal ? (
@@ -96,13 +123,7 @@ function OrderPage({ storage }) {
           <span className="text text_type_main-medium pb-3">
             Black Hole Singularity острый бургер
           </span>
-          {status === "done" && (
-            <span
-              className={`${styles.done} text text_type_main-default pb-15`}
-            >
-              выполнен
-            </span>
-          )}
+          {renderStatus()}
           <span className="text text_type_main-medium pb-6">Состав:</span>
           <div className={`${styles.ingredients} pr-8`}>{ingredientsList}</div>
           <div className={`${styles.footer} pt-10`}>
@@ -128,11 +149,7 @@ function OrderPage({ storage }) {
         <span className="text text_type_main-medium pb-3">
           Black Hole Singularity острый бургер
         </span>
-        {status === "done" && (
-          <span className={`${styles.done} text text_type_main-default pb-15`}>
-            выполнен
-          </span>
-        )}
+        {renderStatus()}
         <span className="text text_type_main-medium pb-6">Состав:</span>
         <div className={`${styles.ingredients} pr-8`}>{ingredientsList}</div>
         <div className={`${styles.footer} pt-10`}>

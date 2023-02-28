@@ -13,14 +13,14 @@ import {
 import Loader from "../../components/loader/loader";
 
 function Feed() {
-  const { orders, connectedAll } = useSelector((store) => store.orders);
+  const { orders } = useSelector((store) => store.orders);
   const { pathname } = useLocation();
   const { modal } = useSelector(getModal);
   const dispatch = useDispatch();
 
   const done = useMemo(
     () =>
-      orders.filter(({ status }) => {
+      orders.data.filter(({ status }) => {
         return status === "done";
       }),
     [orders]
@@ -28,7 +28,7 @@ function Feed() {
 
   const inWork = useMemo(
     () =>
-      orders.filter(({ status }) => {
+      orders.data.filter(({ status }) => {
         return status !== "done";
       }),
     [orders]
@@ -38,7 +38,7 @@ function Feed() {
     dispatch({ type: INIT_ORDERS_SOCKET });
   }, []);
 
-  return connectedAll === "success" ? (
+  return orders.status ? (
     <>
       {(modal || pathname === "/feed") && (
         <main className={`${styles.main} pt-10`}>
@@ -47,7 +47,7 @@ function Feed() {
           </div>
           <div className={`${styles.contentContainer} pt-5`}>
             <div className={styles.feedListContainer}>
-              <FeedList orders={orders} status="ignore" />
+              <FeedList orders={orders.data} status="ignore" />
             </div>
             <FeedStatus done={done} inWork={inWork} />
           </div>

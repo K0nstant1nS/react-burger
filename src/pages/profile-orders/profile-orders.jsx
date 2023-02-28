@@ -9,18 +9,18 @@ import OrderPage from "../order/order";
 import styles from "./profile-orders.module.css";
 
 function ProfileOrders() {
-  const { userOrders, connectedUser } = useSelector(getOrdersData);
+  const { userOrders } = useSelector(getOrdersData);
   const { modal } = useSelector(getModal);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: INIT_USER_ORDERS_SOCKET });
   }, []);
-  return connectedUser === "success" ? (
+  return userOrders.status ? (
     <>
       {(modal || pathname === "/profile/orders") && (
         <div className={styles.content}>
-          <FeedList orders={userOrders} />
+          <FeedList orders={userOrders.data} />
         </div>
       )}
       <Routes>

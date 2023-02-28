@@ -33,12 +33,11 @@ export const socketMiddleware = (url, actions) => {
       }
       if (socket) {
         socket.onopen = () => {
-          dispatch({ type: onOpen, status: "loading" });
+          dispatch({ type: onOpen, status: "success" });
         };
         socket.onmessage = (event) => {
           const { total, orders, totalToday } = JSON.parse(event.data);
           dispatch({ type: onMessage, payload: { total, totalToday, orders } });
-          dispatch({ type: onOpen, status: "success" });
         };
         socket.onсlose = (event) => {
           dispatch({ type: onClose, payload: event });
@@ -49,7 +48,7 @@ export const socketMiddleware = (url, actions) => {
       }
       if (userSocket) {
         userSocket.onopen = () => {
-          dispatch({ type: onOpenUser, status: "loading" });
+          dispatch({ type: onOpenUser, status: "success" });
         };
         userSocket.onmessage = (event) => {
           let { orders } = JSON.parse(event.data);
@@ -62,11 +61,11 @@ export const socketMiddleware = (url, actions) => {
             }, 5000);
           }
           orders.reverse();
+          console.log(orders[0].status);
           dispatch({
             type: onMessageUser,
             payload: { orders },
           });
-          dispatch({ type: onOpenUser, status: "success" });
         };
         userSocket.onсlose = (event) => {
           dispatch({ type: onCloseUser, payload: event });

@@ -9,6 +9,7 @@ function FeedStatus({ done, inWork }) {
     () =>
       done.map(({ number }) => (
         <p
+          key={number}
           className={`${styles.doneNumbers} text text_type_digits-default pb-2`}
         >
           {number}
@@ -23,7 +24,11 @@ function FeedStatus({ done, inWork }) {
   let inWorkList = useMemo(
     () =>
       inWork.map(({ number }) => {
-        return <p className="text text_type_digits-default pb-2">{number}</p>;
+        return (
+          <p key={number} className="text text_type_digits-default pb-2">
+            {number}
+          </p>
+        );
       }),
     [inWork]
   );

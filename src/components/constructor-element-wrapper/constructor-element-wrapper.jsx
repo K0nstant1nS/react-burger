@@ -75,7 +75,6 @@ ConstructorElementWrapper.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   index: PropTypes.number,
-  handleClose: PropTypes.func,
 };
 
 export default ConstructorElementWrapper;

@@ -5,9 +5,9 @@ import {
 } from "../services/actions/ingredients-scroll";
 
 import {
-  SET_INGREDIENT_DETAILS,
-  REMOVE_INGREDIENT_DETAILS,
-} from "../services/actions/ingredient-modal";
+  SET_ROUTE_MODAL,
+  REMOVE_ROUTE_MODAL,
+} from "../services/actions/route-modal";
 
 import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
 
@@ -26,12 +26,12 @@ export const handleScrollIniter = (target, dispatch) => {
   };
 };
 
-export function openIngredientModal(dispatch, ingredient) {
-  dispatch({ type: SET_INGREDIENT_DETAILS, ingredient });
+export function openIngredientModal(dispatch) {
+  dispatch({ type: SET_ROUTE_MODAL });
 }
 
 export function closeIngredientModal(dispatch) {
-  dispatch({ type: REMOVE_INGREDIENT_DETAILS });
+  dispatch({ type: REMOVE_ROUTE_MODAL });
 }
 
 export function deleteHandler(dispatch, { index, price }) {
@@ -44,6 +44,109 @@ export function deleteHandler(dispatch, { index, price }) {
 
 export const getStore = (store) => store;
 
+export const getModal = (store) => store.modal;
+
 export const getIngredients = (store) => store.ingredients;
 
-export const getOrderNumber = (store) => store.orderData.number;
+export const getOrderData = (store) => store.orderData;
+
+export const getUserFromStore = (store) => store.user;
+
+export const getFormError = (store) => store.formError;
+
+export const getOrdersData = (store) => store.orders;
+
+export function getCookie(name) {
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+export function setCookie(name, value, props) {
+  props = props || {};
+  let exp = props.expires;
+  if (typeof exp == "number" && exp) {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
+  }
+  if (exp && exp.toUTCString) {
+    props.expires = exp.toUTCString();
+  }
+  value = encodeURIComponent(value);
+  let updatedCookie = name + "=" + value;
+  for (const propName in props) {
+    updatedCookie += "; " + propName;
+    const propValue = props[propName];
+    if (propValue !== true) {
+      updatedCookie += "=" + propValue;
+    }
+  }
+  document.cookie = updatedCookie;
+}
+
+export function deleteCookie(name) {
+  setCookie(name, null, { expires: -1 });
+}
+
+export function initFormState(formSettings) {
+  const keys = Object.keys(formSettings).filter((item) => {
+    return item === "title" || item === "buttonSettings" ? false : true;
+  });
+
+  const inputsObj = {};
+
+  keys.forEach((item) => {
+    inputsObj[item] = "";
+  });
+
+  return inputsObj;
+}
+
+export const composeList = (list, columnClass) => {
+  const length = list.length;
+  if (list.length > 40) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, 20)}</div>
+        <div className={columnClass}>{list.slice(20, 30)}</div>
+        <div className={columnClass}>{list.slice(30, 40)}</div>
+        <div className={columnClass}>{list.slice(40, length)}</div>
+      </>
+    );
+  }
+  if (list.length > 30) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, 20)}</div>
+        <div className={columnClass}>{list.slice(20, 30)}</div>
+        <div className={columnClass}>{list.slice(30, length)}</div>
+      </>
+    );
+  }
+  if (list.length > 20) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, 20)}</div>
+        <div className={columnClass}>{list.slice(20, length)}</div>
+      </>
+    );
+  }
+  if (list.length > 10) {
+    return (
+      <>
+        <div className={columnClass}>{list.slice(0, 10)}</div>
+        <div className={columnClass}>{list.slice(10, length)}</div>
+      </>
+    );
+  }
+  return <div className={columnClass}>{list}</div>;
+};

@@ -1,0 +1,14 @@
+.container{
+    display: grid;
+    grid-template-columns: min-content auto max-content;
+    align-items: center;
+    height: 64px;
+    width: 100%;
+}
+
+.cost{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+

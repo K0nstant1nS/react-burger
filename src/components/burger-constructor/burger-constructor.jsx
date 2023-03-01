@@ -8,13 +8,33 @@ import ScrollableConstructContainer from "../scrollable-construct-container/scro
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { MAKE_ORDER, CLOSE_MODAL } from "../../services/actions/order-modal";
+import { CLOSE_MODAL } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
 import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
-import { getStore } from "../../utils";
+import { getOrderData, getStore, getUserFromStore } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
+  const { user } = useSelector(getUserFromStore);
+  const { status } = useSelector(getOrderData);
+  const navigate = useNavigate();
+  const onSubmit = () => {
+    if (user) {
+      dispatch(
+        makeOrder(
+          [
+            ...constructorData.common.map((item) => item._id.toString()),
+            constructorData.bun._id,
+            constructorData.bun._id,
+          ],
+          true
+        )
+      );
+    } else {
+      navigate("/login");
+    }
+  };
   const { constructorData, orderData } = useSelector(getStore);
   const dispatch = useDispatch();
   const [, dropTarget] = useDrop({
@@ -37,19 +57,11 @@ function BurgerConstructor() {
           </div>
         </div>
         <Button
-          disabled={false}
+          disabled={status === "pending"}
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => {
-            dispatch(
-              makeOrder([
-                ...constructorData.common.map((item) => item._id.toString()),
-                constructorData.bun._id,
-                constructorData.bun._id,
-              ])
-            );
-          }}
+          onClick={onSubmit}
         >
           Оформить заказ
         </Button>

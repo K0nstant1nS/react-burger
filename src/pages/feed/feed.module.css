@@ -1,0 +1,29 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 1240px;
+}
+
+.contentContainer{
+    display: flex;
+    flex-direction: row;
+    width: 1240px;
+}
+
+.feedListContainer{
+    width: 608px;
+    max-height: 852px;
+}
+
+.loader{
+    height: calc(100vh - 88px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

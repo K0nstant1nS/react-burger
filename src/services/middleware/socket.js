@@ -57,11 +57,13 @@ export const socketMiddleware = (url, actions) => {
           if (!data.success) {
             if (data.message === "Invalid or missing token") {
               userSocket.close();
-              return setTimeout(() => {
-                Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
+              return Api.refreshTokenRequest(getCookie("refreshToken"))
+                .then(() => {
                   dispatch({ type: initWithUser });
+                })
+                .catch((e) => {
+                  console.log(e);
                 });
-              }, 5000);
             } else {
               userSocket.close();
             }

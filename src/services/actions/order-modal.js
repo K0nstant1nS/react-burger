@@ -7,19 +7,26 @@ export const ORDER_ERROR = "ORDER_ERROR";
 
 export function makeOrder(dataArr, isRecon = false) {
   return (dispatch) => {
-    Api.makeOrder(dataArr)
+    Api.imitMakeOrder(dataArr)
       .then((data) => {
-        dispatch({ type: MAKE_ORDER, number: data.order.number });
+        dispatch({
+          type: MAKE_ORDER,
+          number: data.order.number,
+        });
         dispatch({ type: CLEAR_CONSTRUCTOR });
       })
       .catch((err) => {
-        if (isRecon) {
-          Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
-            dispatch(makeOrder(dataArr));
-          });
-        } else {
-          dispatch({ type: ORDER_ERROR, err: err.message });
-        }
+        console.log(err);
       });
+
+    Api.makeOrder(dataArr).catch((err) => {
+      if (isRecon) {
+        Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
+          dispatch(makeOrder(dataArr));
+        });
+      } else {
+        dispatch({ type: ORDER_ERROR, err: err.message });
+      }
+    });
   };
 }

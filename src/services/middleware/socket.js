@@ -38,7 +38,7 @@ export const socketMiddleware = (url, actions) => {
         };
 
         socket.onclose = (event) => {
-          dispatch({ type: onClose, payload: event });
+          dispatch({ type: onClose });
         };
 
         socket.onerror = (event) => {
@@ -53,7 +53,6 @@ export const socketMiddleware = (url, actions) => {
         };
 
         userSocket.onmessage = (event) => {
-          console.log(event);
           let data = JSON.parse(event.data);
           if (!data.success) {
             if (data.message === "Invalid or missing token") {

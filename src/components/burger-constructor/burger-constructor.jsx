@@ -12,11 +12,12 @@ import { CLOSE_MODAL } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
 import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
-import { getStore, getUserFromStore } from "../../utils";
+import { getOrderData, getStore, getUserFromStore } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
   const { user } = useSelector(getUserFromStore);
+  const { status } = useSelector(getOrderData);
   const navigate = useNavigate();
   const onSubmit = () => {
     if (user) {
@@ -56,7 +57,7 @@ function BurgerConstructor() {
           </div>
         </div>
         <Button
-          disabled={false}
+          disabled={status === "pending"}
           htmlType="button"
           type="primary"
           size="large"

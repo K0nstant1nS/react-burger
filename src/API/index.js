@@ -21,16 +21,6 @@ export default class Api {
     return await this.request("/ingredients");
   }
 
-  static async imitMakeOrder(idsArr) {
-    return await this.request("/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: idsArr }),
-    });
-  }
-
   static async makeOrder(idsArr) {
     return await this.request("/orders", {
       method: "POST",

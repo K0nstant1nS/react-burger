@@ -48,7 +48,7 @@ export const getModal = (store) => store.modal;
 
 export const getIngredients = (store) => store.ingredients;
 
-export const getOrderNumber = (store) => store.orderData.number;
+export const getOrderData = (store) => store.orderData;
 
 export const getUserFromStore = (store) => store.user;
 

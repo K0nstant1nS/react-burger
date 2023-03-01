@@ -19,9 +19,13 @@ export function makeOrder(dataArr, isRecon = false) {
       })
       .catch((err) => {
         if (isRecon) {
-          Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
-            dispatch(makeOrder(dataArr));
-          });
+          Api.refreshTokenRequest(getCookie("refreshToken"))
+            .then(() => {
+              dispatch(makeOrder(dataArr));
+            })
+            .catch(() => {
+              dispatch({ type: ORDER_ERROR, err: err.message });
+            });
         } else {
           dispatch({ type: ORDER_ERROR, err: err.message });
         }

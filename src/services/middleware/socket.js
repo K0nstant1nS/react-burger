@@ -53,15 +53,21 @@ export const socketMiddleware = (url, actions) => {
         };
 
         userSocket.onmessage = (event) => {
-          let { orders } = JSON.parse(event.data);
-          if (orders === undefined) {
-            userSocket.close();
-            return setTimeout(() => {
-              Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
-                dispatch({ type: initWithUser });
-              });
-            }, 5000);
+          console.log(event);
+          let data = JSON.parse(event.data);
+          if (!data.success) {
+            if (data.message === "Invalid or missing token") {
+              userSocket.close();
+              return setTimeout(() => {
+                Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
+                  dispatch({ type: initWithUser });
+                });
+              }, 5000);
+            } else {
+              userSocket.close();
+            }
           }
+          let orders = data.orders;
           orders.reverse();
           dispatch({
             type: onMessageUser,

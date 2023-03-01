@@ -8,7 +8,6 @@ import BurgerIngredients from "../../components/burger-ingredients/burger-ingred
 import ErrorReport from "../../components/error-report/error-report";
 import styles from "./constructor.module.css";
 import { getIngredients } from "../../utils";
-import { initData } from "../../services/actions/ingredients";
 import { Route, Routes, useLocation } from "react-router-dom";
 import IngredientPage from "../ingredient/ingredient";
 import { getModal } from "../../utils";

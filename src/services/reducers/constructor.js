@@ -5,6 +5,7 @@ import {
   ADD_CONSTRUCTOR_ELEMENT,
   REMOVE_CONSTRUCTOR_ELEMENT,
   SWAP_IN_CONSTRUCTOR,
+  CLEAR_CONSTRUCTOR,
 } from "../actions/constructor";
 
 const initialState = {
@@ -25,14 +26,7 @@ export const constructorReducer = (state = initialState, action) => {
         ...state,
         status: "success",
         bun: action.bun,
-        common: action.common,
-        sum:
-          action.common.length > 0
-            ? action.common.reduce((sum, element) => {
-                return (sum += element.price);
-              }, 0) +
-              action.bun.price * 2
-            : action.bun.price * 2,
+        sum: action.bun.price * 2,
       };
     }
     case GET_CONSTRUCTOR_DATA_ERROR: {
@@ -77,6 +71,13 @@ export const constructorReducer = (state = initialState, action) => {
       return {
         ...state,
         common: newArr,
+      };
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return {
+        ...state,
+        common: [],
+        sum: state.bun.price * 2,
       };
     }
     default:

@@ -15,12 +15,10 @@ export function initData() {
     Api.getIngredients()
       .then((data) => {
         const bun = data.data.filter((item) => item.type === "bun")[0];
-        const common = data.data.filter((item) => item.type !== "bun");
         dispatch({ type: GET_INGREDIENTS_DATA_SUCCESS, data: data.data });
         dispatch({
           type: GET_CONSTRUCTOR_DATA_SUCCESS,
           bun: bun,
-          common: common,
         });
       })
       .catch((err) => {

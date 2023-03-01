@@ -5,9 +5,9 @@ import {
 } from "../services/actions/ingredients-scroll";
 
 import {
-  SET_INGREDIENT_MODAL,
-  REMOVE_INGREDIENT_MODAL,
-} from "../services/actions/ingredient-modal";
+  SET_ROUTE_MODAL,
+  REMOVE_ROUTE_MODAL,
+} from "../services/actions/route-modal";
 
 import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
 
@@ -27,11 +27,11 @@ export const handleScrollIniter = (target, dispatch) => {
 };
 
 export function openIngredientModal(dispatch) {
-  dispatch({ type: SET_INGREDIENT_MODAL });
+  dispatch({ type: SET_ROUTE_MODAL });
 }
 
 export function closeIngredientModal(dispatch) {
-  dispatch({ type: REMOVE_INGREDIENT_MODAL });
+  dispatch({ type: REMOVE_ROUTE_MODAL });
 }
 
 export function deleteHandler(dispatch, { index, price }) {

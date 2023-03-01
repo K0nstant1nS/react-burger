@@ -5,7 +5,7 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { SET_INGREDIENT_MODAL } from "../../services/actions/ingredient-modal";
+import { SET_ROUTE_MODAL } from "../../services/actions/route-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients, getModal } from "../../utils";
 import ImagesSet from "../images-set/images-set";
@@ -20,7 +20,7 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
   const navigate = useNavigate();
 
   const onClick = () => {
-    dispatch({ type: SET_INGREDIENT_MODAL });
+    dispatch({ type: SET_ROUTE_MODAL });
     pathname === "/feed"
       ? navigate(`/feed/${_id}`)
       : navigate(`/profile/orders/${_id}`);

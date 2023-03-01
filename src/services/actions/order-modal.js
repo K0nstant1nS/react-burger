@@ -8,15 +8,15 @@ export function makeOrder(dataArr, isRecon = false) {
   return (dispatch) => {
     Api.makeOrder(dataArr)
       .then((data) => {
-        console.log(data);
         dispatch({ type: MAKE_ORDER, number: data.order.number });
       })
       .catch((err) => {
-        dispatch({ type: ORDER_ERROR, err: err.message });
         if (isRecon) {
           Api.refreshTokenRequest(getCookie("refreshToken")).then(() => {
             dispatch(makeOrder(dataArr));
           });
+        } else {
+          dispatch({ type: ORDER_ERROR, err: err.message });
         }
       });
   };

@@ -29,7 +29,7 @@ function ProfilePage({ children }) {
   };
 
   return (
-    <main className={`${isNotOrderPage && styles.main} pt-10`}>
+    <main className={isNotOrderPage ? `${styles.main} pt-10` : undefined}>
       {isNotOrderPage && (
         <div className={`${styles.buttons} pr-15 pt-20`}>
           <button

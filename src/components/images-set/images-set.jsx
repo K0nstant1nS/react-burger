@@ -5,9 +5,20 @@ import styles from "./images-set.module.css";
 import { v4 } from "uuid";
 
 function ImagesSet({ links }) {
-  const elements = useMemo(
+  let elements = useMemo(
     () =>
-      links.map((link, index) => {
+      links.reduce((sum, link) => {
+        if (sum.indexOf(link) === -1) {
+          return [...sum, link];
+        }
+        return sum;
+      }, []),
+    [links]
+  );
+
+  elements = useMemo(
+    () =>
+      elements.map((link, index) => {
         if (index >= 7) {
           return null;
         }

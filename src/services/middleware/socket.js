@@ -17,8 +17,8 @@ export const socketMiddleware = (url, actions) => {
         onCloseUser,
         onMessage,
         onMessageUser,
-        onError,
-        onErrorUser,
+        close,
+        closeUser,
       } = actions;
       if (type === init) {
         socket = new WebSocket(`${url}/all`);
@@ -26,27 +26,32 @@ export const socketMiddleware = (url, actions) => {
       if (type === initWithUser) {
         userSocket = new WebSocket(`${url}?token=${getCookie("accessToken")}`);
       }
+
       if (socket) {
         socket.onopen = () => {
           dispatch({ type: onOpen });
         };
+
         socket.onmessage = (event) => {
           const { total, orders, totalToday } = JSON.parse(event.data);
           dispatch({ type: onMessage, payload: { total, totalToday, orders } });
         };
-        socket.onсlose = (event) => {
+
+        socket.onclose = (event) => {
           dispatch({ type: onClose, payload: event });
         };
+
         socket.onerror = (event) => {
           console.log(event);
-          dispatch({ type: onError });
           socket.close();
         };
       }
+
       if (userSocket) {
         userSocket.onopen = () => {
           dispatch({ type: onOpenUser });
         };
+
         userSocket.onmessage = (event) => {
           let { orders } = JSON.parse(event.data);
           if (orders === undefined) {
@@ -58,21 +63,30 @@ export const socketMiddleware = (url, actions) => {
             }, 5000);
           }
           orders.reverse();
-          console.log(orders[0].status);
           dispatch({
             type: onMessageUser,
             payload: { orders },
           });
         };
-        userSocket.onсlose = (event) => {
-          dispatch({ type: onCloseUser, payload: event });
+
+        userSocket.onclose = () => {
+          dispatch({ type: onCloseUser });
         };
+
         userSocket.onerror = (event) => {
           console.log(event);
-          dispatch({ type: onErrorUser });
           userSocket.close();
         };
       }
+
+      if (type === close) {
+        socket.close();
+      }
+
+      if (type === closeUser) {
+        userSocket.close();
+      }
+
       next(action);
     };
   };

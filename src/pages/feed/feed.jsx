@@ -13,7 +13,7 @@ import {
 import Loader from "../../components/loader/loader";
 
 function Feed() {
-  const { orders } = useSelector((store) => store.orders);
+  const { orders, connectedAll } = useSelector((store) => store.orders);
   const { pathname } = useLocation();
   const { modal } = useSelector(getModal);
   const dispatch = useDispatch();
@@ -36,6 +36,9 @@ function Feed() {
 
   useEffect(() => {
     dispatch({ type: INIT_ORDERS_SOCKET });
+    return () => {
+      dispatch({ type: CLOSE_ORDERS_SOCKET });
+    };
   }, []);
 
   return orders.status ? (

@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { ingredientsReducer } from "../reducers/ingredients";
 import { constructorReducer } from "../reducers/constructor";
-import { ingredientModalReducer } from "../reducers/ingredient-modal";
+import { routeModalReducer } from "../reducers/route-modal";
 import { orderReducer } from "../reducers/order-modal";
 import { ingredientsScrollReducer } from "../reducers/ingredients-scroll";
 import { userReducer } from "../reducers/user";
@@ -19,8 +19,8 @@ import {
   SET_USER_ORDERS_DATA,
   SUCCESS_ORDERS_SOCKET,
   SUCCESS_USER_ORDERS_SOCKET,
-  SET_SOCKET_ERROR,
-  SET_USER_SOCKET_ERROR,
+  ON_SOCKET_CLOSE,
+  ON_USER_SOCKET_CLOSE,
 } from "../actions/orders";
 
 const socketTypes = {
@@ -30,14 +30,14 @@ const socketTypes = {
   onOpenUser: SUCCESS_USER_ORDERS_SOCKET,
   onMessage: SET_ORDERS_DATA,
   onMessageUser: SET_USER_ORDERS_DATA,
-  onClose: CLOSE_ORDERS_SOCKET,
-  onCloseUser: CLOSE_USER_ORDERS_SOCKET,
-  onError: SET_SOCKET_ERROR,
-  onErrorUser: SET_USER_SOCKET_ERROR,
+  close: CLOSE_ORDERS_SOCKET,
+  closeUser: CLOSE_USER_ORDERS_SOCKET,
+  onClose: ON_SOCKET_CLOSE,
+  onCloseUser: ON_USER_SOCKET_CLOSE,
 };
 
 const rootReducer = combineReducers({
-  modal: ingredientModalReducer,
+  modal: routeModalReducer,
   ingredients: ingredientsReducer,
   constructorData: constructorReducer,
   orderData: orderReducer,

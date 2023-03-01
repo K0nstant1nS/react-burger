@@ -10,7 +10,7 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../components/modal/modal";
-import { REMOVE_INGREDIENT_MODAL } from "../../services/actions/ingredient-modal";
+import { REMOVE_ROUTE_MODAL } from "../../services/actions/route-modal";
 import { v4 } from "uuid";
 
 function OrderPage({ storage }) {
@@ -82,7 +82,7 @@ function OrderPage({ storage }) {
   );
 
   const closeModal = () => {
-    dispatch({ type: REMOVE_INGREDIENT_MODAL });
+    dispatch({ type: REMOVE_ROUTE_MODAL });
     isFeed ? navigate("/feed") : navigate("/profile/orders");
   };
 
@@ -137,7 +137,7 @@ function OrderPage({ storage }) {
     </Modal>
   ) : (
     <div className={styles.page}>
-      <div className={styles.container}>
+      <div className={`${styles.container} pt-30 pb-30`}>
         <span
           className={`${styles.number} text text_type_digits-default pb-10`}
         >

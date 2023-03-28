@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./loader.module.css";
 
 function Loader({ className = "" }) {
@@ -22,9 +21,5 @@ function Loader({ className = "" }) {
     </div>
   );
 }
-
-Loader.propTypes = {
-  className: PropTypes.string,
-};
 
 export default Loader;

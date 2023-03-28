@@ -1,9 +1,7 @@
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { getOrdersData, composeList } from "../../utils";
 import styles from "./feed-status.module.css";
-import { orderProps } from "../../utils/propTypes";
 
 function FeedStatus({ done, inWork }) {
   const { status } = useSelector(getOrdersData);
@@ -65,10 +63,5 @@ function FeedStatus({ done, inWork }) {
     </div>
   );
 }
-
-FeedStatus.propTypes = {
-  done: PropTypes.arrayOf(orderProps),
-  inWork: PropTypes.arrayOf(orderProps),
-};
 
 export default FeedStatus;

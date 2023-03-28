@@ -6,7 +6,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import FormError from "../form-error/form-error";
 import styles from "./form.module.css";
-import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { initFormState, getFormError } from "../../utils";
 import { useSelector } from "react-redux";
@@ -68,27 +67,5 @@ function Form({ formSettings, onSubmit }) {
     </>
   );
 }
-
-Form.propTypes = {
-  formSettings: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    name: PropTypes.shape({
-      placeholder: PropTypes.string,
-    }),
-    email: PropTypes.shape({
-      placeholder: PropTypes.string,
-    }),
-    password: PropTypes.shape({
-      placeholder: PropTypes.string,
-    }),
-    code: PropTypes.shape({
-      placeholder: PropTypes.string,
-    }),
-    buttonSetting: PropTypes.shape({
-      text: PropTypes.string,
-    }),
-  }).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default Form;

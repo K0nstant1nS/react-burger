@@ -4,15 +4,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useMemo } from "react";
 import styles from "./ingredient-element.module.css";
-import { ingredientProps } from "../../utils/propTypes";
 import { useSelector, useDispatch } from "react-redux";
 import { getStore, openIngredientModal } from "../../utils";
 import { useDrag } from "react-dnd";
 import { useNavigate } from "react-router-dom";
-import {
-  SCROLL_ON_BUN,
-  SCROLL_TO,
-} from "../../services/actions/ingredients-scroll";
 
 function IngredientElement({ ingredient }) {
   const navigate = useNavigate();
@@ -58,9 +53,5 @@ function IngredientElement({ ingredient }) {
     </article>
   );
 }
-
-IngredientElement.propTypes = {
-  ingredient: ingredientProps,
-};
 
 export default IngredientElement;

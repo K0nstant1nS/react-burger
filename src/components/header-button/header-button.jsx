@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./header-button.module.css";
-import PropTypes from "prop-types";
 import {
   ListIcon,
   BurgerIcon,
@@ -34,12 +33,5 @@ function HeaderButton({ iconType, text, indents, to }) {
     </Link>
   );
 }
-
-HeaderButton.propTypes = {
-  iconType: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  indents: PropTypes.string,
-  to: PropTypes.string.isRequired,
-};
 
 export default HeaderButton;

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 
 const modalRoot = document.getElementById("modal-root");
@@ -41,9 +40,5 @@ function Modal({ children, closeModal }) {
     </>
   );
 }
-
-Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-};
 
 export default Modal;

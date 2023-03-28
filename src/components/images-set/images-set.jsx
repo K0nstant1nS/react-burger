@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import IngredientIcon from "../ingredient-icon/ingredient-icon";
 import styles from "./images-set.module.css";
 import { v4 } from "uuid";
@@ -45,9 +44,5 @@ function ImagesSet({ links }) {
   );
   return <div className={styles.container}>{elements}</div>;
 }
-
-ImagesSet.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.string),
-};
 
 export default ImagesSet;

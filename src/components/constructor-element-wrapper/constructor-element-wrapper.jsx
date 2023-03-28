@@ -4,7 +4,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./constructor-element-wrapper.module.css";
 import React from "react";
-import PropTypes from "prop-types";
 import { deleteHandler } from "../../utils";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
@@ -66,15 +65,5 @@ function ConstructorElementWrapper({
     </div>
   );
 }
-
-ConstructorElementWrapper.propTypes = {
-  indents: PropTypes.string,
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  text: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  index: PropTypes.number,
-};
 
 export default ConstructorElementWrapper;

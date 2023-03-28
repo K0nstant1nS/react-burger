@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
 import styles from "./feed-order.module.css";
 import {
   CurrencyIcon,
@@ -10,8 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIngredients, getModal } from "../../utils";
 import ImagesSet from "../images-set/images-set";
 import { useLocation, useNavigate } from "react-router-dom";
-import Modal from "../modal/modal";
-import { orderProps } from "../../utils/propTypes";
 
 function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
   const { data } = useSelector(getIngredients);
@@ -126,7 +123,5 @@ function FeedOrder({ status, ingredients, _id, number, createdAt, name }) {
     </article>
   );
 }
-
-FeedOrder.propTypes = { orderProps };
 
 export default FeedOrder;

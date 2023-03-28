@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./order.module.css";
@@ -162,9 +161,5 @@ function OrderPage({ storage }) {
     </div>
   );
 }
-
-OrderPage.propTypes = {
-  storage: PropTypes.string.isRequired,
-};
 
 export default OrderPage;

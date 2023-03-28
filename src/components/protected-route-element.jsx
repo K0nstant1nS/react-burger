@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getUser } from "../services/actions/user";
-import PropTypes from "prop-types";
 import { getUserFromStore } from "../utils";
 
 function ProtectedRouteElement({ element }) {
@@ -30,9 +29,5 @@ function ProtectedRouteElement({ element }) {
     <Navigate to={`/login?to=${location.pathname}`} replace={false} />
   );
 }
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.element,
-};
 
 export default ProtectedRouteElement;

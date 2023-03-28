@@ -2,7 +2,6 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import React from "react";
 import styles from "./order-ingredient.module.css";
 import IngredientIcon from "../ingredient-icon/ingredient-icon";
-import { ingredientProps } from "../../utils/propTypes";
 
 function OrderIngredient({ ingredient, factor = 1 }) {
   const { name, image, price } = ingredient;
@@ -19,9 +18,5 @@ function OrderIngredient({ ingredient, factor = 1 }) {
     </article>
   );
 }
-
-OrderIngredient.propTypes = {
-  ingredient: ingredientProps,
-};
 
 export default OrderIngredient;

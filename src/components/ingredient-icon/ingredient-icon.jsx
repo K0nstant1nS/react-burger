@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./ingredient-icon.module.css";
 
 function IngredientIcon({ link }) {
@@ -9,9 +8,5 @@ function IngredientIcon({ link }) {
     </div>
   );
 }
-
-IngredientIcon.propTypes = {
-  link: PropTypes.string.isRequired,
-};
 
 export default IngredientIcon;

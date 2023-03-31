@@ -1,0 +1,34 @@
+import {
+  GET_INGREDIENTS_DATA_SUCCESS,
+  GET_INGREDIENTS_DATA_ERROR,
+  GET_INGREDIENTS_DATA_REQUEST,
+  TIngredientsActions,
+} from "../actions/ingredients";
+import { TIngredient } from "../types/data";
+
+export type TIngredientsState = {
+  status: string;
+  data: Array<TIngredient>
+}
+
+const initialState:TIngredientsState = {
+  status: "loading",
+  data: [],
+};
+
+export const ingredientsReducer = (state = initialState, action:TIngredientsActions) => {
+  switch (action.type) {
+    case GET_INGREDIENTS_DATA_SUCCESS: {
+      return { ...state, status: "success", data: action.data };
+    }
+    case GET_INGREDIENTS_DATA_ERROR: {
+      console.log(action.err);
+      return { ...initialState, status: "failed" };
+    }
+    case GET_INGREDIENTS_DATA_REQUEST: {
+      return { ...state, status: "loading" };
+    }
+    default:
+      return state;
+  }
+};

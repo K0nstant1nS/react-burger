@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { SET_ROUTE_MODAL } from "../../services/actions/route-modal";
 import { useDispatch, useSelector } from "../../services/hooks";
-import { getIngredients, getModal } from "../../utils";
+import { getIngredients } from "../../utils";
 import ImagesSet from "../images-set/images-set";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TFeedOrderProps, TIngredient } from "../../services/types/data";

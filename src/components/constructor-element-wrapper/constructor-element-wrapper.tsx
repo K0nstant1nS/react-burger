@@ -3,13 +3,13 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./constructor-element-wrapper.module.css";
-import React, {FC} from "react";
+import React, { FC } from "react";
 import { deleteHandler } from "../../utils";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { SWAP_IN_CONSTRUCTOR } from "../../services/actions/constructor";
 import { TConstructorElementWrapperProps } from "../../services/types/data";
-import { DragSourceMonitor, DropTargetMonitor, DropTargetOptions, MonitorEventEmitter } from "react-dnd";
+import { DragSourceMonitor } from "react-dnd";
 
 const ConstructorElementWrapper:FC<TConstructorElementWrapperProps> = ({
   indents,

@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import styles from "./error-report.module.css";
 
 const ErrorReport: FC = () => {

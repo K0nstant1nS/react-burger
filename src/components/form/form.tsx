@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import FormError from "../form-error/form-error";
 import styles from "./form.module.css";
-import React, { useState, FC } from "react";
+import React, { useState, FC, FormEventHandler } from "react";
 import { initFormState, getFormError } from "../../utils";
 import { useSelector } from "../../services/hooks";
 import { TFormProps, TFormSubmitData } from "../../services/types/data";
@@ -21,7 +21,7 @@ const Form: FC<TFormProps> = ({ formSettings, onSubmit }) => {
     }
   };
 
-  function submitHandler(e) {
+  const submitHandler:FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     onSubmit(formData);
   }

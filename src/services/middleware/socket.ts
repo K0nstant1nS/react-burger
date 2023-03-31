@@ -1,10 +1,12 @@
+import { Middleware } from '@reduxjs/toolkit';
 import { getCookie } from "../../utils";
 import Api from "../../API";
+import { TsocketMiddlewareActions } from '../types/data';
 
-export const socketMiddleware = (url, actions) => {
+export const socketMiddleware:(url:string, actions:TsocketMiddlewareActions)=>Middleware = (url, actions) => {
   return (store) => {
-    let socket = null;
-    let userSocket = null;
+    let socket: null | WebSocket = null;
+    let userSocket : null | WebSocket = null;
     return (next) => (action) => {
       const { dispatch } = store;
       const { type } = action;
@@ -43,7 +45,7 @@ export const socketMiddleware = (url, actions) => {
 
         socket.onerror = (event) => {
           console.log(event);
-          socket.close();
+          socket && socket.close();
         };
       }
 
@@ -56,7 +58,7 @@ export const socketMiddleware = (url, actions) => {
           let data = JSON.parse(event.data);
           if (!data.success) {
             if (data.message === "Invalid or missing token") {
-              userSocket.close();
+              userSocket && userSocket.close();
               return Api.refreshTokenRequest(getCookie("refreshToken"))
                 .then(() => {
                   dispatch({ type: initWithUser });
@@ -65,7 +67,7 @@ export const socketMiddleware = (url, actions) => {
                   console.log(e);
                 });
             } else {
-              userSocket.close();
+              userSocket && userSocket.close();
             }
           }
           let orders = data.orders;
@@ -82,16 +84,16 @@ export const socketMiddleware = (url, actions) => {
 
         userSocket.onerror = (event) => {
           console.log(event);
-          userSocket.close();
+          userSocket && userSocket.close();
         };
       }
 
       if (type === close) {
-        socket.close();
+        socket && socket.close();
       }
 
       if (type === closeUser) {
-        userSocket.close();
+        userSocket && userSocket.close();
       }
 
       next(action);

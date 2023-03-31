@@ -7,7 +7,10 @@ import { TImagesSetProps } from "../../services/types/data";
 const ImagesSet: FC<TImagesSetProps> = ({ links }) => {
   const images = useMemo(
     () =>
-      links.reduce((sum: ReadonlyArray<string>, link:string) => {
+      links.reduce((sum: ReadonlyArray<string>, link) => {
+        if(!link){
+          return sum
+        }
         if (sum.indexOf(link) === -1) {
           return [...sum, link];
         }

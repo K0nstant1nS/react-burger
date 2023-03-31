@@ -40,7 +40,7 @@ const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item:TIngredient) {
       dispatch({ type: ADD_CONSTRUCTOR_ELEMENT, ingredient: item });
     },
   });

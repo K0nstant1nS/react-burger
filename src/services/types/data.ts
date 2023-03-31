@@ -72,6 +72,19 @@ export type TFooterString = {
     linkTo: string;
 }
 
+export type TsocketMiddlewareActions = {
+    init:string ;
+    initWithUser:string ;
+    onOpen:string ;
+    onOpenUser:string ;
+    onClose:string ;
+    onCloseUser:string ;
+    onMessage:string ;
+    onMessageUser:string ;
+    close:string ;
+    closeUser:string ;
+}
+
 // Components props
 
 export type TConstructorElementWrapperProps = {
@@ -129,7 +142,7 @@ export type THeaderButtonProps = {
 }
 
 export type TImagesSetProps = {
-    links: string[];
+    links: (string|undefined)[];
 }
 
 export type TIngredientElementProps = {
@@ -148,7 +161,7 @@ export type TOrderIngredientProps = TIngredientElementProps & {factor:number}
 export type TSortedByTypeProps = {
     type: string;
     header: string;
-    indents: string;
+    indents?: string;
     data: Array<TIngredient>;
 }
 
@@ -160,4 +173,4 @@ export type TOrderPageProps = {
     storage: "userOrders"|"orders"
 }
 
-export type TProfilePageProps = Omit<TModalProps, "closeModal">
+export type TProfilePageProps = Partial<Omit<TModalProps, "closeModal">>

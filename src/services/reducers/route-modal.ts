@@ -1,4 +1,5 @@
 import { SET_ROUTE_MODAL, REMOVE_ROUTE_MODAL, TRouteModalActions } from "../actions/route-modal";
+import {Reducer} from "redux"
 
 export type TRouteModalState = {
   modal: boolean
@@ -6,7 +7,7 @@ export type TRouteModalState = {
 
 const initialState:TRouteModalState = { modal: false };
 
-export const routeModalReducer = (state = initialState, action:TRouteModalActions) => {
+export const routeModalReducer: Reducer<TRouteModalState, TRouteModalActions> = (state = initialState, action) => {
   switch (action.type) {
     case SET_ROUTE_MODAL: {
       return { modal: true };

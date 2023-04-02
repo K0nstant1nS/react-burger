@@ -29,7 +29,7 @@ const Form: FC<TFormProps> = ({ formSettings, onSubmit }) => {
     <>
       <h1 className="text text_type_main-medium pb-6">{formSettings.title}</h1>
       <form className={styles.form} onSubmit={submitHandler}>
-        {formSettings.name && (
+        {(formData.name || formData.name === "") && formSettings.name && (
           <Input
             type="text"
             placeholder={formSettings.name.placeholder}
@@ -38,7 +38,7 @@ const Form: FC<TFormProps> = ({ formSettings, onSubmit }) => {
             data-type={"name"}
           />
         )}
-        {formSettings.email && (
+        {(formData.email || formData.email === "") && formSettings.email && (
           <EmailInput
             placeholder={formSettings.email.placeholder}
             value={formData.email}
@@ -46,7 +46,7 @@ const Form: FC<TFormProps> = ({ formSettings, onSubmit }) => {
             data-type={"email"}
           />
         )}
-        {formSettings.password && (
+        {(formData.password || formData.password === "") && formSettings.password && (
           <PasswordInput
             placeholder={formSettings.password.placeholder}
             value={formData.password}
@@ -54,7 +54,7 @@ const Form: FC<TFormProps> = ({ formSettings, onSubmit }) => {
             data-type={"password"}
           />
         )}
-        {formSettings.token && (
+        {(formData.token || formData.token === "") && formSettings.token && (
           <PasswordInput
             placeholder={formSettings.token.placeholder}
             value={formData.token}

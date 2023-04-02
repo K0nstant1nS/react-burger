@@ -6,14 +6,15 @@ import {
   SCROLL_TO,
   TIngredientsScrollActions,
 } from "../actions/ingredients-scroll";
+import {Reducer} from "redux"
 
 export type TIngredientsScrollState = {
   scrolledOn: string;
-  bunY: string;
-  sauceY: string;
-  mainY: string;
+  bunY: number;
+  sauceY: number;
+  mainY: number;
   scrollTo: {
-    y: string;
+    y:number;
   }
 
 }
@@ -21,13 +22,13 @@ export type TIngredientsScrollState = {
 
 const initialState:TIngredientsScrollState = {
   scrolledOn: "",
-  bunY: "",
-  sauceY: "",
-  mainY: "",
-  scrollTo: { y: "" },
+  bunY: 0,
+  sauceY: 0,
+  mainY: 0,
+  scrollTo: { y: 0 },
 };
 
-export function ingredientsScrollReducer(state = initialState, action:TIngredientsScrollActions) {
+export const ingredientsScrollReducer: Reducer<TIngredientsScrollState,TIngredientsScrollActions> = (state = initialState, action) => {
   switch (action.type) {
     case SCROLL_ON_BUN: {
       return { ...state, scrolledOn: "bun" };

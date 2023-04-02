@@ -9,6 +9,7 @@ import {
   STOP_CHANGING,
   TUserActions,
 } from "../actions/user";
+import {Reducer} from "redux"
 
 export type TUserState = {
   user: object|null;
@@ -24,7 +25,7 @@ const initialState:TUserState = {
   onChange: false,
 };
 
-export const userReducer = (state = initialState, action:TUserActions) => {
+export const userReducer: Reducer<TUserState,TUserActions> = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER: {
       return { ...state, user: action.user };

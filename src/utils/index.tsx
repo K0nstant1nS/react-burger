@@ -10,14 +10,19 @@ import {
 } from "../services/actions/route-modal";
 
 import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
+import { RootState } from "../services/types";
+import { TOrderModalState } from "../services/reducers/order-modal";
+import { TThunkDispatch } from "../services/hooks";
+import { TFormProps, TFormFields } from "../services/types/data";
+import { TIngredientsScrollState } from "../services/reducers/ingredients-scroll";
 
-export const handleScrollIniter = (target, dispatch) => {
-  return (e) => {
-    if (e.target.scrollTop < (target.sauceY + target.bunY) / 2) {
+export const handleScrollIniter = (target: TIngredientsScrollState, dispatch:TThunkDispatch)  => {
+  return (e:React.UIEvent<HTMLDivElement>):any => {
+    if (e.currentTarget.scrollTop < (target.sauceY + target.bunY) / 2) {
       dispatch({ type: SCROLL_ON_BUN });
     } else if (
-      e.target.scrollTop >= (target.sauceY + target.bunY) / 2 &&
-      e.target.scrollTop < (target.mainY + target.sauceY) / 2
+      e.currentTarget.scrollTop >= (target.sauceY + target.bunY) / 2 &&
+      e.currentTarget.scrollTop < (target.mainY + target.sauceY) / 2
     ) {
       dispatch({ type: SCROLL_ON_SAUCE });
     } else {
@@ -26,15 +31,15 @@ export const handleScrollIniter = (target, dispatch) => {
   };
 };
 
-export function openIngredientModal(dispatch) {
+export function openIngredientModal(dispatch:TThunkDispatch) {
   dispatch({ type: SET_ROUTE_MODAL });
 }
 
-export function closeIngredientModal(dispatch) {
+export function closeIngredientModal(dispatch:TThunkDispatch) {
   dispatch({ type: REMOVE_ROUTE_MODAL });
 }
 
-export function deleteHandler(dispatch, { index, price }) {
+export function deleteHandler(dispatch:TThunkDispatch, { index, price }: {index: number; price: number}) {
   dispatch({
     type: REMOVE_CONSTRUCTOR_ELEMENT,
     index,
@@ -42,21 +47,21 @@ export function deleteHandler(dispatch, { index, price }) {
   });
 }
 
-export const getStore = (store) => store;
+export const getStore = (store:RootState) => store;
 
-export const getModal = (store) => store.modal;
+export const getModal = (store:RootState) => store.modal;
 
-export const getIngredients = (store) => store.ingredients;
+export const getIngredients = (store:RootState) => store.ingredients;
 
-export const getOrderData = (store) => store.orderData;
+export const getOrderData = (store:RootState) => store.orderData;
 
-export const getUserFromStore = (store) => store.user;
+export const getUserFromStore = (store:RootState) => store.user;
 
-export const getFormError = (store) => store.formError;
+export const getFormError = (store:RootState) => store.formError;
 
-export const getOrdersData = (store) => store.orders;
+export const getOrdersData = (store:RootState) => store.orders;
 
-export function getCookie(name) {
+export const getCookie = (name:string):string | undefined => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -67,39 +72,44 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(
+  name: string,
+  value: string,
+  props: { [key: string]: any } & { expires?: number | Date | string } = {}
+) {
   props = props || {};
   let exp = props.expires;
-  if (typeof exp == "number" && exp) {
+  if (typeof exp == 'number' && exp) {
     const d = new Date();
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
+  if (exp && (exp as Date).toUTCString) {
+    props.expires = (exp as Date).toUTCString();
   }
   value = encodeURIComponent(value);
-  let updatedCookie = name + "=" + value;
+  let updatedCookie = name + '=' + value;
   for (const propName in props) {
-    updatedCookie += "; " + propName;
+    updatedCookie += '; ' + propName;
     const propValue = props[propName];
     if (propValue !== true) {
-      updatedCookie += "=" + propValue;
+      updatedCookie += '=' + propValue;
     }
   }
   document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export const deleteCookie = (name:string) => {
+  setCookie(name, "", { expires: -1 });
 }
 
-export function initFormState(formSettings) {
+export function initFormState(formSettings:TFormProps): {[T in string]: string} {
   const keys = Object.keys(formSettings).filter((item) => {
     return item === "title" || item === "buttonSettings" ? false : true;
   });
 
-  const inputsObj = {};
+  const inputsObj: {[T in string]: string} /*{[T in TFormFields]?: string}*/ = {};
+
 
   keys.forEach((item) => {
     inputsObj[item] = "";
@@ -108,7 +118,7 @@ export function initFormState(formSettings) {
   return inputsObj;
 }
 
-export const composeList = (list, columnClass) => {
+export const composeList:(list: Array<number>, columnClass:string)=> JSX.Element = (list, columnClass) => {
   const length = list.length;
   if (list.length > 40) {
     return (

@@ -8,6 +8,7 @@ import {
   TOrdersActions,
 } from "../actions/orders";
 import { TOrder } from "../types/data";
+import {Reducer} from "redux"
 
 export type TOrdersState = {
   orders: {
@@ -19,8 +20,8 @@ export type TOrdersState = {
     status: boolean;
   };
   status:{
-    total: null|number;
-    totalToday: null|number;
+    total: null|number|string;
+    totalToday: null|number|string;
   };
   connectedAll: boolean;
   connectedUser: boolean;
@@ -37,7 +38,7 @@ const initialState: TOrdersState = {
   connectedUser: false,
 };
 
-export function ordersReducer(state = initialState, action:TOrdersActions) {
+export const ordersReducer: Reducer<TOrdersState, TOrdersActions> = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESS_ORDERS_SOCKET: {
       return { ...state, connectedAll: true };

@@ -5,6 +5,7 @@ import {
   TIngredientsActions,
 } from "../actions/ingredients";
 import { TIngredient } from "../types/data";
+import {Reducer} from "redux"
 
 export type TIngredientsState = {
   status: string;
@@ -16,7 +17,7 @@ const initialState:TIngredientsState = {
   data: [],
 };
 
-export const ingredientsReducer = (state = initialState, action:TIngredientsActions) => {
+export const ingredientsReducer: Reducer<TIngredientsState, TIngredientsActions> = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_DATA_SUCCESS: {
       return { ...state, status: "success", data: action.data };

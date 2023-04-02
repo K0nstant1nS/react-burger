@@ -4,10 +4,9 @@ import ConstructorElementWrapper from "../constructor-element-wrapper/constructo
 import { v4 as uuid } from "uuid";
 import { useSelector } from "../../services/hooks";
 import { getStore } from "../../utils";
-import { TConstructorState } from "../../services/reducers/constructor";
 
 const ScrollableConstructContainer: FC = () => {
-  const { constructorData }: {constructorData: TConstructorState} = useSelector(getStore);
+  const { constructorData } = useSelector(getStore);
 
   const burgerElementsArr = useMemo(() => {
     return constructorData.common.map((burgerElement, index) => {

@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { TFeedOrderProps, TIngredient } from "../../services/types/data";
 
 const FeedOrder:FC<TFeedOrderProps> = ({ status, ingredients, _id, number, createdAt, name }) => {
-  const { data }: {data: Array<TIngredient>} = useSelector(getIngredients);
+  const { data } = useSelector(getIngredients);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const navigate = useNavigate();

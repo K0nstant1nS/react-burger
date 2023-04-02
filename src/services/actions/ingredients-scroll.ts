@@ -19,7 +19,7 @@ export interface IScrollOnMainAction{
 export interface ISetStartsAction{
     readonly type: typeof SET_STARTS;
     readonly containerType: string;
-    readonly y: string;
+    readonly y: number;
 }
 
 export interface IScrollToAction{

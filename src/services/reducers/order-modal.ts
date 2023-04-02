@@ -5,9 +5,10 @@ import {
   MAKE_ORDER_PENDING,
   TOrderModalActions,
 } from "../actions/order-modal";
+import {Reducer} from "redux"
 
 export type TOrderModalState = {
-  number: null | number;
+  number: null | number | string;
   modalOpened: boolean;
   status: boolean|"success"|"error"|"pending";
 }
@@ -18,7 +19,7 @@ const initialState:TOrderModalState = {
   status: false,
 };
 
-export const orderReducer = (state = initialState, action:TOrderModalActions) => {
+export const orderReducer:Reducer<TOrderModalState, TOrderModalActions> = (state = initialState, action) => {
   switch (action.type) {
     case MAKE_ORDER_SUCCESS: {
       return { status: "success", number: action.number, modalOpened: true };

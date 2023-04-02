@@ -1,4 +1,5 @@
 import { SET_ERROR, REMOVE_ERROR, TFormErrorsActions } from "../actions/form-errors";
+import {Reducer} from "redux"
 
 export type TFormErrorsState = {
   error: boolean;
@@ -10,7 +11,7 @@ const initialState:TFormErrorsState = {
   errorMessage: "",
 };
 
-export function formErrorReducer(state = initialState, action:TFormErrorsActions) {
+export const formErrorReducer: Reducer<TFormErrorsState, TFormErrorsActions> = (state = initialState, action) => {
   switch (action.type) {
     case SET_ERROR: {
       return { error: true, errorMessage: action.message };

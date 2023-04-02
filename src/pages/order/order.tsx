@@ -18,7 +18,7 @@ const OrderPage: FC<TOrderPageProps>  = ({ storage }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const orders: Array<TOrder> = useSelector((store) => store.orders[storage].data);
+  const orders = useSelector((store) => store.orders[storage].data);
   const { data } = useSelector(getIngredients);
   const { ingredients, status, number, createdAt } = orders.find(({ _id }) => {
     return id === _id;

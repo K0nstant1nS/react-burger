@@ -4,8 +4,6 @@ import {ThunkDispatch} from 'redux-thunk'
 import {AnyAction, Action} from "redux"
 
 
-
+export type TThunkDispatch = ThunkDispatch<RootState, any, TApplicationActions>;
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
-//export const useDispatch = () => dispatchHook<AppDispatch|AppThunk>()
-//export const useDispatch = ()=>dispatchHook<AppDispatch>()
-export const useDispatch = ()=> dispatchHook<ThunkDispatch<RootState, any, TApplicationActions>>()
+export const useDispatch = ()=> dispatchHook<TThunkDispatch>()

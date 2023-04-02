@@ -97,6 +97,8 @@ export type TConstructorElementWrapperProps = {
     index?: number;
 }
 
+export type TFormFields = "title"|"name"|"email"|"password"|"token";
+
 export type TFeedListProps = {
     orders: ReadonlyArray<TOrder>;
     status?: string;

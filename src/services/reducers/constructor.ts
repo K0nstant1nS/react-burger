@@ -9,14 +9,11 @@ import {
 } from "../actions/constructor";
 import { TConstructorActions } from "../actions/constructor";
 import { TIngredient } from "../types/data";
+import {Reducer} from "redux"
 
 export type TConstructorState = {
   status: string;
-  bun: {
-    price: number;
-    name: string;
-    image: string;
-  };
+  bun: Partial<TIngredient> & {price: number; name: string; image: string};
   common: Array<TIngredient>;
   sum: number;
 }
@@ -32,7 +29,7 @@ const initialState:TConstructorState = {
   sum: 0,
 };
 
-export const constructorReducer = (state = initialState, action:TConstructorActions) => {
+export const constructorReducer: Reducer<TConstructorState,TConstructorActions> = (state = initialState, action) => {
   switch (action.type) {
     case GET_CONSTRUCTOR_DATA_SUCCESS: {
       return {

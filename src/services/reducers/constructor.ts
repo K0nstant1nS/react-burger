@@ -12,7 +12,7 @@ import { TIngredient } from "../types/data";
 import {Reducer} from "redux"
 
 export type TConstructorState = {
-  status: string;
+  status: "loading"|"success"|"failed";
   bun: Partial<TIngredient> & {price: number; name: string; image: string};
   common: Array<TIngredient>;
   sum: number;

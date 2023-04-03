@@ -23,7 +23,7 @@ export const initData:AppThunk<void> = () => {
           bun: bun,
         });
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         dispatch({ type: GET_INGREDIENTS_DATA_ERROR, err: err.message });
         dispatch({ type: GET_CONSTRUCTOR_DATA_ERROR });
       });

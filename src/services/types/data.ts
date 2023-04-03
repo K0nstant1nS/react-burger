@@ -12,6 +12,29 @@ export type TResetPasswordData = Omit<TRegisterUserData, "name" | "email">;
 
 export type TConfirmPasswordResetData = Omit<TRegisterUserData, "name" | "email"> & {token:string};
 
+export type TGetIngredientsPromise = {
+    data:TIngredient[];
+}
+
+export type TMakeOrderPromise = {
+    order: {
+        number:number
+    }
+}
+
+export type TSignPromise = {
+    accessToken: string;
+    refreshToken: string;
+    user: TUser;
+}
+
+export type TGetUserPromise = Omit<TSignPromise, "accessToken" | "refreshToken">;
+
+export type TResetPasswordPromise = {
+    success: boolean;
+}
+
+
 //Data
 
 export type TStatus = "loading"|"success"|"failed";
@@ -36,6 +59,14 @@ export type TUser = {
     name: string;
 }
 
+export type TSocketMessage = {
+    total: number;
+    orders: TOrder[];
+    totalToday: number;
+    success: boolean;
+    message: string;
+}
+
 export type TOrder = {
     _id: string;
     ingredients: Array<string>;
@@ -52,7 +83,7 @@ export type TFetchOptions = {
         "Content-Type": string;
         authorization?: string;
     }
-    body?:string;
+    body?: string;
 }
 
 export type TPlaceholderObject = {
@@ -114,8 +145,7 @@ export type TFeedOrderProps = {
 }
 
 export type TFeedStatusProps = {
-    done: Array<TOrder>;
-    inWork: Array<TOrder>;
+    [T in "done"|"inWork"]: Array<TOrder>
 }
 
 export type TFormProps = {

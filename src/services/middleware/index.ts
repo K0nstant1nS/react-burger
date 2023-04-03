@@ -1,4 +1,3 @@
-import { AnyAction } from "redux"
 import thunk from "redux-thunk";
 import { userMiddleware } from "./user";
 import { socketMiddleware } from "./socket";
@@ -15,7 +14,7 @@ import {
     ON_USER_SOCKET_CLOSE,
   } from "../actions/orders";
 
-const socketTypes = {
+export const socketTypes = {
     init: INIT_ORDERS_SOCKET,
     initWithUser: INIT_USER_ORDERS_SOCKET,
     onOpen: SUCCESS_ORDERS_SOCKET,

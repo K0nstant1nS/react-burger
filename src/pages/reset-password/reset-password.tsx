@@ -1,11 +1,11 @@
 import React, {FC} from "react";
 import FormPage from "../../components/form-page/form-page";
 import { confirmPasswordChange } from "../../services/actions/user";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "../../services/hooks";
 import { TFormSubmitData } from "../../services/types/data";
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onSubmit = (form: TFormSubmitData) => {

@@ -9,7 +9,7 @@ const BurgerIngredientsContent:FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const { ingredients, ingredientsScroll } = useSelector(getStore);
-  const [bun, main, sauce] = ["bun", "main", "sauce"];
+  const [bun, main, sauce] = ["bun", "main", "sauce"] as const;
   const bunsData = useMemo(
     () =>
       ingredients.data.filter((item:TIngredient) => {

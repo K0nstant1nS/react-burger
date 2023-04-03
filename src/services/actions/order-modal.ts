@@ -18,7 +18,7 @@ export const makeOrder:AppThunk<void> = (dataArr:string[], isRecon:boolean= fals
         });
         dispatch({ type: CLEAR_CONSTRUCTOR });
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         if (isRecon) {
           Api.refreshTokenRequest(getCookie("refreshToken"))
             .then(() => {

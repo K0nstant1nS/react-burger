@@ -9,7 +9,7 @@ import {
 import {Reducer} from "redux"
 
 export type TIngredientsScrollState = {
-  scrolledOn: string;
+  scrolledOn: "bun"|"sauce"|"main";
   bunY: number;
   sauceY: number;
   mainY: number;
@@ -21,7 +21,7 @@ export type TIngredientsScrollState = {
 
 
 const initialState:TIngredientsScrollState = {
-  scrolledOn: "",
+  scrolledOn: "bun",
   bunY: 0,
   sauceY: 0,
   mainY: 0,

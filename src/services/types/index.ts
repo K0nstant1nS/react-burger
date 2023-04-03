@@ -1,5 +1,4 @@
-import { ActionCreator, Action, Dispatch, AnyAction } from "redux";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { ActionCreator, Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { store } from "../store/store";
 import { TConstructorActions } from "../actions/constructor";

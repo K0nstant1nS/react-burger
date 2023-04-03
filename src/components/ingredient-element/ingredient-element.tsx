@@ -39,7 +39,7 @@ const IngredientElement: FC<TIngredientElementProps> = ({ ingredient }) => {
     <article
       ref={dragRef}
       className={styles.element}
-      onClick={onClick} // () => addBurgerElement(ingredient) openModal
+      onClick={onClick}
     >
       <img src={ingredient.image} className="pb-2"></img>
       <div className={`pb-2 text text_type_digits-default ${styles.price}`}>

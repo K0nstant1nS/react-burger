@@ -34,7 +34,7 @@ const Modal: FC<TModalProps> = ({ children, closeModal }) => {
         <div className={styles.modal}>
           <ModalOverlay closeModal={closeModal} />
           <div
-            className={styles.popup} /*onClick={(e) => e.stopPropagation()}*/
+            className={styles.popup}
           >
             {children}
             <div className={styles.close} onClick={closeModal}>

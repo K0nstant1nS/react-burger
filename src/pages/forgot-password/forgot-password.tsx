@@ -1,6 +1,5 @@
 import React, {FC} from "react";
 import FormPage from "../../components/form-page/form-page";
-import styles from "./forgot-password.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "../../services/hooks";
 import { changePassword } from "../../services/actions/user";

@@ -3,7 +3,6 @@ import {
   LOGOUT,
   SET_PASSWORD_DEFAULT,
   SET_USER,
-  STOP_CHANGING,
 } from "../actions/user";
 import { deleteCookie } from "../../utils";
 

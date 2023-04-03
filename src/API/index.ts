@@ -1,6 +1,6 @@
 import checkResponse from "../utils/checkResponse";
 import { getCookie, setCookie } from "../utils";
-import { TConfirmPasswordResetData, TFetchOptions, TLoginUserData, TRegisterUserData, TResetPasswordData } from "../services/types/data";
+import { TConfirmPasswordResetData, TFetchOptions, TGetIngredientsPromise, TGetUserPromise, TLoginUserData, TMakeOrderPromise, TRegisterUserData, TResetPasswordData, TResetPasswordPromise, TSignPromise } from "../services/types/data";
 
 const dataBaseAddres = "https://norma.nomoreparties.space/api";
 const authAddres = "/auth/login";
@@ -18,11 +18,11 @@ export default class Api {
     );
   }
 
-  static async getIngredients() {
+  static async getIngredients():Promise<TGetIngredientsPromise> {
     return await this.request("/ingredients");
   }
 
-  static async makeOrder(idsArr:string[]) {
+  static async makeOrder(idsArr:string[]): Promise<TMakeOrderPromise> {
     return await this.request("/orders", {
       method: "POST",
       headers: {
@@ -33,7 +33,7 @@ export default class Api {
     });
   }
 
-  static async registerUser(data:TRegisterUserData) {
+  static async registerUser(data:TRegisterUserData):Promise<TSignPromise> {
     return await this.request(regAddres, {
       method: "POST",
       headers: {
@@ -43,7 +43,7 @@ export default class Api {
     });
   }
 
-  static async loginRequest(data:TLoginUserData) {
+  static async loginRequest(data:TLoginUserData): Promise<TSignPromise> {
     return this.request(authAddres, {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ export default class Api {
     });
   }
 
-  static async getUserRequest() {
+  static async getUserRequest():Promise<TGetUserPromise> {
     return await this.request(userAddres, {
       method: "GET",
       headers: {
@@ -63,7 +63,7 @@ export default class Api {
     });
   }
 
-  static async resetPasswordRequest(form:TResetPasswordData) {
+  static async resetPasswordRequest(form:TResetPasswordData):Promise<TResetPasswordPromise> {
     return await this.request(resetPasswordAddres, {
       method: "POST",
       headers: {
@@ -73,7 +73,7 @@ export default class Api {
     });
   }
 
-  static async confirmPasswordResetRequest(form:TConfirmPasswordResetData) {
+  static async confirmPasswordResetRequest(form:TConfirmPasswordResetData):Promise<void> {
     return await this.request(confirmPasswordResetAddres, {
       method: "POST",
       headers: {
@@ -83,7 +83,7 @@ export default class Api {
     });
   }
 
-  static async refreshTokenRequest(refreshToken:string|undefined) {
+  static async refreshTokenRequest(refreshToken:string|undefined):Promise<void> {
     return await this.request(tokenAddres, {
       method: "POST",
       headers: {
@@ -98,7 +98,7 @@ export default class Api {
     });
   }
 
-  static async logoutRequest(refreshToken:string|undefined) {
+  static async logoutRequest(refreshToken:string|undefined):Promise<void> {
     return await this.request(logoutAddres, {
       method: "POST",
       headers: {
@@ -108,7 +108,7 @@ export default class Api {
     });
   }
 
-  static async patchUserRequest(form:Partial<TRegisterUserData>) {
+  static async patchUserRequest(form:Partial<TRegisterUserData>): Promise<TGetUserPromise> {
     return await this.request(userAddres, {
       method: "PATCH",
       headers: {

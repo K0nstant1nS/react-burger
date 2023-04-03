@@ -1,5 +1,4 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
 import { ingredientsReducer } from "../reducers/ingredients";
 import { constructorReducer } from "../reducers/constructor";
 import { routeModalReducer } from "../reducers/route-modal";

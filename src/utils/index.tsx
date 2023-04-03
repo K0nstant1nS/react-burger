@@ -13,13 +13,18 @@ import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
 import { RootState } from "../services/types";
 import { TOrderModalState } from "../services/reducers/order-modal";
 import { TThunkDispatch } from "../services/hooks";
-import { TFormProps, TFormFields, TFormSubmitData } from "../services/types/data";
+import { TFormProps } from "../services/types/data";
 import { TIngredientsScrollState } from "../services/reducers/ingredients-scroll";
+import { TRouteModalState } from "../services/reducers/route-modal";
+import { TIngredientsState } from "../services/reducers/ingredients";
+import { TUserState } from "../services/reducers/user";
+import { TFormErrorsState } from "../services/reducers/form-errors";
+import { TOrdersState } from "../services/reducers/orders";
 
 export const handleScrollIniter = (target: TIngredientsScrollState, dispatch:TThunkDispatch)  => {
-  return (e:Event):any => {
+  return (e:Event):void => {
     if(!e.currentTarget){
-      return null
+      throw new Error("No scroll target")
     }
     if (e.currentTarget.scrollTop < (target.sauceY + target.bunY) / 2) {
       dispatch({ type: SCROLL_ON_BUN });
@@ -34,15 +39,15 @@ export const handleScrollIniter = (target: TIngredientsScrollState, dispatch:TTh
   };
 };
 
-export function openIngredientModal(dispatch:TThunkDispatch) {
+export function openIngredientModal(dispatch:TThunkDispatch):void {
   dispatch({ type: SET_ROUTE_MODAL });
 }
 
-export function closeIngredientModal(dispatch:TThunkDispatch) {
+export function closeIngredientModal(dispatch:TThunkDispatch):void {
   dispatch({ type: REMOVE_ROUTE_MODAL });
 }
 
-export function deleteHandler(dispatch:TThunkDispatch, { index, price }: {index: number; price: number}) {
+export function deleteHandler(dispatch:TThunkDispatch, { index, price }: {index: number; price: number}):void {
   dispatch({
     type: REMOVE_CONSTRUCTOR_ELEMENT,
     index,
@@ -52,17 +57,17 @@ export function deleteHandler(dispatch:TThunkDispatch, { index, price }: {index:
 
 export const getStore = (store:RootState) => store;
 
-export const getModal = (store:RootState) => store.modal;
+export const getModal = (store:RootState):TRouteModalState => store.modal;
 
-export const getIngredients = (store:RootState) => store.ingredients;
+export const getIngredients = (store:RootState):TIngredientsState => store.ingredients;
 
-export const getOrderData = (store:RootState) => store.orderData;
+export const getOrderData = (store:RootState):TOrderModalState => store.orderData;
 
-export const getUserFromStore = (store:RootState) => store.user;
+export const getUserFromStore = (store:RootState):TUserState => store.user;
 
-export const getFormError = (store:RootState) => store.formError;
+export const getFormError = (store:RootState):TFormErrorsState => store.formError;
 
-export const getOrdersData = (store:RootState) => store.orders;
+export const getOrdersData = (store:RootState):TOrdersState => store.orders;
 
 export const getCookie = (name:string):string | undefined => {
   const matches = document.cookie.match(
@@ -79,7 +84,7 @@ export function setCookie(
   name: string,
   value: string,
   props: { [key: string]: any } & { expires?: number | Date | string } = {}
-) {
+):void {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -102,24 +107,26 @@ export function setCookie(
   document.cookie = updatedCookie;
 }
 
-export const deleteCookie = (name:string) => {
+export const deleteCookie = (name:string):void => {
   setCookie(name, "", { expires: -1 });
 }
 
-export function initFormState(formSettings:TFormProps["formSettings"]): {[T in string]: string} {
-  const keys = Object.keys(formSettings).filter((item) => {
-    return item === "title" || item === "buttonSettings" ? false : true;
-  });
+export function initFormState(formSettings:TFormProps["formSettings"]): {[T in "name"|"password"|"email"|"token"]?: string} {
+  const keys = Object.keys(formSettings)
 
-  const inputsObj: {[T in string]: string} /*{[T in TFormFields]?: string}*/ = {};
+  const inputsObj: {[T in "name"|"password"|"email"|"token"]?: string} = {};
 
 
   keys.forEach((item) => {
-    inputsObj[item] = "";
+    if(item === "name" || item === "password" || item === "email" || item === "token"){
+      inputsObj[item] = "";
+    }
   });
 
   return inputsObj;
 }
+
+
 
 export const composeList:(list: Array<JSX.Element>, columnClass:string)=> JSX.Element = (list, columnClass) => {
   const length = list.length;

@@ -18,7 +18,7 @@ const ConstructorPage: FC = () => {
   const { modal } = useSelector(getModal);
   const { pathname } = useLocation();
 
-  function renderer(status: TStatus) {
+  function renderer(status: TStatus):JSX.Element {
     switch (status) {
       case "loading": {
         return <Loader />;

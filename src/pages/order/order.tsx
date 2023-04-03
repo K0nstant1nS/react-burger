@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, FC } from "react";
+import React, { FC } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "../../services/hooks";
 import styles from "./order.module.css";
@@ -11,8 +11,7 @@ import {
 import Modal from "../../components/modal/modal";
 import { REMOVE_ROUTE_MODAL } from "../../services/actions/route-modal";
 import { v4 } from "uuid";
-import { TIngredient, TOrder, TOrderPageProps } from "../../services/types/data";
-import { RootState } from "../../services/types";
+import { TIngredient, TOrderPageProps } from "../../services/types/data";
 import ErrorPage from "../error/error";
 
 const OrderPage: FC<TOrderPageProps>  = ({ storage }) => {

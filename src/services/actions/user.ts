@@ -1,7 +1,8 @@
+import { NavigateFunction } from "react-router";
 import Api from "../../API";
 import { setCookie, getCookie } from "../../utils";
 import { AppDispatch, AppThunk } from "../types";
-import { TLoginUserData, TRegisterUserData, TUser } from "../types/data";
+import { TConfirmPasswordResetData, TLoginUserData, TRegisterUserData, TResetPasswordData, TUser } from "../types/data";
 import { SET_ERROR, REMOVE_ERROR } from "./form-errors";
 
 export const SET_USER = "SET_USER" as const;
@@ -26,7 +27,7 @@ export const signUp:AppThunk<void> = (form:TRegisterUserData)=>{
         dispatch({ type: SET_LOADED });
         dispatch({ type: REMOVE_ERROR });
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         console.log(err);
         dispatch({
           type: SET_ERROR,
@@ -50,7 +51,7 @@ export const signIn:AppThunk<void> = (form:TLoginUserData) => {
         dispatch({ type: SET_LOADED });
         dispatch({ type: REMOVE_ERROR });
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         console.log(err);
         dispatch({ type: SET_ERROR, message: "Не удается найти пользователя" });
       });
@@ -82,7 +83,7 @@ export const getUser:AppThunk<void> = (isRefresh = false) => {
   };
 }
 
-export const changePassword:AppThunk<void> = (form, navigate) => {
+export const changePassword:AppThunk<void> = (form:TResetPasswordData, navigate:NavigateFunction) => {
   return (dispatch:AppDispatch) => {
     Api.resetPasswordRequest(form)
       .then((data) => {
@@ -92,14 +93,14 @@ export const changePassword:AppThunk<void> = (form, navigate) => {
           navigate("/reset-password");
         }
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         console.log(err);
         dispatch({ type: SET_ERROR, message: "Пользователь не найден" });
       });
   };
 }
 
-export const confirmPasswordChange:AppThunk<void> = (form, navigate) => {
+export const confirmPasswordChange:AppThunk<void> = (form:TConfirmPasswordResetData, navigate:NavigateFunction) => {
   return (dispatch:AppDispatch) => {
     Api.confirmPasswordResetRequest(form)
       .then(() => {
@@ -107,7 +108,7 @@ export const confirmPasswordChange:AppThunk<void> = (form, navigate) => {
         dispatch({ type: REMOVE_ERROR });
         navigate("/login");
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         dispatch({
           type: SET_ERROR,
           message:
@@ -118,7 +119,7 @@ export const confirmPasswordChange:AppThunk<void> = (form, navigate) => {
   };
 }
 
-export const patchUser:AppThunk<void> = (form, isRefresh = false) => {
+export const patchUser:AppThunk<void> = (form:TRegisterUserData, isRefresh:boolean = false) => {
   return (dispatch) => {
     Api.patchUserRequest(form)
       .then((data) => {
@@ -142,7 +143,7 @@ export const logout:AppThunk<void> = () => {
       .then(() => {
         dispatch({ type: LOGOUT });
       })
-      .catch((err) => {
+      .catch((err:Error) => {
         console.log(err);
       });
   };

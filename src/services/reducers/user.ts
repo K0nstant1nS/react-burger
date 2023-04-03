@@ -12,7 +12,7 @@ import {
 import {Reducer} from "redux"
 
 export type TUserState = {
-  user: object|null;
+  user: {name:string; email: string; password?:string}|null;
   onLoad: boolean;
   changingPassword: boolean;
   onChange: boolean;

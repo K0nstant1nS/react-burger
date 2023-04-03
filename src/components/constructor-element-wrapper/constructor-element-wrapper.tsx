@@ -49,6 +49,9 @@ const ConstructorElementWrapper:FC<TConstructorElementWrapperProps> = ({
   const style = {
     opacity: isDrag ? "0.5" : "1",
   };
+  const handleClose = {
+    handleClose: index ? () => deleteHandler(dispatch, { index, price }) : undefined
+  }
   return (
     <div {...dropProp} style={style} className={indents}>
       <div className={styles.wrapperElement} {...dragProp}>
@@ -60,7 +63,7 @@ const ConstructorElementWrapper:FC<TConstructorElementWrapperProps> = ({
             text={text}
             thumbnail={thumbnail}
             price={price}
-            handleClose={() => deleteHandler(dispatch, { index, price })}
+            {...handleClose}
           />
         </div>
       </div>

@@ -41,7 +41,7 @@ const ProfileForm: FC = () => {
   };
 
   const stopChanging = () => {
-    setUserState({ ...user, password: "" });
+    setUserState({password: "", name: "", email: "", ...user });
     dispatch({ type: STOP_CHANGING });
   };
 
@@ -51,7 +51,7 @@ const ProfileForm: FC = () => {
   };
 
   useEffect(() => {
-    setUserState({ ...user, password: "" });
+    setUserState({password: "", name: "", email: "", ...user });
   }, [user]);
 
   return (

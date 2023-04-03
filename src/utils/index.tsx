@@ -13,11 +13,14 @@ import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
 import { RootState } from "../services/types";
 import { TOrderModalState } from "../services/reducers/order-modal";
 import { TThunkDispatch } from "../services/hooks";
-import { TFormProps, TFormFields } from "../services/types/data";
+import { TFormProps, TFormFields, TFormSubmitData } from "../services/types/data";
 import { TIngredientsScrollState } from "../services/reducers/ingredients-scroll";
 
 export const handleScrollIniter = (target: TIngredientsScrollState, dispatch:TThunkDispatch)  => {
-  return (e:React.UIEvent<HTMLDivElement>):any => {
+  return (e:Event):any => {
+    if(!e.currentTarget){
+      return null
+    }
     if (e.currentTarget.scrollTop < (target.sauceY + target.bunY) / 2) {
       dispatch({ type: SCROLL_ON_BUN });
     } else if (
@@ -103,7 +106,7 @@ export const deleteCookie = (name:string) => {
   setCookie(name, "", { expires: -1 });
 }
 
-export function initFormState(formSettings:TFormProps): {[T in string]: string} {
+export function initFormState(formSettings:TFormProps["formSettings"]): {[T in string]: string} {
   const keys = Object.keys(formSettings).filter((item) => {
     return item === "title" || item === "buttonSettings" ? false : true;
   });
@@ -118,7 +121,7 @@ export function initFormState(formSettings:TFormProps): {[T in string]: string} 
   return inputsObj;
 }
 
-export const composeList:(list: Array<number>, columnClass:string)=> JSX.Element = (list, columnClass) => {
+export const composeList:(list: Array<JSX.Element>, columnClass:string)=> JSX.Element = (list, columnClass) => {
   const length = list.length;
   if (list.length > 40) {
     return (

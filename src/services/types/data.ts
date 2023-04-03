@@ -39,7 +39,7 @@ export type TUser = {
 export type TOrder = {
     _id: string;
     ingredients: Array<string>;
-    status: "done"|"pending";
+    status: "done"|"pending"|"created";
     name: string;
     createdAt: string;
     updatedAt: string;

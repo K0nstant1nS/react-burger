@@ -4,11 +4,11 @@ import {
   GET_INGREDIENTS_DATA_REQUEST,
   TIngredientsActions,
 } from "../actions/ingredients";
-import { TIngredient } from "../types/data";
+import { TIngredient, TStatus } from "../types/data";
 import {Reducer} from "redux"
 
 export type TIngredientsState = {
-  status: string;
+  status: TStatus;
   data: Array<TIngredient>
 }
 

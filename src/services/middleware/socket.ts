@@ -37,7 +37,6 @@ export const socketMiddleware:(url:string, actions:TsocketMiddlewareActions)=>Mi
 
         socket.onmessage = (event) => {
           const { total, orders, totalToday } :TSocketMessage = JSON.parse(event.data);
-          console.log(JSON.parse(event.data))
           dispatch({ type: onMessage, payload: { total, totalToday, orders } });
         };
 

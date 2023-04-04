@@ -1,5 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
-import { getCookie } from "../../utils";
+import { deleteCookie, getCookie } from "../../utils";
 import Api from "../../API";
 import { TSocketMessage, TsocketMiddlewareActions } from '../types/data';
 import { TOrdersActions } from '../actions/orders';
@@ -65,7 +65,9 @@ export const socketMiddleware:(url:string, actions:TsocketMiddlewareActions)=>Mi
                   dispatch({ type: initWithUser });
                 })
                 .catch((e) => {
+                  deleteCookie("refreshToken")
                   console.log(e);
+                  window.location.href= "/"
                 });
             } else {
               userSocket && userSocket.close();

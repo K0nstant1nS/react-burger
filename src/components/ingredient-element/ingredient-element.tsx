@@ -24,7 +24,7 @@ const IngredientElement: FC<TIngredientElementProps> = ({ ingredient }) => {
   });
 
   const counter = useMemo(() => {
-    if (ingredient._id === constructorData.bun._id) {
+    if (constructorData.bun && ingredient._id === constructorData.bun._id) {
       return 1;
     }
     return constructorData.common.reduce((sum:number, item:TIngredient) => {

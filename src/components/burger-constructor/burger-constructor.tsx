@@ -18,10 +18,9 @@ import { TIngredient } from "../../services/types/data";
 
 const BurgerConstructor: FC = () => {
   const { user } = useSelector(getUserFromStore);
-  const { status } = useSelector(getOrderData);
   const navigate = useNavigate();
   const onSubmit = (e:React.SyntheticEvent) => {
-    if (user) {
+    if (user && constructorData.bun) {
       dispatch(
         makeOrder(
           [
@@ -45,6 +44,8 @@ const BurgerConstructor: FC = () => {
     },
   });
 
+  const buttonStatus = !(constructorData.bun && constructorData.common.length)
+
   return (
     <section ref={dropTarget} className={`pt-25 ${styles.content}`}>
       <ScrollableConstructContainer />
@@ -58,7 +59,7 @@ const BurgerConstructor: FC = () => {
           </div>
         </div>
         <Button
-          disabled={status === "pending"}
+          disabled={buttonStatus}
           htmlType="button"
           type="primary"
           size="large"

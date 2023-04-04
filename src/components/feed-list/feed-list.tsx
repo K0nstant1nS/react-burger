@@ -1,7 +1,6 @@
 import React, { useMemo, FC } from "react";
 import FeedOrder from "../feed-order/feed-order";
 import styles from "./feed-list.module.css";
-import { v4 } from "uuid";
 import { TFeedListProps } from "../../services/types/data";
 
 const FeedList:FC<TFeedListProps> = ({ orders, status }) => {
@@ -9,7 +8,7 @@ const FeedList:FC<TFeedListProps> = ({ orders, status }) => {
     () =>
       orders.map((item) => {
         const orderStatus = status ? status : item.status;
-        return <FeedOrder key={v4()} {...{ ...item, status: orderStatus }} />;
+        return <FeedOrder key={item.number} {...{ ...item, status: orderStatus }} />;
       }),
     [orders]
   );

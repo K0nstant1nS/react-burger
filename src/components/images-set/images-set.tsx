@@ -1,7 +1,6 @@
 import React, { useMemo, FC } from "react";
 import IngredientIcon from "../ingredient-icon/ingredient-icon";
 import styles from "./images-set.module.css";
-import { v4 } from "uuid";
 import { TImagesSetProps } from "../../services/types/data";
 
 const ImagesSet: FC<TImagesSetProps> = ({ links }) => {
@@ -27,7 +26,7 @@ const ImagesSet: FC<TImagesSetProps> = ({ links }) => {
         }
         if (index === 5 && links.length > 6) {
           return (
-            <div key={v4()} className={styles.last}>
+            <div key={index} className={styles.last}>
               <div className={styles.absoluteWrapper}>
                 <IngredientIcon link={link} />
               </div>
@@ -39,7 +38,7 @@ const ImagesSet: FC<TImagesSetProps> = ({ links }) => {
           );
         }
         return (
-          <div key={v4()} className={styles[`default${index}`]}>
+          <div key={index} className={styles[`default${index}`]}>
             <IngredientIcon link={link} />
           </div>
         );

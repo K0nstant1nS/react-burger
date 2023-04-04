@@ -1,7 +1,4 @@
 import {
-  GET_CONSTRUCTOR_DATA_SUCCESS,
-  GET_CONSTRUCTOR_DATA_ERROR,
-  GET_CONSTRUCTOR_DATA_REQUEST,
   ADD_CONSTRUCTOR_ELEMENT,
   REMOVE_CONSTRUCTOR_ELEMENT,
   SWAP_IN_CONSTRUCTOR,
@@ -10,52 +7,35 @@ import {
 import { TConstructorActions } from "../actions/constructor";
 import { TIngredient } from "../types/data";
 import {Reducer} from "redux"
+import {v4 as uuid} from "uuid"
 
 export type TConstructorState = {
-  status: "loading"|"success"|"failed";
-  bun: Partial<TIngredient> & {price: number; name: string; image: string};
+  bun: TIngredient | undefined;
   common: Array<TIngredient>;
   sum: number;
 }
 
 const initialState:TConstructorState = {
-  status: "loading",
-  bun: {
-    price: 0,
-    name: "default",
-    image: "default",
-  },
+  bun: undefined,
   common: [],
   sum: 0,
 };
 
 export const constructorReducer: Reducer<TConstructorState,TConstructorActions> = (state = initialState, action) => {
   switch (action.type) {
-    case GET_CONSTRUCTOR_DATA_SUCCESS: {
-      return {
-        ...state,
-        status: "success",
-        bun: action.bun,
-        sum: action.bun.price * 2,
-      };
-    }
-    case GET_CONSTRUCTOR_DATA_ERROR: {
-      return { ...initialState, status: "failed" };
-    }
-    case GET_CONSTRUCTOR_DATA_REQUEST: {
-      return { ...state, status: "loading" };
-    }
     case ADD_CONSTRUCTOR_ELEMENT: {
       if (action.ingredient.type === "bun") {
+        const bunPrice = state.bun ? state.bun.price : 0;
         return {
           ...state,
           bun: action.ingredient,
-          sum: state.sum - state.bun.price * 2 + action.ingredient.price * 2,
+          sum: state.sum - bunPrice * 2 + action.ingredient.price * 2,
         };
       } else {
+        const keyId = uuid()
         return {
           ...state,
-          common: [...state.common, action.ingredient],
+          common: [...state.common, {...action.ingredient, keyId}],
           sum: state.sum + action.ingredient.price,
         };
       }
@@ -84,11 +64,7 @@ export const constructorReducer: Reducer<TConstructorState,TConstructorActions> 
       };
     }
     case CLEAR_CONSTRUCTOR: {
-      return {
-        ...state,
-        common: [],
-        sum: state.bun.price * 2,
-      };
+      return initialState
     }
     default:
       return state;

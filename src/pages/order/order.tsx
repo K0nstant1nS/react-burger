@@ -10,7 +10,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../components/modal/modal";
 import { REMOVE_ROUTE_MODAL } from "../../services/actions/route-modal";
-import { v4 } from "uuid";
 import { TIngredient, TOrderPageProps } from "../../services/types/data";
 import ErrorPage from "../error/error";
 
@@ -71,7 +70,7 @@ const OrderPage: FC<TOrderPageProps>  = ({ storage }) => {
   const ingredientsList = sortedIngredientsArr.map((item) => {
         return (
           <OrderIngredient
-            key={v4()}
+            key={item.ingredient._id}
             ingredient={item.ingredient}
             factor={item.factor}
           />

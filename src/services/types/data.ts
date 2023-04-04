@@ -40,6 +40,7 @@ export type TResetPasswordPromise = {
 export type TStatus = "loading"|"success"|"failed";
 
 export type TIngredient = {
+    keyId?: string;
     _id:string;
     name:string;
     type:string;

@@ -47,7 +47,7 @@ const ScrollableConstructContainer: FC = () => {
       />}
     </> :
     <div className={styles.empty}>
-      <p className={`${styles.emptyMessage} text text_type_main-default`}>Перетащите игредиенты в конструктор</p>
+      <p className={`${styles.emptyMessage} text text_type_main-medium`}>Перетащите игредиенты в конструктор</p>
     </div>
   );
 }

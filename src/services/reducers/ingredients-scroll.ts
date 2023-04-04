@@ -4,6 +4,7 @@ import {
   SCROLL_ON_MAIN,
   SET_STARTS,
   SCROLL_TO,
+  SCROLL_REFRESH,
   TIngredientsScrollActions,
 } from "../actions/ingredients-scroll";
 import {Reducer} from "redux"
@@ -47,6 +48,9 @@ export const ingredientsScrollReducer: Reducer<TIngredientsScrollState,TIngredie
         ...state,
         [action.containerType + "Y"]: action.y,
       };
+    }
+    case SCROLL_REFRESH: {
+      return initialState
     }
     default:
       return state;

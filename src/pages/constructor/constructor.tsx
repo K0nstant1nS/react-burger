@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { useSelector } from "../../services/hooks";
+import React, { FC, useEffect } from "react";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Loader from "../../components/loader/loader";
@@ -12,11 +12,19 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import IngredientPage from "../ingredient/ingredient";
 import { getModal } from "../../utils";
 import { TStatus } from "../../services/types/data";
+import { SCROLL_REFRESH } from "../../services/actions/ingredients-scroll";
 
 const ConstructorPage: FC = () => {
   const { status } = useSelector(getIngredients);
   const { modal } = useSelector(getModal);
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    return ()=>{
+      dispatch({type: SCROLL_REFRESH})
+    }
+  })
 
   function renderer(status: TStatus):JSX.Element {
     switch (status) {

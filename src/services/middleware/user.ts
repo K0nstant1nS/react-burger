@@ -13,7 +13,6 @@ export const userMiddleware: Middleware = (store) => (next) => (action) => {
   if (action.type === LOGOUT) {
     deleteCookie("refreshToken");
     deleteCookie("accessToken");
-    deleteCookie("password");
   }
   next(action);
 };

@@ -1,6 +1,6 @@
 import { NavigateFunction } from "react-router";
 import Api from "../../API";
-import { setCookie, getCookie } from "../../utils";
+import { setCookie, getCookie, deleteCookie } from "../../utils";
 import { AppDispatch, AppThunk } from "../types";
 import { TConfirmPasswordResetData, TLoginUserData, TRegisterUserData, TResetPasswordData, TUser } from "../types/data";
 import { SET_ERROR, REMOVE_ERROR } from "./form-errors";
@@ -73,6 +73,7 @@ export const getUser:AppThunk<void> = (isRefresh = false) => {
               dispatch(getUser());
             })
             .catch(() => {
+              deleteCookie("refreshToken")
               dispatch({ type: SET_LOADED });
             });
         } else {
@@ -130,7 +131,9 @@ export const patchUser:AppThunk<void> = (form:TRegisterUserData, isRefresh:boole
         if (isRefresh && refreshToken) {
           Api.refreshTokenRequest(refreshToken).then(() => {
             dispatch(patchUser(form));
-          });
+          }).catch(()=>{
+            deleteCookie("refreshToken")
+          })
         }
       });
   };

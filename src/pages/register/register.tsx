@@ -3,12 +3,14 @@ import FormPage from "../../components/form-page/form-page";
 import { signUp } from "../../services/actions/user";
 import { useDispatch } from "../../services/hooks";
 import { TFormSubmitData } from "../../services/types/data";
+import { useNavigate } from "react-router";
 
 const RegisterPage: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const onSubmit = (form: TFormSubmitData) => {
-    dispatch(signUp(form));
+    dispatch(signUp(form, navigate))
   };
 
   const formSettings = {

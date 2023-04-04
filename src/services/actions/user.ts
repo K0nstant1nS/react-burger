@@ -14,18 +14,13 @@ export const SET_PASSWORD_DEFAULT = "SET_PASSWORD_DEFAULT" as const;
 export const START_CHANGING = "START_CHANGING" as const;
 export const STOP_CHANGING = "STOP_CHANGING" as const;
 
-export const signUp:AppThunk<void> = (form:TRegisterUserData)=>{
-  return (dispatch:AppDispatch) => {
+export const signUp:AppThunk<void> = (form:TRegisterUserData, navigate:NavigateFunction)=>{
+  return (dispatch: AppDispatch) => {
     dispatch({ type: SET_ONLOAD });
     Api.registerUser(form)
-      .then((data) => {
-        setCookie("accessToken", data.accessToken.split("Bearer ")[1], {
-          path: "/",
-        });
-        setCookie("refreshToken", data.refreshToken, { path: "/" });
-        dispatch({ type: SET_USER, user: data.user });
-        dispatch({ type: SET_LOADED });
+      .then(() => {
         dispatch({ type: REMOVE_ERROR });
+        navigate("/")
       })
       .catch((err:Error) => {
         console.log(err);

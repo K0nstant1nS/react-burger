@@ -5,7 +5,7 @@ import {
 import styles from "./constructor-element-wrapper.module.css";
 import React, { FC } from "react";
 import { deleteHandler } from "../../utils";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { SWAP_IN_CONSTRUCTOR } from "../../services/actions/constructor";
 import { TConstructorElementWrapperProps } from "../../services/types/data";
@@ -20,6 +20,9 @@ const ConstructorElementWrapper:FC<TConstructorElementWrapperProps> = ({
   price,
   index,
 }) => {
+
+  const dispatch = useDispatch();
+
   const [{ isDrag }, dragRef] = useDrag({
     type: "constructor",
     item: { index },
@@ -29,17 +32,17 @@ const ConstructorElementWrapper:FC<TConstructorElementWrapperProps> = ({
       };
     },
   });
+
   const [, dropTarget] = useDrop({
     accept: "constructor",
     drop(item: {index:number}) {
-      dispatch({
+      index && dispatch({
         type: SWAP_IN_CONSTRUCTOR,
         dragIndex: item.index,
         dropIndex: index,
       });
     },
   });
-  const dispatch = useDispatch();
   const dragProp = {
     ref: type ? null : dragRef,
   };

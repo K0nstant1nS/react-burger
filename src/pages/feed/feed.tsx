@@ -35,7 +35,7 @@ const Feed: FC = () => {
   );
 
   useEffect(() => {
-    dispatch({ type: INIT_ORDERS_SOCKET });
+    dispatch({ type: INIT_ORDERS_SOCKET, payload: {additionalUrl: "/all"} });
     return () => {
       dispatch({ type: CLOSE_ORDERS_SOCKET });
     };

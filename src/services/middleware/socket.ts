@@ -23,8 +23,8 @@ export const socketMiddleware:(url:string, actions:TsocketMiddlewareActions)=>Mi
         close,
         closeUser,
       } = actions;
-      if (type === init) {
-        socket = new WebSocket(`${url}/all`);
+      if (type === init && "payload" in action && "additionalUrl" in action.payload) {
+        socket = new WebSocket(`${url}${action.payload.additionalUrl}`);
       }
       if (type === initWithUser) {
         userSocket = new WebSocket(`${url}?token=${getCookie("accessToken")}`);
@@ -103,3 +103,4 @@ export const socketMiddleware:(url:string, actions:TsocketMiddlewareActions)=>Mi
     };
   };
 };
+

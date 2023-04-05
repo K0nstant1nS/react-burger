@@ -13,6 +13,9 @@ export const ON_USER_SOCKET_CLOSE = "ON_USER_SOCKET_CLOSE" as const;
 
 export interface IInitOrdersSocketAction {
     readonly type: typeof INIT_ORDERS_SOCKET;
+    readonly payload: {
+        additionalUrl: string
+    }
 }
 
 export interface IInitUserOrdersSocketAction {

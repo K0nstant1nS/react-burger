@@ -28,3 +28,8 @@ export interface IClearConstructorAction{
 }
 
 export type TConstructorActions = IClearConstructorAction|ISwapInConstructorAction|IRemoveConstructorElementAction|IAddConstructorElementAction
+
+export const addConstructorElementAction = (ingredient: TIngredient):IAddConstructorElementAction => {
+    return {type: ADD_CONSTRUCTOR_ELEMENT, ingredient}
+}
+

@@ -2,14 +2,14 @@ import React, { useEffect, FC } from "react";
 import styles from "./form-page.module.css";
 import { useDispatch } from "../../services/hooks";
 import Form from "../form/form";
-import { Link, Navigate } from "react-router-dom";
-import { REMOVE_ERROR } from "../../services/actions/form-errors";
+import { Link } from "react-router-dom";
+import { removeErrorAction } from "../../services/actions/form-errors";
 import { TFormPageProps } from "../../services/types/data";
 
 const FormPage:FC<TFormPageProps> = ({ formSettings, footer, onSubmit }) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: REMOVE_ERROR });
+    dispatch(removeErrorAction());
   }, []);
   return (
     <main className={styles.formContainer}>

@@ -22,10 +22,10 @@ const initialState:TOrderModalState = {
 export const orderReducer:Reducer<TOrderModalState, TOrderModalActions> = (state = initialState, action) => {
   switch (action.type) {
     case MAKE_ORDER_SUCCESS: {
-      return { status: "success", number: action.number, modalOpened: true };
+      return { status: "success", number: action.payload.number, modalOpened: true };
     }
     case ORDER_ERROR: {
-      console.log(action.err);
+      console.log(action.payload.err);
       return { ...initialState, modalOpened: true, status: "error" };
     }
     case MAKE_ORDER_PENDING: {

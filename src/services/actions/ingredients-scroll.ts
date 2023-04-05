@@ -19,13 +19,17 @@ export interface IScrollOnMainAction{
 
 export interface ISetStartsAction{
     readonly type: typeof SET_STARTS;
-    readonly containerType: string;
-    readonly y: number;
+    readonly payload: {
+        readonly containerType: string;
+        readonly y: number;
+    }
 }
 
 export interface IScrollToAction{
     readonly type: typeof SCROLL_TO;
-    readonly scrollTo: number;
+    readonly payload: {
+        readonly scrollTo: number;
+    }
 }
 
 export interface IScrollRefreshAction{
@@ -34,3 +38,27 @@ export interface IScrollRefreshAction{
 
 export type TIngredientsScrollActions = IScrollRefreshAction|IScrollOnBunAction|IScrollOnSauceAction|IScrollOnMainAction|ISetStartsAction|IScrollToAction;
 
+
+export const scrollOnBunAction = ():IScrollOnBunAction => {
+    return {type: SCROLL_ON_BUN}
+}
+
+export const scrollOnSauceAction = ():IScrollOnSauceAction => {
+    return {type: SCROLL_ON_SAUCE}
+}
+
+export const scrollOnMainAction = ():IScrollOnMainAction => {
+    return {type: SCROLL_ON_MAIN}
+}
+
+export const setStartsAction = (containerType: string, y:number):ISetStartsAction => {
+    return {type: SET_STARTS, payload: {containerType, y}}
+}
+
+export const scrollToAction = (scrollTo:number):IScrollToAction => {
+    return {type: SCROLL_TO, payload: {scrollTo}}
+}
+
+export const scrollRefreshAction = ():IScrollRefreshAction => {
+    return {type: SCROLL_REFRESH}
+}

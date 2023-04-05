@@ -4,8 +4,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import FeedList from "../../components/feed-list/feed-list";
 import Loader from "../../components/loader/loader";
 import {
-  CLOSE_USER_ORDERS_SOCKET,
-  INIT_USER_ORDERS_SOCKET,
+  closeUserOrdersSocketAction,
+  initUserOrdersSocketAction,
 } from "../../services/actions/orders";
 import { getModal, getOrdersData } from "../../utils";
 import OrderPage from "../order/order";
@@ -17,9 +17,9 @@ const ProfileOrders: FC = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: INIT_USER_ORDERS_SOCKET });
+    dispatch(initUserOrdersSocketAction());
     return () => {
-      dispatch({ type: CLOSE_USER_ORDERS_SOCKET });
+      dispatch(closeUserOrdersSocketAction());
     };
   }, []);
   return userOrders.status ? (

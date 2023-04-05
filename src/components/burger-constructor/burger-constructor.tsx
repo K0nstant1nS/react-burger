@@ -8,11 +8,11 @@ import ScrollableConstructContainer from "../scrollable-construct-container/scro
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useSelector, useDispatch } from "../../services/hooks";
-import { CLOSE_MODAL } from "../../services/actions/order-modal";
+import { closeModalAction } from "../../services/actions/order-modal";
 import { makeOrder } from "../../services/actions/order-modal";
 import { useDrop } from "react-dnd/dist/hooks";
-import { ADD_CONSTRUCTOR_ELEMENT } from "../../services/actions/constructor";
-import { getOrderData, getStore, getUserFromStore } from "../../utils";
+import { addConstructorElementAction } from "../../services/actions/constructor";
+import { getStore, getUserFromStore } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { TIngredient } from "../../services/types/data";
 
@@ -40,7 +40,7 @@ const BurgerConstructor: FC = () => {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item:TIngredient) {
-      dispatch({ type: ADD_CONSTRUCTOR_ELEMENT, ingredient: item });
+      dispatch(addConstructorElementAction(item));
     },
   });
 
@@ -71,7 +71,7 @@ const BurgerConstructor: FC = () => {
       {orderData.modalOpened && (
         <Modal
           closeModal={() => {
-            dispatch({ type: CLOSE_MODAL });
+            dispatch(closeModalAction());
           }}
         >
           <OrderDetails />

@@ -4,7 +4,7 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { SET_ROUTE_MODAL } from "../../services/actions/route-modal";
+import { setRouteModalAction } from "../../services/actions/route-modal";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { getIngredients } from "../../utils";
 import ImagesSet from "../images-set/images-set";
@@ -18,7 +18,7 @@ const FeedOrder:FC<TFeedOrderProps> = ({ status, ingredients, _id, number, creat
   const navigate = useNavigate();
 
   const onClick = () => {
-    dispatch({ type: SET_ROUTE_MODAL });
+    dispatch(setRouteModalAction());
     pathname === "/feed"
       ? navigate(`/feed/${_id}`)
       : navigate(`/profile/orders/${_id}`);

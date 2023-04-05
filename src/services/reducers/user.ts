@@ -28,7 +28,7 @@ const initialState:TUserState = {
 export const userReducer: Reducer<TUserState,TUserActions> = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER: {
-      return { ...state, user: action.user };
+      return { ...state, user: action.payload.user };
     }
     case SET_PASSWORD_ONCHANGE: {
       return { ...state, changingPassword: true };

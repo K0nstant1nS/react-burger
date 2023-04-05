@@ -41,16 +41,16 @@ export const ingredientsScrollReducer: Reducer<TIngredientsScrollState,TIngredie
       return { ...state, scrolledOn: "main" };
     }
     case SCROLL_TO: {
-      return { ...state, scrollTo: { y: action.scrollTo } };
+      return { ...state, scrollTo: { y: action.payload.scrollTo } };
     }
     case SET_STARTS: {
       return {
         ...state,
-        [action.containerType + "Y"]: action.y,
+        [action.payload.containerType + "Y"]: action.payload.y,
       };
     }
     case SCROLL_REFRESH: {
-      return initialState
+      return  {...state, scrollTo: {y: initialState.scrollTo.y}, scrolledOn: initialState.scrolledOn}
     }
     default:
       return state;

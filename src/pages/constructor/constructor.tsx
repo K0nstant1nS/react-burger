@@ -12,7 +12,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import IngredientPage from "../ingredient/ingredient";
 import { getModal } from "../../utils";
 import { TStatus } from "../../services/types/data";
-import { SCROLL_REFRESH } from "../../services/actions/ingredients-scroll";
+import { scrollRefreshAction } from "../../services/actions/ingredients-scroll";
 
 const ConstructorPage: FC = () => {
   const { status } = useSelector(getIngredients);
@@ -22,9 +22,9 @@ const ConstructorPage: FC = () => {
 
   useEffect(()=>{
     return ()=>{
-      dispatch({type: SCROLL_REFRESH})
+        dispatch(scrollRefreshAction())
     }
-  })
+  }, [])
 
   function renderer(status: TStatus):JSX.Element {
     switch (status) {

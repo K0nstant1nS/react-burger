@@ -20,10 +20,10 @@ const initialState:TIngredientsState = {
 export const ingredientsReducer: Reducer<TIngredientsState, TIngredientsActions> = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_DATA_SUCCESS: {
-      return { ...state, status: "success", data: action.data };
+      return { ...state, status: "success", data: action.payload.data };
     }
     case GET_INGREDIENTS_DATA_ERROR: {
-      console.log(action.err);
+      console.log(action.payload.err);
       return { ...initialState, status: "failed" };
     }
     case GET_INGREDIENTS_DATA_REQUEST: {

@@ -10,3 +10,11 @@ export interface IRemoveRouteModalAction {
 }
 
 export type TRouteModalActions = ISetRouteModalAction|IRemoveRouteModalAction;
+
+export const setRouteModalAction = ():ISetRouteModalAction => {
+    return {type: SET_ROUTE_MODAL}
+}
+
+export const removeRouteModalAction = ():IRemoveRouteModalAction => {
+    return {type: REMOVE_ROUTE_MODAL}
+}

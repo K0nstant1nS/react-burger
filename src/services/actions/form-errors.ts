@@ -3,11 +3,21 @@ export const REMOVE_ERROR = "REMOVE_ERROR" as const;
 
 export interface ISetErrorAction{
     readonly type: typeof SET_ERROR;
-    readonly message: string;
+    readonly payload: {
+        readonly message: string;
+    }
 }
 
 export interface IRemoveErrorAction{
     readonly type: typeof REMOVE_ERROR;
 }
 
-export type TFormErrorsActions = ISetErrorAction|IRemoveErrorAction
+export type TFormErrorsActions = ISetErrorAction|IRemoveErrorAction;
+
+export const setErrorAction = (message:string):ISetErrorAction => {
+    return {type: SET_ERROR, payload: {message}}
+}
+
+export const removeErrorAction = ():IRemoveErrorAction => {
+    return {type: REMOVE_ERROR}
+}

@@ -3,7 +3,7 @@ import Api from "../../API";
 import { setCookie, getCookie, deleteCookie } from "../../utils";
 import { AppDispatch, AppThunk } from "../types";
 import { TConfirmPasswordResetData, TLoginUserData, TRegisterUserData, TResetPasswordData, TUser } from "../types/data";
-import { SET_ERROR, REMOVE_ERROR } from "./form-errors";
+import { setErrorAction, removeErrorAction } from "./form-errors";
 
 export const SET_USER = "SET_USER" as const;
 export const SET_ONLOAD = "SET_ONLOAD" as const;
@@ -23,16 +23,12 @@ export const signUp:AppThunk<void> = (form:TRegisterUserData)=>{
           path: "/",
         });
         setCookie("refreshToken", data.refreshToken, { path: "/" });
-        dispatch({ type: SET_USER, user: data.user });
+        dispatch({ type: SET_USER, payload: {user: data.user} });
         dispatch({ type: SET_LOADED });
       })
       .catch((err:Error) => {
         console.log(err);
-        dispatch({
-          type: SET_ERROR,
-          message:
-            "Произошла ошибка при регистрации, проверьте данные или попробуйте позднее",
-        });
+        setErrorAction("Произошла ошибка при регистрации, проверьте данные или попробуйте позднее")
       });
   };
 }
@@ -46,13 +42,13 @@ export const signIn:AppThunk<void> = (form:TLoginUserData) => {
           path: "/",
         });
         setCookie("refreshToken", data.refreshToken, { path: "/" });
-        dispatch({ type: SET_USER, user: data.user });
+        dispatch({ type: SET_USER, payload: {user: data.user} });
         dispatch({ type: SET_LOADED });
-        dispatch({ type: REMOVE_ERROR });
+        dispatch(removeErrorAction());
       })
       .catch((err:Error) => {
         console.log(err);
-        dispatch({ type: SET_ERROR, message: "Не удается найти пользователя" });
+        dispatch(setErrorAction("Не удается найти пользователя"))
       });
   };
 }
@@ -62,7 +58,7 @@ export const getUser:AppThunk<void> = (isRefresh = false) => {
     dispatch({ type: SET_ONLOAD });
     Api.getUserRequest()
       .then((data) => {
-        dispatch({ type: SET_USER, user: data.user });
+        dispatch({ type: SET_USER, payload: {user: data.user} });
         dispatch({ type: SET_LOADED });
       })
       .catch(() => {
@@ -89,13 +85,13 @@ export const changePassword:AppThunk<void> = (form:TResetPasswordData, navigate:
       .then((data) => {
         if (data.success) {
           dispatch({ type: SET_PASSWORD_ONCHANGE });
-          dispatch({ type: REMOVE_ERROR });
+          dispatch(removeErrorAction());
           navigate("/reset-password");
         }
       })
       .catch((err:Error) => {
         console.log(err);
-        dispatch({ type: SET_ERROR, message: "Пользователь не найден" });
+        dispatch(setErrorAction("Пользователь не найден"))
       });
   };
 }
@@ -105,15 +101,11 @@ export const confirmPasswordChange:AppThunk<void> = (form:TConfirmPasswordResetD
     Api.confirmPasswordResetRequest(form)
       .then(() => {
         dispatch({ type: SET_PASSWORD_DEFAULT });
-        dispatch({ type: REMOVE_ERROR });
+        dispatch(removeErrorAction());
         navigate("/login");
       })
       .catch((err:Error) => {
-        dispatch({
-          type: SET_ERROR,
-          message:
-            "произошла ошибка, перепроверьте правильность введенных данных",
-        });
+        dispatch(setErrorAction("произошла ошибка, перепроверьте правильность введенных данных"));
         console.log(err);
       });
   };
@@ -123,8 +115,8 @@ export const patchUser:AppThunk<void> = (form:TRegisterUserData, isRefresh:boole
   return (dispatch) => {
     Api.patchUserRequest(form)
       .then((data) => {
-        dispatch({ type: SET_USER, user: data.user });
-        dispatch({ type: STOP_CHANGING, password: form.password });
+        dispatch({ type: SET_USER, payload: {user: data.user} });
+        dispatch({ type: STOP_CHANGING });
       })
       .catch(() => {
         const refreshToken = getCookie("refreshToken");
@@ -153,7 +145,9 @@ export const logout:AppThunk<void> = () => {
 
 export interface ISetUserAction {
   readonly type: typeof SET_USER;
-  readonly user: TUser;
+  readonly payload: {
+    readonly user: TUser;
+  }
 }
 
 export interface ISetOnloadAction {
@@ -185,3 +179,19 @@ export interface IStopChangingAction {
 }
 
 export type TUserActions = ISetUserAction|ISetOnloadAction|ISetLoadedAction|ILogoutAction|ISetPasswordOnchangeAction|ISetPasswordDefaultAction|IStartChangingAction|IStopChangingAction
+
+export const logoutAction = ():ILogoutAction => {
+  return {type: LOGOUT}
+}
+
+export const startChangingAction = ():IStartChangingAction => {
+  return {type: START_CHANGING}
+}
+
+export const stopChangingAction = ():IStopChangingAction => {
+  return {type: STOP_CHANGING}
+}
+
+export const setPasswordDefaultAction = ():ISetPasswordDefaultAction => {
+  return {type: SET_PASSWORD_DEFAULT}
+}

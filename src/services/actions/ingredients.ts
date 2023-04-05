@@ -10,27 +10,31 @@ export const initData:AppThunk<void> = () => {
     dispatch({ type: GET_INGREDIENTS_DATA_REQUEST });
     Api.getIngredients()
       .then((data) => {
-        dispatch({ type: GET_INGREDIENTS_DATA_SUCCESS, data: data.data });
+        dispatch({ type: GET_INGREDIENTS_DATA_SUCCESS, payload: {data: data.data} });
       })
       .catch((err:Error) => {
-        dispatch({ type: GET_INGREDIENTS_DATA_ERROR, err: err.message });
+        dispatch({ type: GET_INGREDIENTS_DATA_ERROR, payload: {err: err.message} });
       });
   };
 }
 
 export interface IGetIngredientsDataSuccessAction{
   readonly type: typeof GET_INGREDIENTS_DATA_SUCCESS;
-  readonly data: TIngredient[];
+  readonly payload: {
+    readonly data: TIngredient[];
+  }
 }
 
 export interface IGetIngredientsDataErrorAction{
   readonly type: typeof GET_INGREDIENTS_DATA_ERROR
-  readonly err: string;
+  readonly payload: {
+    readonly err: string;
+  }
 }
 
 export interface IGetIngredientsDataRequestAction{
   readonly type: typeof GET_INGREDIENTS_DATA_REQUEST
 }
 
-export type TIngredientsActions = IGetIngredientsDataSuccessAction|IGetIngredientsDataErrorAction|IGetIngredientsDataRequestAction
+export type TIngredientsActions = IGetIngredientsDataSuccessAction|IGetIngredientsDataErrorAction|IGetIngredientsDataRequestAction;
 

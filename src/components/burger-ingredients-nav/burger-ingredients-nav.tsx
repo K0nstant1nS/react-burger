@@ -2,7 +2,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {FC} from "react";
 import { useSelector, useDispatch } from "../../services/hooks";
 import styles from "./burger-ingredients-nav.module.css";
-import { SCROLL_TO } from "../../services/actions/ingredients-scroll";
+import { scrollToAction } from "../../services/actions/ingredients-scroll";
 import { getStore } from "../../utils";
 
 const BurgerIngredientsNav:FC = ()=>{
@@ -16,7 +16,7 @@ const BurgerIngredientsNav:FC = ()=>{
           <Tab
             active={ingredientsScroll.scrolledOn === "bun"}
             onClick={() => {
-              dispatch({ type: SCROLL_TO, scrollTo: ingredientsScroll.bunY });
+              dispatch(scrollToAction(ingredientsScroll.bunY))
             }}
             value="Булки"
           >
@@ -27,7 +27,7 @@ const BurgerIngredientsNav:FC = ()=>{
           <Tab
             active={ingredientsScroll.scrolledOn === "sauce"}
             onClick={() => {
-              dispatch({ type: SCROLL_TO, scrollTo: ingredientsScroll.sauceY });
+              dispatch(scrollToAction(ingredientsScroll.sauceY))
             }}
             value="Соусы"
           >
@@ -38,10 +38,7 @@ const BurgerIngredientsNav:FC = ()=>{
           <Tab
             active={ingredientsScroll.scrolledOn === "main"}
             onClick={() => {
-              dispatch({
-                type: SCROLL_TO,
-                scrollTo: ingredientsScroll.mainY,
-              });
+              dispatch(scrollToAction(ingredientsScroll.mainY))
             }}
             value="Начинки"
           >

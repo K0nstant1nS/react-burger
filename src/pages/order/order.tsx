@@ -9,7 +9,7 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../components/modal/modal";
-import { REMOVE_ROUTE_MODAL } from "../../services/actions/route-modal";
+import { removeRouteModalAction } from "../../services/actions/route-modal";
 import { TIngredient, TOrderPageProps } from "../../services/types/data";
 import ErrorPage from "../error/error";
 
@@ -78,7 +78,7 @@ const OrderPage: FC<TOrderPageProps>  = ({ storage }) => {
       })
 
   const closeModal = () => {
-    dispatch({ type: REMOVE_ROUTE_MODAL });
+    dispatch(removeRouteModalAction());
     isFeed ? navigate("/feed") : navigate("/profile/orders");
   };
 

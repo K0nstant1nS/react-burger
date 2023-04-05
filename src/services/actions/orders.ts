@@ -63,3 +63,19 @@ export interface IOnUserCloseSocketAction {
 }
 
 export type TOrdersActions = IOnUserCloseSocketAction|IOnCloseSocketAction|ISetUserOrdersDataAction|ISetOrdersDataAction|ICloseUserOrdersSocketAction|ICloseOrdersSocketAction|ISuccessUserOrdersSocketAction|ISuccessOrdersSocketAction|IInitOrdersSocketAction|IInitUserOrdersSocketAction
+
+export const initOrdersSocketAction = (additionalUrl:string):IInitOrdersSocketAction => {
+    return {type: INIT_ORDERS_SOCKET, payload: {additionalUrl}}
+}
+
+export const initUserOrdersSocketAction = ():IInitUserOrdersSocketAction => {
+    return {type: INIT_USER_ORDERS_SOCKET}
+}
+
+export const closeOrdersSocketAction = ():ICloseOrdersSocketAction => {
+    return {type: CLOSE_ORDERS_SOCKET}
+}
+
+export const closeUserOrdersSocketAction = ():ICloseUserOrdersSocketAction => {
+    return {type: CLOSE_USER_ORDERS_SOCKET}
+}

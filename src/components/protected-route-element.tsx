@@ -1,12 +1,11 @@
 import React, { useEffect, FC } from "react";
 import { useSelector, useDispatch } from "../services/hooks";
 import { Navigate, useLocation } from "react-router-dom";
-import { getUser, logout } from "../services/actions/user";
-import { LOGOUT } from "../services/actions/user";
+import { getUser, logoutAction } from "../services/actions/user";
 import { getUserFromStore } from "../utils";
 import { TRouteProps } from "../services/types/data";
 import { getCookie } from "../utils";
-import { CLOSE_USER_ORDERS_SOCKET } from "../services/actions/orders";
+import { closeUserOrdersSocketAction } from "../services/actions/orders";
 
 const ProtectedRouteElement:FC<TRouteProps> = ({ element }) => {
   const dispatch = useDispatch();
@@ -29,8 +28,8 @@ const ProtectedRouteElement:FC<TRouteProps> = ({ element }) => {
   }
 
   if(!refreshToken && user){
-    dispatch({type: CLOSE_USER_ORDERS_SOCKET});
-    dispatch({type: LOGOUT})
+    dispatch(closeUserOrdersSocketAction());
+    dispatch(logoutAction())
   }
 
   return (user) ? (

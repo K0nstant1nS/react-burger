@@ -1,7 +1,7 @@
 import Api from "../../API";
 import { getCookie } from "../../utils";
-import { AppDispatch, AppThunk } from "../types";
-import { CLEAR_CONSTRUCTOR } from "./constructor";
+import { AppThunk } from "../types";
+import { clearConstructorAction } from "./constructor";
 export const MAKE_ORDER_PENDING = "MAKE_ORDER_PENDING" as const;
 export const MAKE_ORDER_SUCCESS = "MAKE_ORDER_SUCCESS" as const;
 export const CLOSE_MODAL = "CLOSE_MODAL" as const;
@@ -14,9 +14,11 @@ export const makeOrder:AppThunk<void> = (dataArr:string[], isRecon:boolean= fals
       .then((data) => {
         dispatch({
           type: MAKE_ORDER_SUCCESS,
-          number: data.order.number,
+          payload:{
+            number: data.order.number
+          }
         });
-        dispatch({ type: CLEAR_CONSTRUCTOR });
+        dispatch(clearConstructorAction());
       })
       .catch((err:Error) => {
         if (isRecon) {
@@ -25,10 +27,10 @@ export const makeOrder:AppThunk<void> = (dataArr:string[], isRecon:boolean= fals
               dispatch(makeOrder(dataArr));
             })
             .catch(() => {
-              dispatch({ type: ORDER_ERROR, err: err.message });
+              dispatch({ type: ORDER_ERROR, payload: {err: err.message} });
             });
         } else {
-          dispatch({ type: ORDER_ERROR, err: err.message });
+          dispatch({ type: ORDER_ERROR, payload: {err: err.message} });
         }
       });
   };
@@ -40,12 +42,16 @@ export interface IMakeOrderPendingAction {
 
 export interface IMakeOrderSuccessAction {
   readonly type: typeof MAKE_ORDER_SUCCESS;
-  readonly number: number|string;
+  readonly payload: {
+    readonly number: number|string;
+  }
 }
 
 export interface IMakeOrderErrorAction {
   readonly type: typeof ORDER_ERROR;
-  readonly err: string;
+  readonly payload: {
+    readonly err: string;
+  }
 }
 
 export interface ICloseModalAction {
@@ -53,3 +59,7 @@ export interface ICloseModalAction {
 }
 
 export type TOrderModalActions = IMakeOrderErrorAction|IMakeOrderPendingAction|IMakeOrderSuccessAction|ICloseModalAction
+
+export const closeModalAction = (): ICloseModalAction => {
+  return {type: CLOSE_MODAL}
+}

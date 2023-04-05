@@ -1,15 +1,15 @@
 import {
-  SCROLL_ON_BUN,
-  SCROLL_ON_SAUCE,
-  SCROLL_ON_MAIN,
+  scrollOnBunAction,
+  scrollOnSauceAction,
+  scrollOnMainAction,
 } from "../services/actions/ingredients-scroll";
 
 import {
-  SET_ROUTE_MODAL,
-  REMOVE_ROUTE_MODAL,
+  removeRouteModalAction,
+  setRouteModalAction,
 } from "../services/actions/route-modal";
 
-import { REMOVE_CONSTRUCTOR_ELEMENT } from "../services/actions/constructor";
+import { removeConstructorElementAction } from "../services/actions/constructor";
 import { RootState } from "../services/types";
 import { TOrderModalState } from "../services/reducers/order-modal";
 import { TThunkDispatch } from "../services/hooks";
@@ -27,32 +27,28 @@ export const handleScrollIniter = (target: TIngredientsScrollState, dispatch:TTh
       throw new Error("No scroll target")
     }
     if (e.currentTarget.scrollTop < (target.sauceY + target.bunY) / 2) {
-      dispatch({ type: SCROLL_ON_BUN });
+      dispatch(scrollOnBunAction());
     } else if (
       e.currentTarget.scrollTop >= (target.sauceY + target.bunY) / 2 &&
       e.currentTarget.scrollTop < (target.mainY + target.sauceY) / 2
     ) {
-      dispatch({ type: SCROLL_ON_SAUCE });
+      dispatch(scrollOnSauceAction());
     } else {
-      dispatch({ type: SCROLL_ON_MAIN });
+      dispatch(scrollOnMainAction());
     }
   };
 };
 
 export function openIngredientModal(dispatch:TThunkDispatch):void {
-  dispatch({ type: SET_ROUTE_MODAL });
+  dispatch(setRouteModalAction());
 }
 
 export function closeIngredientModal(dispatch:TThunkDispatch):void {
-  dispatch({ type: REMOVE_ROUTE_MODAL });
+  dispatch(removeRouteModalAction());
 }
 
 export function deleteHandler(dispatch:TThunkDispatch, { index, price }: {index: number; price: number}):void {
-  dispatch({
-    type: REMOVE_CONSTRUCTOR_ELEMENT,
-    index,
-    price,
-  });
+  dispatch(removeConstructorElementAction(price, index))
 }
 
 export const getStore = (store:RootState) => store;
@@ -60,6 +56,8 @@ export const getStore = (store:RootState) => store;
 export const getModal = (store:RootState):TRouteModalState => store.modal;
 
 export const getIngredients = (store:RootState):TIngredientsState => store.ingredients;
+
+export const getIngredientsScroll = (store:RootState):TIngredientsScrollState => store.ingredientsScroll
 
 export const getOrderData = (store:RootState):TOrderModalState => store.orderData;
 

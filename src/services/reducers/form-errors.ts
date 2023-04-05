@@ -14,7 +14,7 @@ const initialState:TFormErrorsState = {
 export const formErrorReducer: Reducer<TFormErrorsState, TFormErrorsActions> = (state = initialState, action) => {
   switch (action.type) {
     case SET_ERROR: {
-      return { error: true, errorMessage: action.message };
+      return { error: true, errorMessage: action.payload.message };
     }
     case REMOVE_ERROR: {
       return { ...initialState };

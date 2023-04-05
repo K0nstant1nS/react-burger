@@ -7,7 +7,7 @@ import React, { FC } from "react";
 import { deleteHandler } from "../../utils";
 import { useDispatch } from "../../services/hooks";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
-import { SWAP_IN_CONSTRUCTOR } from "../../services/actions/constructor";
+import { swapInConstructorAction } from "../../services/actions/constructor";
 import { TConstructorElementWrapperProps } from "../../services/types/data";
 import { DragSourceMonitor } from "react-dnd";
 
@@ -36,11 +36,7 @@ const ConstructorElementWrapper:FC<TConstructorElementWrapperProps> = ({
   const [, dropTarget] = useDrop({
     accept: "constructor",
     drop(item: {index:number}) {
-      index && dispatch({
-        type: SWAP_IN_CONSTRUCTOR,
-        dragIndex: item.index,
-        dropIndex: index,
-      });
+      index && dispatch(swapInConstructorAction(item.index, index))
     },
   });
   const dragProp = {

@@ -10,7 +10,6 @@ const UnAuthRoute: FC<TRouteProps> = ({ element }) => {
   const { user } = useSelector(getUserFromStore);
   const location = useLocation();
   const to = location.search.split("to=")[1];
-  const refreshToken = getCookie("refreshToken")
 
   if (user) {
     return <Navigate to={to ? to : "/"} replace={true} />;

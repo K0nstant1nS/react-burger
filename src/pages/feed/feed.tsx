@@ -7,8 +7,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import OrderPage from "../order/order";
 import { getModal, getOrdersData } from "../../utils";
 import {
-  CLOSE_ORDERS_SOCKET,
-  INIT_ORDERS_SOCKET,
+  closeOrdersSocketAction,
+  initOrdersSocketAction,
 } from "../../services/actions/orders";
 import Loader from "../../components/loader/loader";
 
@@ -17,6 +17,7 @@ const Feed: FC = () => {
   const { pathname } = useLocation();
   const { modal } = useSelector(getModal);
   const dispatch = useDispatch();
+
 
   const done = useMemo(
     () =>
@@ -35,9 +36,9 @@ const Feed: FC = () => {
   );
 
   useEffect(() => {
-    dispatch({ type: INIT_ORDERS_SOCKET, payload: {additionalUrl: "/all"} });
+    dispatch(initOrdersSocketAction("/all"))
     return () => {
-      dispatch({ type: CLOSE_ORDERS_SOCKET });
+      dispatch(closeOrdersSocketAction());
     };
   }, []);
 

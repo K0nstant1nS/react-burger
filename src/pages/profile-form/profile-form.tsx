@@ -1,9 +1,9 @@
 import React, { useState, useEffect, FC } from "react";
 import { useSelector, useDispatch } from "../../services/hooks";
 import {
-  START_CHANGING,
-  STOP_CHANGING,
   patchUser,
+  startChangingAction,
+  stopChangingAction,
 } from "../../services/actions/user";
 import { getUserFromStore } from "../../utils";
 import styles from "./profile-form.module.css";
@@ -21,28 +21,28 @@ const ProfileForm: FC = () => {
 
   const changeName = (e:React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) {
-      dispatch({ type: START_CHANGING });
+      dispatch(startChangingAction());
     }
     setUserState({ ...userState, name: e.target.value });
   };
 
   const changeLogin = (e:React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) {
-      dispatch({ type: START_CHANGING });
+      dispatch(startChangingAction());
     }
     setUserState({ ...userState, email: e.target.value });
   };
 
   const changePassword = (e:React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) {
-      dispatch({ type: START_CHANGING });
+      dispatch(startChangingAction());
     }
     setUserState({ ...userState, password: e.target.value });
   };
 
   const stopChanging = () => {
     setUserState({password: "", name: "", email: "", ...user });
-    dispatch({ type: STOP_CHANGING });
+    dispatch(stopChangingAction());
   };
 
   const onSave: React.FormEventHandler<HTMLFormElement> = (e) => {

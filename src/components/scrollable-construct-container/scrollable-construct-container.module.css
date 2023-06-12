@@ -5,6 +5,13 @@
     flex-direction: column;
 }
 
+.empty{
+    height: 464px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .constructor::-webkit-scrollbar {
     box-sizing: border-box;
     width: 8px;

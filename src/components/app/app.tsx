@@ -3,7 +3,7 @@ import AppHeader from "../app-header/app-header";
 import { getIngredients, getUserFromStore } from "../../utils";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { initData } from "../../services/actions/ingredients";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ConstructorPage from "../../pages/constructor/constructor";
 import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import LoginPage from "../../pages/login/login";
@@ -30,7 +30,7 @@ const App: FC = () => {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="app">
         <AppHeader />
         {status === "success" && (
@@ -61,7 +61,7 @@ const App: FC = () => {
           </Routes>
         )}
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -1,3 +1,5 @@
+https://k0nstant1ns.github.io/react-burger/
+
 # Учебный реакт-проект stellar burgers, промежуточное ревью первого месяца
 
 ## Использованые технологии
